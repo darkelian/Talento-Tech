@@ -24,8 +24,14 @@ export function Navbar() {
                             </ul>
                         </li>
 
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/estudiante">Estudiante</Link>
+                        <li className="nav-item dropdown">
+                            <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Estudiante
+                            </a>
+                            <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+                                <li><Link className="dropdown-item" to="/student/registration1">Registro</Link></li>
+                                <li><Link className="dropdown-item" to="/student/dashboard">Dashboard</Link></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
