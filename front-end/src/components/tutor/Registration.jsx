@@ -18,12 +18,18 @@ export function Registration() {
                     let errors = {}
                     if (!values.name) {
                         errors.name = 'Ingresa el nombre'
+                    } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.lastName)) {
+                        errors.name = 'El nombre ingresado es inválido'
                     }
                     if (!values.lastName) {
                         errors.lastName = 'Ingresa el apellido'
+                    } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.lastName)) {
+                        errors.lastName = 'El apellido ingresado es inválido'
                     }
                     if (!values.email) {
                         errors.email = 'Ingresa el correo electrónico'
+                    } else if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(values.email)) {
+                        errors.email = 'El correo electrónico ingresado es inválido'
                     }
                     if (!values.password) {
                         errors.password = 'Ingresa la contraseña'
