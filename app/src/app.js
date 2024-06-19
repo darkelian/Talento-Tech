@@ -1,10 +1,21 @@
-// src/app.js
 const express = require('express');
 const session = require('express-session');
 const passport = require('./config/passport');
-
+const sequelize = require('./config/database'); // Importar sequelize
 const app = express();
 const port = 3000;
+
+// Importar modelos
+const City = require('./models/cityModel');
+const Materia = require('./models/materiaModel');
+const Person = require('./models/personModel');
+const Reservation = require('./models/reservationModel');
+const ReservationType = require('./models/reservationTypeModel');
+const Rol = require('./models/rolModel');
+const Student = require('./models/studentModel');
+const Subject = require('./models/subjectModel');
+const Tutor = require('./models/tutorModel');
+const User = require('./models/userModel');
 
 // Middleware
 app.use(express.json());
@@ -24,16 +35,23 @@ app.get('/auth/callback',
     // Successful authentication, redirect home.
     res.redirect('/');
   });
-// Importar las Rutas
-//app.use('/users', require('./routes/userRoutes'));
-const users = require("./routes/userRoutes")
-const students = require("./routes/studentRoutes")
 
-//Creamos la ruta del navegador, las rutas del back inician con '/api'
-app.use('/apis', users)
-app.use('/api', students)
+// Importar las rutas
+const users = require("./routes/userRoutes");
+const students = require("./routes/studentRoutes");
 
-// Iniciar servidor
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+// Crear las rutas del navegador, las rutas del back inician con '/api'
+app.use('/apis', users);
+app.use('/api', students);
+
+// Sincronizar la base de datos y luego iniciar el servidor
+sequelize.sync({ force: true }) // `force: true` recrea las tablas en cada reinicio (útil para desarrollo)
+  .then(() => {
+    console.log('Database & tables created!');
+    app.listen(port, () => {
+      console.log(`Server running at http://localhost:${port}`);
+    });
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
