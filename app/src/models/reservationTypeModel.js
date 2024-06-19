@@ -1,17 +1,17 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const Rol = sequelize.define('Rol', {
+const reservationType = sequelize.define('reservationType', {
   id: {
     type: DataTypes.INTEGER, 
     primaryKey: true,
     autoIncrement: true
   },
-  name: {
+  description : {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true
-  }
+    unique: false
+}
 });
 
-module.exports = Rol;
+module.exports = reservationType;

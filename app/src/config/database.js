@@ -1,7 +1,7 @@
 // src/config/database.js
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize('database', 'username', 'password', {
+const sequelize = new Sequelize('tutoria', 'postgres', 'admin', {
   host: 'localhost',
   dialect: 'postgres'
 });

@@ -24,8 +24,14 @@ app.get('/auth/callback',
     // Successful authentication, redirect home.
     res.redirect('/');
   });
-// Rutas
-app.use('/users', require('./routes/userRoutes'));
+// Importar las Rutas
+//app.use('/users', require('./routes/userRoutes'));
+const users = require("./routes/userRoutes")
+const students = require("./routes/studentRoutes")
+
+//Creamos la ruta del navegador, las rutas del back inician con '/api'
+app.use('/apis', users)
+app.use('/api', students)
 
 // Iniciar servidor
 app.listen(port, () => {
