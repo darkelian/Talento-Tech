@@ -19,7 +19,7 @@ export function Navbar() {
                                 Tutores
                             </a>
                             <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
-                                <li><Link className="dropdown-item" to="/tutor/registro">Registro</Link></li>
+                                <li><Link className="dropdown-item" to="/tutor/registration">Registro</Link></li>
                                 <li><Link className="dropdown-item" to="/tutor/dashboard">Dashboard</Link></li>
                             </ul>
                         </li>
