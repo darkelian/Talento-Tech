@@ -1,8 +1,12 @@
 import * as Yup from "yup";
 
 export const secondForm = Yup.object().shape({
-    age:Yup.string().matches(/^([0-9]).{1,2}$/,"only numbers are allowed").required("Age is required"),
-    residenceDepartment: Yup.string()
+  age: Yup.number()
+    .typeError("Solo se permiten números")
+    .min(1)
+    .max(130, "Ingrese una edad válida")
+    .required("Edad es requerida"),
+  residenceDepartment: Yup.string()
     .oneOf(
       [
         "Selecciona una opción",
@@ -13,8 +17,18 @@ export const secondForm = Yup.object().shape({
       ],
       "Debe seleccionar el departamento de residencia"
     )
-    .required("Select a genre"),
-    surnamesFirstForm:Yup.string().matches(/^([ a-zA-ZñÑáéíóúÁÉÍÓÚ]).{2,254}/,"only letters are allowed").required("Surnames are required"),
-    documentFirstForm:Yup.string().oneOf(["citizenship card","identity card","passport"],"Must select a document type").required("Select a document type"),
-    genreFirstForm:Yup.string().oneOf(["Female","Male","Other","I prefer not to answer"],"Must select a genre").required("Select a genre"),
-})
+    .required("Debe seleccionar el departamento de residencia"),
+  phoneNumber: Yup.number()
+    .typeError("Solo se permiten números")
+    .min(1)
+    .required("Teléfono es requerido"),
+  password: Yup.string()
+    .required("La contraseña es requerida.")
+    .min(8, "La contraseña debe contener mínimo 8 caracteres."),
+  passwordConfirmation: Yup.string()
+    .oneOf([Yup.ref("password"), null], "Las contraseñas deben coincidir.")
+    .required("La confirmación es requerida."),
+  dataTreatment: Yup.bool()
+    .oneOf([true], "Debe aceptar los términos y condiciones")
+    .required("La confirmación es requerida."),
+});

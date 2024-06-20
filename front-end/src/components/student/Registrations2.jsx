@@ -1,18 +1,77 @@
+import React, { useEffect } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import React from "react";
+import { useSelector } from "react-redux";
 import { secondForm } from "../schemas/studentSecondForm";
 import { useNavigate } from "react-router-dom";
 
 const Registrations2 = () => {
   const navigate = useNavigate();
 
+  const { dataStudentForm2 } = useSelector((store) => store.infoStudentForm);
+  const {
+    dataForm: {
+      studentName,
+      surnameStudent,
+      documentType,
+      emailStudent,
+      documentNumber,
+      gender,
+    },
+  } = useSelector((store) => store.infoStudentForm);
+
   const onSubmit = (values) => {
-    console.log(values);
+    const {
+      age,
+      residenceDepartment,
+      phoneNumber,
+      password,
+      passwordConfirmation,
+      dataTreatment,
+    } = values;
+    const sendData = {
+      studentName,
+      surnameStudent,
+      documentType,
+      emailStudent,
+      documentNumber,
+      gender,
+      age,
+      residenceDepartment,
+      phoneNumber,
+      password,
+      passwordConfirmation,
+      dataTreatment,
+    };
+    console.log(sendData);
   };
 
   const sendInfo = () => {
     navigate("/");
   };
+
+  useEffect(() => {
+    (() => {
+
+      const forms = document.querySelectorAll(".needs-validation");
+
+
+      Array.from(forms).forEach((form) => {
+        form.addEventListener(
+          "submit",
+          (event) => {
+            if (!form.checkValidity()) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+
+            form.classList.add("was-validated");
+          },
+          false
+        );
+      });
+    })();
+    
+  }, []);
 
   return (
     <>
@@ -68,128 +127,137 @@ const Registrations2 = () => {
           </p>
         </h6>
         <Formik
-          initialValues={{
-            age: "",
-            residenceDepartment: "",
-            documentType: "",
-            emailStudent: "",
-            documentNumber: "",
+          initialValues={dataStudentForm2}
+          onSubmit={(values, actions) => {
+            onSubmit(values);
+            actions.setSubmitting(false);
           }}
-          onSubmit={onSubmit}
           validationSchema={secondForm}
         >
-          <Form autoComplete="off">
-            <div className="mb-3">
-              <label htmlFor="age" className="form-label">
-                Edad
-              </label>
-              <Field
-                name="age"
-                id="age"
-                type="text"
-                className="form-control"
-                autoFocus
-              />
-              <ErrorMessage name="age" component="p" />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="residenceDepartment" className="form-label">
-                Departamento de residencia
-              </label>
-              <Field
-                name="residenceDepartment"
-                id="residenceDepartment"
-                as="select"
-                className="form-control"
+          {({ errors, touched, isSubmitting }) => (
+            <Form className=" needs-validation" noValidate>
+              <div className="mb-3">
+                <label htmlFor="age" className="form-label">
+                  Edad
+                </label>
+                <Field
+                  name="age"
+                  id="age"
+                  type="text"
+                  className={`form-control ${
+                    touched.name && errors.name ? "is-invalid" : ""
+                  }`}
+                  autoFocus
+                />
+                <ErrorMessage
+                  name="age"
+                  component="p"
+                  className="invalid-feedback"
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="residenceDepartment" className="form-label">
+                  Departamento de residencia
+                </label>
+                <Field
+                  name="residenceDepartment"
+                  id="residenceDepartment"
+                  as="select"
+                  className={`form-control ${
+                    touched.name && errors.name ? "is-invalid" : ""
+                  }`}
+                >
+                  <option> Selecciona una opción</option>
+                  <option> Bogotá D.C</option>
+                  <option> Cundinamarca</option>
+                  <option> Medellin</option>
+                  <option> Cali</option>
+                </Field>
+                <ErrorMessage
+                  name="residenceDepartment"
+                  component="p"
+                  className="invalid-feedback"
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="phoneNumber">Número de celular</label>
+                <Field
+                  name="phoneNumber"
+                  id="phoneNumber"
+                  type="text"
+                  className={`form-control ${
+                    touched.name && errors.name ? "is-invalid" : ""
+                  }`}
+                />
+                <ErrorMessage
+                  name="phoneNumber"
+                  component="p"
+                  className="invalid-feedback"
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="password"> Contraseña</label>
+                <Field
+                  name="password"
+                  id="password"
+                  type="password"
+                  className={`form-control ${
+                    touched.name && errors.name ? "is-invalid" : ""
+                  }`}
+                />
+                <ErrorMessage
+                  name="password"
+                  component="p"
+                  className="invalid-feedback"
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="passwordConfirmation" className="form-label">
+                  Confirme la contraseña
+                </label>
+                <Field
+                  name="passwordConfirmation"
+                  id="passwordConfirmation"
+                  type="password"
+                  className={`form-control ${
+                    touched.name && errors.name ? "is-invalid" : ""
+                  }`}
+                />
+                <ErrorMessage
+                  name="passwordConfirmation"
+                  component="p"
+                  className="invalid-feedback"
+                />
+              </div>
+              <div className="mb-3 form-check">
+                <Field
+                  name="dataTreatment"
+                  id="dataTreatment"
+                  type="checkbox"
+                  className={`form-check-input ${
+                    touched.name && errors.name ? "is-invalid" : ""
+                  }`}
+                />
+                <label className="form-check-label" htmlFor="dataTreatment">
+                  Acepta el tratamiento de datos
+                </label>
+                <ErrorMessage
+                  name="dataTreatment"
+                  component="p"
+                  className="invalid-feedback"
+                />
+              </div>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                /*                 data-bs-target="#exampleModalToggle"
+                data-bs-toggle="modal" */
+                disabled={isSubmitting}
               >
-                <option> Selecciona una opción</option>
-                <option> Bogotá D.C</option>
-                <option> Cundinamarca</option>
-                <option> Medellin</option>
-                <option> Cali</option>
-              </Field>
-              <ErrorMessage name="residenceDepartment" component="p" />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="documentType">Tipo de documento</label>
-              <Field
-                name="documentType"
-                id="documentType"
-                as="select"
-                className="form-control"
-              >
-                <option> Selecciona una opción</option>
-                <option> Cédula de ciudadanía</option>
-                <option> Tarjeta de identidad</option>
-                <option> Número de pasaporte</option>
-                <option> Cédula de extranjería</option>
-              </Field>
-              <ErrorMessage name="documentType" component="p" />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="documentNumber"> Número de documento</label>
-              <Field
-                name="documentNumber"
-                id="documentNumber"
-                type="text"
-                className="form-control"
-              />
-              <ErrorMessage name="documentNumber" component="p" />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="email" className="form-label">
-                Correo electrónico
-              </label>
-              <Field
-                name="emailStudent"
-                id="email"
-                type="email"
-                className="form-control"
-                aria-describedby="emailHelp"
-              />
-              <ErrorMessage name="emailStudent" component="p" />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="gender" className="form-label">
-                Género
-              </label>
-              <Field
-                name="gender"
-                id="gender"
-                as="select"
-                className="form-control"
-              >
-                <option> Select an option</option>
-                <option> Masculino</option>
-                <option> Femenino</option>
-                <option> Otro</option>
-                <option> Prefiero no responder</option>
-              </Field>
-              <ErrorMessage
-                name="gender"
-                component="p"
-                className="container__message-error"
-              />
-            </div>
-            <div className="mb-3 form-check">
-              <input
-                type="checkbox"
-                className="form-check-input"
-                id="exampleCheck1"
-              />
-              <label className="form-check-label" htmlFor="exampleCheck1">
-                I accept the data processing
-              </label>
-            </div>
-            <button
-              type="submit"
-              className="btn btn-primary"
-              data-bs-target="#exampleModalToggle"
-              data-bs-toggle="modal"
-            >
-              Siguiente
-            </button>
-          </Form>
+                Siguiente
+              </button>
+            </Form>
+          )}
         </Formik>
       </div>
     </>

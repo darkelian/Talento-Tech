@@ -1,15 +1,17 @@
 import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
 import { firstForm } from "../schemas/studentFirstForm";
 import { useNavigate } from "react-router-dom";
+import { addInfo } from "../features/studentFormSlice";
 
 const Registrations = () => {
-
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { dataStudentForm1 } = useSelector((store) => store.infoStudentForm);
 
   const onSubmit = (values) => {
-    console.log("se envió el formulario");
-    //setModal(true);
+    dispatch(addInfo(values));
     navigate("/student/registration2");
   };
 
@@ -26,18 +28,11 @@ const Registrations = () => {
           </p>
         </h6>
         <Formik
-          initialValues={{
-            studentName: "",
-            surnameStudent: "",
-            documentType: "",
-            emailStudent: "",
-            documentNumber: "",
-            gender: "",
-          }}
+          initialValues={dataStudentForm1}
           onSubmit={onSubmit}
           validationSchema={firstForm}
         >
-          <Form autoComplete="off">
+          <Form>
             <div className="mb-3">
               <label htmlFor="nombres" className="form-label">
                 Nombres
@@ -98,7 +93,6 @@ const Registrations = () => {
                 id="email"
                 type="email"
                 className="form-control"
-                aria-describedby="emailHelp"
               />
               <ErrorMessage name="emailStudent" component="p" />
             </div>
@@ -125,10 +119,7 @@ const Registrations = () => {
               />
             </div>
 
-            <button
-              type="submit"
-              className="btn btn-primary"
-            >
+            <button type="submit" className="btn btn-primary">
               Siguiente
             </button>
           </Form>
