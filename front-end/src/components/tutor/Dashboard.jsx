@@ -1,7 +1,7 @@
-import { CalendarioEditable } from "./calendario";
-import { Perfil } from "./perfil";
-import { Programadas } from "./programadas";
-import { Solicitudes } from "./solicitudes";
+import { EditableCalendar } from "./Calendar";
+import { Profile } from "./Profile";
+import { Scheduled } from "./Scheduled";
+import { Request } from "./Request";
 
 export function Dashboard() {
     return (
@@ -13,17 +13,17 @@ export function Dashboard() {
             </div>
             <div className="row">
                 <div className="col">
-                    <Perfil />
+                    <Profile />
                 </div>
                 <div className="col">
-                    <Solicitudes />
+                    <Request />
                 </div>
             </div>
             <div className="row">
-                <CalendarioEditable />
+                <EditableCalendar />
             </div>
             <div className="">
-                <Programadas />
+                <Scheduled />
             </div>
         </>
 

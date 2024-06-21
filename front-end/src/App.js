@@ -1,12 +1,10 @@
-import { Route, Routes } from "react-router-dom";
-
-import "./App.css";
-import { Home } from "./components/shared/home";
-import { Tutor } from "./components/tutor/tutor";
-import { Student } from "./components/student/Student";
-import { Navbar } from "./components/shared/navbar";
-/* import { useEffect } from "react";
-import { useSelector } from "react-redux"; */
+import { Route, Routes } from 'react-router-dom';
+import './App.css';
+import { Home } from './components/shared/Home.jsx';
+import { Tutor } from './components/tutor/Tutor.jsx';
+import { Navbar } from './components/shared/Navbar.jsx';
+import Registrations from './components/student/Registrations';
+import Registrations2 from './components/student/Registrations2';
 
 function App() {
 

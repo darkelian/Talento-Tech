@@ -1,4 +1,4 @@
-export function Programadas() {
+export function Scheduled() {
     const solicitudes = [
         {
             nombre: 'Marcela Jimenez',
