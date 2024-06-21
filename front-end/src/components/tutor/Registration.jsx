@@ -1,9 +1,56 @@
-import { Form, Formik } from "formik";
+import { Form, Formik, Field, ErrorMessage } from "formik";
+import { useState, useCallback } from "react";
+
+const validate = (values) => {
+    const errors = {};
+    const namePattern = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
+    const emailPattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+
+    if (!values.name) {
+        errors.name = 'Ingresa el nombre';
+    } else if (!namePattern.test(values.name)) {
+        errors.name = 'El nombre ingresado es inválido';
+    }
+
+    if (!values.lastName) {
+        errors.lastName = 'Ingresa el apellido';
+    } else if (!namePattern.test(values.lastName)) {
+        errors.lastName = 'El apellido ingresado es inválido';
+    }
+
+    if (!values.email) {
+        errors.email = 'Ingresa el correo electrónico';
+    } else if (!emailPattern.test(values.email)) {
+        errors.email = 'El correo electrónico ingresado es inválido';
+    }
+
+    if (!values.password) {
+        errors.password = 'Ingresa la contraseña';
+    }
+
+    if (!values.passwordConfirm) {
+        errors.passwordConfirm = 'Ingresa la confirmación de la contraseña';
+    } else if (values.password !== values.passwordConfirm) {
+        errors.passwordConfirm = 'La confirmación de contraseña no coincide con la contraseña';
+    }
+
+    return errors;
+};
 
 export function Registration() {
+    const [formSended, setFormSended] = useState(false);
+
+    const handleSubmit = useCallback((values, { resetForm }) => {
+        resetForm();
+        setFormSended(true);
+        setTimeout(() => {
+            setFormSended(false);
+        }, 5000);
+    }, []);
 
     return (
         <>
+
             <Formik
 
                 initialValues={{
@@ -14,110 +61,66 @@ export function Registration() {
                     passwordConfirm: ''
                 }}
 
-                validate={(values) => {
-                    let errors = {}
-                    if (!values.name) {
-                        errors.name = 'Ingresa el nombre'
-                    } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.lastName)) {
-                        errors.name = 'El nombre ingresado es inválido'
-                    }
-                    if (!values.lastName) {
-                        errors.lastName = 'Ingresa el apellido'
-                    } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.lastName)) {
-                        errors.lastName = 'El apellido ingresado es inválido'
-                    }
-                    if (!values.email) {
-                        errors.email = 'Ingresa el correo electrónico'
-                    } else if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(values.email)) {
-                        errors.email = 'El correo electrónico ingresado es inválido'
-                    }
-                    if (!values.password) {
-                        errors.password = 'Ingresa la contraseña'
-                    }
-                    if (!values.passwordConfirm) {
-                        errors.passwordConfirm = 'Ingresa la confirmación de la contraseña'
-                    }
-                    if (values.password && values.passwordConfirm && values.password !== values.passwordConfirm) {
-                        errors.passwordConfirm = 'La confirmación de contraseña no coincide con la contraseña'
-                    }
-
-                    return errors;
-                }}
-
-                onSubmit={(values) => {
-
-                }}
+                validate={validate}
+                onSubmit={handleSubmit}
 
             >
-                {({ handleSubmit, values, handleChange, handleBlur, errors, touched }) => (
+                {({ errors, touched }) => (
                     <div className="container">
                         <h1 className="text-center"><p>Regístrate como profesor</p></h1>
                         <h6 className="text-center">
                             <p>Completa el formulario para unirte como tutor a nuestra plataforma educativa</p>
                         </h6>
-                        <Form onSubmit={handleSubmit}>
+                        <Form>
                             <div className="mb-3">
                                 <label htmlFor="name" className="form-label">Nombres</label>
-                                <input type="text"
+                                <Field type="text"
                                     className={`form-control ${touched.name && errors.name ? 'is-invalid' : ''}`}
                                     id="name"
                                     name="name"
-                                    value={values.name}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur} />
-                                {touched.name && errors.name && <div className='invalid-feedback'>{errors.name}</div>}
+                                    autoFocus />
+                                <ErrorMessage name="name" component={() => (<div className='invalid-feedback'>{errors.name}</div>)} />
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="lastName"
                                     className="form-label">Apellidos</label>
-                                <input type="text"
+                                <Field type="text"
                                     className={`form-control ${touched.lastName && errors.lastName ? 'is-invalid' : ''}`}
                                     id="lastName"
-                                    name="lastName"
-                                    value={values.lastName}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur} />
-                                {touched.lastName && errors.lastName && <div className='invalid-feedback'>{errors.lastName}</div>}
+                                    name="lastName" />
+                                <ErrorMessage name="lastName" component={() => (<div className='invalid-feedback'>{errors.lastName}</div>)} />
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="email" className="form-label">Correo electrónico</label>
-                                <input type="email"
+                                <Field type="email"
                                     className={`form-control ${touched.email && errors.email ? 'is-invalid' : ''}`}
                                     id="email"
                                     name="email"
-                                    value={values.email}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
                                     aria-describedby="emailHelp"
                                     autoComplete="email" />
-                                {touched.email && errors.email && <div className='invalid-feedback'>{errors.email}</div>}
+                                <ErrorMessage name="email" component={() => (<div className='invalid-feedback'>{errors.email}</div>)} />
                                 <div id="emailHelp" className="form-text">Nosotros no compartimos su información con nadie</div>
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="password" className="form-label">Contraseña</label>
-                                <input type="password"
+                                <Field type="password"
                                     className={`form-control ${touched.password && errors.password ? 'is-invalid' : ''}`}
                                     id="password"
                                     name="password"
-                                    value={values.password}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
                                     autoComplete="current-password" />
-                                {touched.password && errors.password && <div className='invalid-feedback'>{errors.password}</div>}
+                                <ErrorMessage name="password" component={() => (<div className='invalid-feedback'>{errors.password}</div>)} />
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="passwordConfirm" className="form-label">Confirmar contraseña</label>
-                                <input type="password"
+                                <Field type="password"
                                     className={`form-control ${touched.passwordConfirm && errors.passwordConfirm ? 'is-invalid' : ''}`}
                                     id="passwordConfirm"
                                     name="passwordConfirm"
-                                    value={values.passwordConfirm}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
                                     autoComplete="current-password" />
-                                {touched.passwordConfirm && errors.passwordConfirm && <div className='invalid-feedback'>{errors.passwordConfirm}</div>}
+                                <ErrorMessage name="passwordConfirm" component={() => (<div className='invalid-feedback'>{errors.passwordConfirm}</div>)} />
                             </div>
-                            <button type="submit" className="btn btn-primary">Enviar</button>
+                            <button type="submit" className="btn btn-dark">Enviar</button>
+                            {formSended && <div className="alert alert-success" role="alert">Información enviada satisfactoriamente</div>}
                         </Form>
                     </div>
                 )}
