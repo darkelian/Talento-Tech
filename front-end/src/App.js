@@ -3,8 +3,7 @@ import './App.css';
 import { Home } from './components/shared/Home.jsx';
 import { Tutor } from './components/tutor/Tutor.jsx';
 import { Navbar } from './components/shared/Navbar.jsx';
-import Registrations from './components/student/Registrations';
-import Registrations2 from './components/student/Registrations2';
+import { Student } from './components/student/Student.jsx';
 
 function App() {
 

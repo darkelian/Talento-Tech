@@ -49,11 +49,9 @@ const Registrations2 = () => {
     navigate("/");
   };
 
-  useEffect(() => {
+/*   useEffect(() => {
     (() => {
-
       const forms = document.querySelectorAll(".needs-validation");
-
 
       Array.from(forms).forEach((form) => {
         form.addEventListener(
@@ -70,8 +68,7 @@ const Registrations2 = () => {
         );
       });
     })();
-    
-  }, []);
+  }, []); */
 
   return (
     <>
@@ -145,7 +142,7 @@ const Registrations2 = () => {
                   id="age"
                   type="text"
                   className={`form-control ${
-                    touched.name && errors.name ? "is-invalid" : ""
+                    touched.age && errors.age ? "is-invalid" : ""
                   }`}
                   autoFocus
                 />
@@ -164,7 +161,9 @@ const Registrations2 = () => {
                   id="residenceDepartment"
                   as="select"
                   className={`form-control ${
-                    touched.name && errors.name ? "is-invalid" : ""
+                    touched.residenceDepartment && errors.residenceDepartment
+                      ? "is-invalid"
+                      : ""
                   }`}
                 >
                   <option> Selecciona una opción</option>
@@ -186,7 +185,9 @@ const Registrations2 = () => {
                   id="phoneNumber"
                   type="text"
                   className={`form-control ${
-                    touched.name && errors.name ? "is-invalid" : ""
+                    touched.phoneNumber && errors.phoneNumber
+                      ? "is-invalid"
+                      : ""
                   }`}
                 />
                 <ErrorMessage
@@ -202,7 +203,7 @@ const Registrations2 = () => {
                   id="password"
                   type="password"
                   className={`form-control ${
-                    touched.name && errors.name ? "is-invalid" : ""
+                    touched.password && errors.password ? "is-invalid" : ""
                   }`}
                 />
                 <ErrorMessage
@@ -220,7 +221,9 @@ const Registrations2 = () => {
                   id="passwordConfirmation"
                   type="password"
                   className={`form-control ${
-                    touched.name && errors.name ? "is-invalid" : ""
+                    touched.passwordConfirmation && errors.passwordConfirmation
+                      ? "is-invalid"
+                      : ""
                   }`}
                 />
                 <ErrorMessage
@@ -235,7 +238,9 @@ const Registrations2 = () => {
                   id="dataTreatment"
                   type="checkbox"
                   className={`form-check-input ${
-                    touched.name && errors.name ? "is-invalid" : ""
+                    touched.dataTreatment && errors.dataTreatment
+                      ? "is-invalid"
+                      : ""
                   }`}
                 />
                 <label className="form-check-label" htmlFor="dataTreatment">
