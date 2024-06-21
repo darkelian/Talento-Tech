@@ -2,10 +2,10 @@ import * as Yup from "yup";
 
 export const firstForm = Yup.object().shape({
   studentName: Yup.string()
-    .matches(/^([ a-zA-ZñÑáéíóúÁÉÍÓÚ]).{2,254}/, "only letters are allowed")
+    .matches(/^([ a-zA-ZñÑáéíóúÁÉÍÓÚ]).{2,254}/, "Solo se permiten letras")
     .required("Los nombres son requeridos"),
   surnameStudent: Yup.string()
-    .matches(/^([ a-zA-ZñÑáéíóúÁÉÍÓÚ]).{2,254}/, "only letters are allowed")
+    .matches(/^([ a-zA-ZñÑáéíóúÁÉÍÓÚ]).{2,254}/, "Solo se permiten letras")
     .required("Los apellidos son requeridos"),
   documentType: Yup.string()
     .oneOf(
@@ -17,16 +17,16 @@ export const firstForm = Yup.object().shape({
       ],
       "Debe seleccionar el tipo de documento"
     )
-    .required("Select a genre"),
+    .required("Debe seleccionar un tipo de documento"),
   documentNumber: Yup.string()
     .matches(/^([0-9]).{1,20}$/, "Ingrese un identificación válida")
     .required("El número de documento es requerido"),
   emailStudent: Yup.string()
     .matches(
       /[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,5}/,
-      "write a valid email"
+      "Ingrese un email válido"
     )
-    .required("Email is required"),
+    .required("El email es requerido"),
   gender: Yup.string()
     .oneOf(
       ["Masculino", "Femenino", "Otro", "Prefiero no responder"],

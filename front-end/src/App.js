@@ -3,18 +3,25 @@ import './App.css';
 import { Home } from './components/shared/Home.jsx';
 import { Tutor } from './components/tutor/Tutor.jsx';
 import { Navbar } from './components/shared/Navbar.jsx';
-import Registrations from './components/student/Registrations';
-import Registrations2 from './components/student/Registrations2';
+import { Student } from './components/student/Student.jsx';
 
 function App() {
+
+/*   const { notificationForm } = useSelector((store) => store.infoStudentForm);
+  const selector = useSelector((store) => store.infoStudentForm);
+  
+  useEffect(()=>{
+  const { dataForm } = selector;
+console.log(dataForm);
+},[notificationForm]); */
+
   return (
     <div className="container">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/tutor/*" element={<Tutor />} />
-        <Route path='/student/registration1' element={<Registrations />} />
-        <Route path='/student/registration2' element={<Registrations2 />} />
+        <Route path="/student/*" element={<Student />} />
       </Routes>
     </div>
   );
