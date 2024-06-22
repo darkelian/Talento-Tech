@@ -1,7 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const passport = require('./config/passport');
-const sequelize = require('./config/database'); // Importar sequelize
+const sequelize = require('./config/database');
 const app = express();
 const port = 3000;
 
@@ -31,17 +31,18 @@ app.get('/auth', passport.authenticate('oauth2'));
 app.get('/auth/callback',
   passport.authenticate('oauth2', { failureRedirect: '/' }),
   (req, res) => {
-    // Successful authentication, redirect home.
     res.redirect('/');
   });
 
 // Importar las rutas
-const users = require("./routes/userRoutes");
-const students = require("./routes/studentRoutes");
+//const users = require('./routes/userRoutes');
+const students = require('./routes/studentRoutes');
+const cities = require('./routes/cityRoutes'); // Asegúrate de que la ruta es correcta
 
 // Crear las rutas del navegador, las rutas del back inician con '/api'
-app.use('/api', users);
+//app.use('/api', users);
 app.use('/api', students);
+app.use('/api', cities);
 
 // Sincronizar la base de datos y luego iniciar el servidor
 sequelize.sync({ force: true }) // `force: true` recrea las tablas en cada reinicio (útil para desarrollo)
