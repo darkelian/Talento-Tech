@@ -7,14 +7,13 @@ const port = 3000;
 
 // Importar modelos
 const City = require('./models/cityModel');
-const Materia = require('./models/materiaModel');
 const Person = require('./models/personModel');
 const Reservation = require('./models/reservationModel');
 const ReservationType = require('./models/reservationTypeModel');
-const Rol = require('./models/rolModel');
 const Student = require('./models/studentModel');
 const Subject = require('./models/subjectModel');
 const Tutor = require('./models/tutorModel');
+const TutorSubject = require('./models/tutorSubjectModel');
 const User = require('./models/userModel');
 
 // Middleware
@@ -41,7 +40,7 @@ const users = require("./routes/userRoutes");
 const students = require("./routes/studentRoutes");
 
 // Crear las rutas del navegador, las rutas del back inician con '/api'
-app.use('/apis', users);
+app.use('/api', users);
 app.use('/api', students);
 
 // Sincronizar la base de datos y luego iniciar el servidor

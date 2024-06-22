@@ -32,7 +32,8 @@ const Person = sequelize.define('Person', {
             model: City,
             key: 'id'
         }
-    }
-});
+    }},
+    { tableName: 'People' }
+);
 
 module.exports = Person;

@@ -50,7 +50,8 @@ const Reservation = sequelize.define('Reservation', {
             model: ReservationType,
             key: 'id'
         }
-    }
-});
+    }},
+    { tableName: 'Reservations' }
+);
 
 module.exports = Reservation;
