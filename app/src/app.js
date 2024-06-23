@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const cors = require('cors');
 const passport = require('./config/passport');
 const sequelize = require('./config/database');
 const app = express();
@@ -24,6 +25,7 @@ app.use(express.static('public'));
 app.use(session({ secret: 'your-secret-key', resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cors());
 
 // Rutas de autenticación
 app.get('/auth', passport.authenticate('oauth2'));
