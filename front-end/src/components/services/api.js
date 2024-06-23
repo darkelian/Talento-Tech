@@ -1,4 +1,4 @@
-const urlAPI = 'http://localhost:3000/api/'
+const urlAPI = 'http://localhost:4000/api/'
 
 export const fetchDepartments = async () => {
     const response = await fetch(`${urlAPI}departments`);
