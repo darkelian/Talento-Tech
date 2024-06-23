@@ -35,12 +35,12 @@ app.get('/auth/callback',
   });
 
 // Importar las rutas
-//const users = require('./routes/userRoutes');
+const users = require('./routes/userRoutes');
 const students = require('./routes/studentRoutes');
 const cities = require('./routes/cityRoutes'); // Asegúrate de que la ruta es correcta
 
 // Crear las rutas del navegador, las rutas del back inician con '/api'
-//app.use('/api', users);
+app.use('/api', users);
 app.use('/api', students);
 app.use('/api', cities);
 
