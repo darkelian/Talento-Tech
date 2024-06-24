@@ -1,7 +1,7 @@
 const urlAPI = 'http://localhost:4000/api/'
 
 export const fetchDepartments = async () => {
-    const response = await fetch(`${urlAPI}departments`);
+    const response = await fetch(`${urlAPI}cities/departments`);
     if (!response.ok) {
         throw new Error('Error fetching departments');
     }
@@ -10,7 +10,7 @@ export const fetchDepartments = async () => {
 };
 
 export const fetchCities = async (department) => {
-    const response = await fetch(`${urlAPI}departments/cities?name=${department}`);
+    const response = await fetch(`${urlAPI}cities/departments/cities?name=${department}`);
     if (!response.ok) {
         throw new Error('Error fetching cities');
     }
