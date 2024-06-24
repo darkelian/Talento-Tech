@@ -1,3 +1,2 @@
-app/node_modules/cors/
-app/node_modules/object-assign/index.js
 app/node_modules/
+front-end/node_modules/
