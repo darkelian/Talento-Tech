@@ -4,7 +4,7 @@ const cors = require('cors');
 const passport = require('./config/passport');
 const sequelize = require('./config/database');
 const app = express();
-const port = 3000;
+const port = 4000;
 
 // Importar modelos
 const City = require('./models/cityModel');
@@ -42,9 +42,9 @@ const students = require('./routes/studentRoutes');
 const cities = require('./routes/cityRoutes'); // Asegúrate de que la ruta es correcta
 
 // Crear las rutas del navegador, las rutas del back inician con '/api'
-app.use('/api', users);
+app.use('/api/user', users);
 app.use('/api', students);
-app.use('/api', cities);
+app.use('/api/cities', cities);
 
 // Sincronizar la base de datos y luego iniciar el servidor
 sequelize.sync({ force: true }) // `force: true` recrea las tablas en cada reinicio (útil para desarrollo)
