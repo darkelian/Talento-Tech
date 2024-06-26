@@ -25,5 +25,8 @@ const TutorSubject = sequelize.define('TutorSubject', {
     }},
     { tableName: 'TutorSubjects' }
 );
+TutorSubject.belongsTo(Tutor, { foreignKey: 'tutorId', as: 'tutor' });
+
+TutorSubject.belongsTo(Subject, { foreignKey: 'subjectId', as: 'subject' });
 
 module.exports = TutorSubject;

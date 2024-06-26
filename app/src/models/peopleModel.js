@@ -5,7 +5,7 @@ const City = require('./cityModel');
 const GenderEnum = require('./genderEnum');
 const documentTypeEnum = require('./documentTypeEnum');
 
-const Person = sequelize.define('Person', {
+const People = sequelize.define('People', {
     id: {
         type: DataTypes.INTEGER, 
         primaryKey: true,
@@ -66,7 +66,17 @@ const Person = sequelize.define('Person', {
         }
     }
 }, {
-    tableName: 'persons'
+    tableName: 'People'
 });
 
-module.exports = Person;
+City.hasMany(People, { as: 'city_people', foreignKey: 'cityId' });
+People.belongsTo(City, {
+  foreignKey: "cityId",
+});
+
+User.hasMany(People, { as: 'user_people', foreignKey: 'userId' });
+People.belongsTo(User, {
+  foreignKey: "userId",
+});
+
+module.exports = People;

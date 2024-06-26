@@ -54,4 +54,20 @@ const Reservation = sequelize.define('Reservation', {
     { tableName: 'Reservations' }
 );
 
+Student.hasMany(Reservation, { as: 'student_reservation', foreignKey: 'studentId' });
+Reservation.belongsTo(Student, {
+  foreignKey: "studentId",
+});
+
+
+Tutor.hasMany(Reservation, { as: 'tutor_reservation', foreignKey: 'tutorId' });
+Reservation.belongsTo(Tutor, {
+  foreignKey: "tutorId",
+});
+
+ReservationType.hasMany(Reservation, { as: 'reservationType_reservation', foreignKey: 'reservationTypeId' });
+Reservation.belongsTo(ReservationType, {
+  foreignKey: "reservationTypeId",
+});
+
 module.exports = Reservation;
