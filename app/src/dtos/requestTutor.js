@@ -23,7 +23,7 @@ class RegisterTutorDTO {
         this.birthdate = data.birthdate;
         this.phone = data.phone;
         this.password = data.password;
-        this.profesion = data.profesion;
+        this.profession = data.profession;
     }
 };
 
