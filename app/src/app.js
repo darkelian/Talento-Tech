@@ -8,7 +8,7 @@ const port = 4000;
 
 // Importar modelos
 const City = require('./models/cityModel');
-const Person = require('./models/personModel');
+const Person = require('./models/peopleModel');
 const Reservation = require('./models/reservationModel');
 const ReservationType = require('./models/reservationTypeModel');
 const Student = require('./models/studentModel');

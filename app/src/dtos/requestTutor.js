@@ -1,5 +1,6 @@
 // DOTs: Patrón de Transferencia de datos. Describir cómo recibe datos y los expone en sus capas. 
 class RegisterTutorDTO {
+    id;
     names;
     lastNames;
     typeDocument;
@@ -9,9 +10,10 @@ class RegisterTutorDTO {
     birthdate;
     phone;
     password;
-    profesion;
+    profession;
 
     constructor(data){
+        this.id = data.id;
         this.names = data.names;
         this.lastNames = data.lastNames;
         this.typeDocument = data.typeDocument;
@@ -24,3 +26,5 @@ class RegisterTutorDTO {
         this.profesion = data.profesion;
     }
 };
+
+module.exports = RegisterTutorDTO;

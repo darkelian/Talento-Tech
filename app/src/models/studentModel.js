@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
-const Person = require('./personModel');
+const Person = require('./peopleModel');
 
 const Student = sequelize.define('Student', {
     id: {
@@ -17,5 +17,10 @@ const Student = sequelize.define('Student', {
     }},
     { tableName: 'Students' }
 );
+
+Person.hasMany(Student, { as: 'person_student', foreignKey: 'personId' });
+Student.belongsTo(Person, {
+  foreignKey: "personId",
+});
 
 module.exports = Student;

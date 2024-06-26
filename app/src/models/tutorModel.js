@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
-const Person = require('./personModel');
+const Person = require('./peopleModel');
 
 const Tutor = sequelize.define('Tutor', {
     id: {
@@ -8,7 +8,7 @@ const Tutor = sequelize.define('Tutor', {
         primaryKey: true,
         autoIncrement: true
     },
-    profesion: {
+    profession: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: false
@@ -22,5 +22,10 @@ const Tutor = sequelize.define('Tutor', {
     }},
     { tableName: 'Tutors' }
 );
+
+Person.hasMany(Tutor, { as: 'person_tutor', foreignKey: 'personId' });
+Tutor.belongsTo(Person, {
+  foreignKey: "personId",
+});
 
 module.exports = Tutor;
