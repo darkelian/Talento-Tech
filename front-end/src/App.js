@@ -7,23 +7,23 @@ import { Student } from './components/student/Student.jsx';
 
 function App() {
 
-/*   const { notificationForm } = useSelector((store) => store.infoStudentForm);
-  const selector = useSelector((store) => store.infoStudentForm);
-  
-  useEffect(()=>{
-  const { dataForm } = selector;
-console.log(dataForm);
-},[notificationForm]); */
-
   return (
-    <div className="container">
+/*     <div className="container">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/tutor/*" element={<Tutor />} />
         <Route path="/student/*" element={<Student />} />
       </Routes>
-    </div>
+    </div> */
+    <div>
+    <Navbar />
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/tutor/*" element={<Tutor />} />
+      <Route path="/student/*" element={<Student />} />
+    </Routes>
+  </div>
   );
 }
 

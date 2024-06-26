@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useSelector } from "react-redux";
 import { secondForm } from "../schemas/studentSecondForm";
@@ -49,26 +49,6 @@ const Registrations2 = () => {
     navigate("/");
   };
 
-/*   useEffect(() => {
-    (() => {
-      const forms = document.querySelectorAll(".needs-validation");
-
-      Array.from(forms).forEach((form) => {
-        form.addEventListener(
-          "submit",
-          (event) => {
-            if (!form.checkValidity()) {
-              event.preventDefault();
-              event.stopPropagation();
-            }
-
-            form.classList.add("was-validated");
-          },
-          false
-        );
-      });
-    })();
-  }, []); */
 
   return (
     <>
@@ -126,8 +106,8 @@ const Registrations2 = () => {
         <Formik
           initialValues={dataStudentForm2}
           onSubmit={(values, actions) => {
-            onSubmit(values);
             actions.setSubmitting(false);
+            onSubmit(values);
           }}
           validationSchema={secondForm}
         >

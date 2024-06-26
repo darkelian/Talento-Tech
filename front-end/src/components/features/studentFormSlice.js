@@ -18,6 +18,11 @@ const initialState = {
     passwordConfirmation: "",
     dataTreatment: false,
   },
+  contactForm: {
+    contactName: "",
+    contactEmail: "",
+    contactMessage: "",
+  },
   dataForm: {},
 };
 
