@@ -28,7 +28,8 @@ const Reservation = sequelize.define('Reservation', {
     cancelled: {
         type: DataTypes.TEXT('tiny'),
         allowNull: false,
-        unique: true
+        unique: true,
+        defaultValue: 'Active'
     },
     studentId : {
         type: DataTypes.INTEGER,

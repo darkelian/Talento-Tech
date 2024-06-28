@@ -29,18 +29,12 @@ exports.newStudent = async (req, res, next) => {
 };
 
 //Query all students
-exports.getStudents = async (req, res, next) => {
+exports.getAllStudents = async (req, res, next) => {
     try {
         const students = await Student.findAll({
             include: [Person]
         });
- /*           {
-            include: [{
-                model: Person,
-                as: 'person'
-            }]
-        });
-*/
+ 
         if (!students || students.length === 0) {
             return res.status(404).json({
                 success: false,
