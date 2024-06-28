@@ -2,6 +2,7 @@ import React from "react";
 import ServicesStudent from "./ServicesStudent";
 import SignaturesStudents from "./SignaturesStudents";
 import ContactStudent from "./ContactStudent";
+import { Link } from "react-router-dom";
 
 const HomeStudent = () => {
   return (
@@ -13,9 +14,11 @@ const HomeStudent = () => {
           ayudarte a alcanzar tus metas académicas. Reserva una cita con
           nuestros expertos profesores y mejora tus habilidades.
         </p>
+        <Link to="/student/booktutoring" >
         <button type="button" className="btn btn-dark my-4">
           Reservar cita
         </button>
+        </Link>
       </div>
       <ServicesStudent />
       <SignaturesStudents />

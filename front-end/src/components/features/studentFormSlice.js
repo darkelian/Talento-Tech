@@ -23,6 +23,14 @@ const initialState = {
     contactEmail: "",
     contactMessage: "",
   },
+
+  bookTutoring: {
+    reserveName: "",
+    reserveEmail: "",
+    reserveDate: "",
+    reserveHour: "",
+    reserveSubject: "",
+  },
   dataForm: {},
 };
 
