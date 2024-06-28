@@ -12,3 +12,5 @@ class RegisterReservationDTO {
         this.cancelled = data.cancelled;
     }
 };
+
+module.exports = RegisterReservationDTO;

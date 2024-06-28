@@ -8,7 +8,7 @@ const port = 4000;
 
 // Importar modelos
 const City = require('./models/cityModel');
-const Person = require('./models/personModel');
+const Person = require('./models/peopleModel');
 const Reservation = require('./models/reservationModel');
 const ReservationType = require('./models/reservationTypeModel');
 const Student = require('./models/studentModel');
@@ -39,11 +39,13 @@ app.get('/auth/callback',
 // Importar las rutas
 const users = require('./routes/userRoutes');
 const students = require('./routes/studentRoutes');
+const tutors = require('./routes/tutorRoutes');
 const cities = require('./routes/cityRoutes'); // Asegúrate de que la ruta es correcta
 
 // Crear las rutas del navegador, las rutas del back inician con '/api'
 app.use('/api/user', users);
 app.use('/api', students);
+app.use('/api/', tutors);
 app.use('/api/cities', cities);
 
 // Sincronizar la base de datos y luego iniciar el servidor

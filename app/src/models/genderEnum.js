@@ -1,9 +1,9 @@
 // genderEnum.js
 const GenderEnum = Object.freeze({
-    MALE: 'Masculino',
-    FEMALE: 'Feminino',
-    OTHER: 'otro',
-    UNSPECIFIED: 'Prefiero no responder'
+    MALE: 'M',
+    FEMALE: 'F',
+    OTHER: 'O',
+    UNSPECIFIED: 'NR'
   });
   
   module.exports = GenderEnum;
