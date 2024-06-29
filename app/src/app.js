@@ -40,6 +40,7 @@ app.get('/auth/callback',
 const users = require('./routes/userRoutes');
 const students = require('./routes/studentRoutes');
 const tutors = require('./routes/tutorRoutes');
+const tutorSubjects = require('./routes/tutorSubjectRoutes');
 const reservations = require('./routes/reservationRoutes');
 const cities = require('./routes/cityRoutes'); 
 
@@ -47,6 +48,7 @@ const cities = require('./routes/cityRoutes');
 app.use('/api/user', users);
 app.use('/api', students);
 app.use('/api/', tutors);
+app.use('/api/', tutorSubjects);
 app.use('/api/', reservations);
 app.use('/api/cities', cities);
 
