@@ -18,18 +18,45 @@ export const fetchCities = async (department) => {
     return data.sort((a, b) => a.name.localeCompare(b.name));    //devuelve las ciudades ordenadas alfabéticamente
 };
 
+export const fetchGender = async () => {
+    const response = await fetch(`${urlAPI}generic/gender`);
+    if (!response.ok) {
+        throw new Error('Error fetching gender');
+    }
+    const data = await response.json();
+    const dataArray = Object.entries(data).map(([key, value]) => ({
+        id: key,
+        name: value
+    }));
+    return dataArray;   //devuelve los generos
+};
+
+export const fetchDocumentType = async () => {
+    const response = await fetch(`${urlAPI}generic/documentType`);
+    if (!response.ok) {
+        throw new Error('Error fetching document type');
+    }
+
+    const data = await response.json();
+    const dataArray = Object.entries(data).map(([key, value]) => ({
+        id: key,
+        name: value
+    }));
+    return dataArray;    //devuelve los tipos de documento
+};
+
 export const setTutorInfo = async (values) => {
+    const valuesToInsert = JSON.stringify(values);
 
     const response = await fetch(`${urlAPI}tutor/new`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(values)
+        body: valuesToInsert
     });
     if (!response.ok) {
-        console.log(response)
-        throw new Error('Error al enviar la información del tutor');
+        throw new Error(`Error al enviar la información del tutor`);
     }
     return response.json();
 };

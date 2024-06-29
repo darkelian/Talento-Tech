@@ -11,13 +11,16 @@ export function Registration() {
                 names: '',
                 lastNames: '',
                 typeDocument: '',
+                birthdate: '',
+                gender: '',
                 numberDocument: '',
                 phone: '',
                 department: '',
-                city: '',
+                cityId: '',
                 email: '',
                 password: '',
-                passwordConfirm: ''
+                passwordConfirm: '',
+                profession: ''
             }}
             validate={props.validate}
             onSubmit={props.handleSubmit}
@@ -51,18 +54,50 @@ export function Registration() {
                             <ErrorMessage name="lastNames" component={() => (<div className='invalid-feedback'>{errors.lastNames}</div>)} />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="documentType" className="form-label">Tipo de documento</label>
+                            <label htmlFor="birthdate" className="form-label">Fecha de nacimiento</label>
                             <Field
-                                name="documentType"
-                                id="documentType"
+                                type="date"
+                                className={`form-control ${touched.birthdate && errors.birthdate ? 'is-invalid' : ''}`}
+                                id="birthdate"
+                                name="birthdate"
+                            />
+                            <ErrorMessage name="birthdate" component={() => (<div className='invalid-feedback'>{errors.birthdate}</div>)} />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="gender" className="form-label">Género</label>
+                            <Field
+                                name="gender"
+                                id="gender"
+                                as="select"
+                                className={`form-control ${touched.gender && errors.gender ? "is-invalid" : ""}`}
+                            >
+                                <option value="">Selecciona un género</option>
+                                {
+                                    props.genders.map(gen => (
+                                        <option
+                                            key={gen.id}
+                                            value={gen.id}
+                                        >{gen.name}</option>
+                                    ))
+                                }
+                            </Field>
+                            <ErrorMessage name="gender" component={() => (<div className='invalid-feedback'>{errors.gender}</div>)} />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="typeDocument" className="form-label">Tipo de documento</label>
+                            <Field
+                                name="typeDocument"
+                                id="typeDocument"
                                 as="select"
                                 className={`form-control ${touched.typeDocument && errors.typeDocument ? "is-invalid" : ""}`}
                             >
-                                <option value=''> Selecciona una opción</option>
-                                <option value='1'> Cédula de ciudadanía</option>
-                                <option value='2'> Tarjeta de identidad</option>
-                                <option value='3'> Número de pasaporte</option>
-                                <option value='4'> Cédula de extranjería</option>
+                                <option value="">Selecciona un tipo de documento</option>
+                                {props.typeDocuments.map(docType => (
+                                    <option
+                                        key={docType.id}
+                                        value={docType.id}
+                                    >{docType.name}</option>
+                                ))}
                             </Field>
                             <ErrorMessage name="typeDocument" component={() => (<div className='invalid-feedback'>{errors.typeDocument}</div>)} />
                         </div>
@@ -102,12 +137,12 @@ export function Registration() {
                             <ErrorMessage id="departmentHelp" component={() => (<div className='invalid-feedback'>{errors.department}</div>)} />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="city" className="form-label">Ciudad</label>
+                            <label htmlFor="cityId" className="form-label">Ciudad</label>
                             <Field
-                                name="city"
-                                id="city"
+                                name="cityId"
+                                id="cityId"
                                 as="select"
-                                className={`form-control ${touched.city && errors.city ? "is-invalid" : ""}`}
+                                className={`form-control ${touched.cityId && errors.cityId ? "is-invalid" : ""}`}
                                 disabled={!props.selectedDepartment}
                             >
                                 <option value="">Selecciona una ciudad</option>
@@ -115,7 +150,7 @@ export function Registration() {
                                     <option key={city.id} value={city.id}>{city.name}</option>
                                 ))}
                             </Field>
-                            <ErrorMessage id="cityHelp" component={() => (<div className='invalid-feedback'>{errors.city}</div>)} />
+                            <ErrorMessage id="cityIdHelp" component={() => (<div className='invalid-feedback'>{errors.cityId}</div>)} />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="phone" className="form-label">No. de celular</label>
@@ -177,6 +212,7 @@ export function Registration() {
                         </div>
                         <button type="submit" className="btn btn-dark">Enviar</button>
                         {props.formSended && <div className="alert alert-success" role="alert">Información enviada satisfactoriamente</div>}
+                        {props.formSendedError && <div className="alert alert-danger" role="alert">Hubo errores al enviar la información del tutor</div>}
                     </Form>
                 </div>
             )
