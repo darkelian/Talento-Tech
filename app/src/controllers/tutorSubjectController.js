@@ -85,7 +85,7 @@ exports.getTutorSubjectByTutorId = async (req, res, next) => {
 exports.deleteTutorSubject = async (req, res, next) => {
     const tutorSubjectId = req.params.id;
     
-    const tutorSubject = await Student.findByPk(tutorSubjectId)
+    const tutorSubject = await Tutor.findByPk(tutorSubjectId)
 
     if (!tutorSubject) {
         return next(`TutorSubject not found in DB with Id: ${tutorSubjectId}`, 404);
