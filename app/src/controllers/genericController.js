@@ -4,10 +4,7 @@ const GenderEnum = require("../models/genderEnum");
 //Query all reservations
 exports.getDocumentType = async (req, res, next) => {
     try {
-        res.status(200).json({
-            success: true,
-            DocumentTypeEnum
-        });
+        res.status(200).json(DocumentTypeEnum);
     } catch (error) {
         return res.status(500).json({
             success: false,
@@ -19,10 +16,7 @@ exports.getDocumentType = async (req, res, next) => {
 //Query all reservations
 exports.getGender = async (req, res, next) => {
     try {
-        res.status(200).json({
-            success: true,
-            GenderEnum
-        });
+        res.status(200).json(GenderEnum);
     } catch (error) {
         return res.status(500).json({
             success: false,
