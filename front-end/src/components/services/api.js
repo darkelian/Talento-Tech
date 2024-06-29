@@ -19,7 +19,8 @@ export const fetchCities = async (department) => {
 };
 
 export const setTutorInfo = async (values) => {
-    const response = await fetch(`${urlAPI}tutor`, {
+
+    const response = await fetch(`${urlAPI}tutor/new`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -27,6 +28,7 @@ export const setTutorInfo = async (values) => {
         body: JSON.stringify(values)
     });
     if (!response.ok) {
+        console.log(response)
         throw new Error('Error al enviar la información del tutor');
     }
     return response.json();

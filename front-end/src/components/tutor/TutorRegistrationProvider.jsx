@@ -8,24 +8,24 @@ const validate = (values) => {
     const namePattern = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
     const emailPattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 
-    if (!values.name) {
-        errors.name = 'Ingresa el nombre';
-    } else if (!namePattern.test(values.name)) {
-        errors.name = 'El nombre ingresado es inválido';
+    if (!values.names) {
+        errors.names = 'Ingresa el nombre';
+    } else if (!namePattern.test(values.names)) {
+        errors.names = 'El nombre ingresado es inválido';
     }
 
-    if (!values.lastName) {
-        errors.lastName = 'Ingresa el apellido';
-    } else if (!namePattern.test(values.lastName)) {
-        errors.lastName = 'El apellido ingresado es inválido';
+    if (!values.lastNames) {
+        errors.lastNames = 'Ingresa el apellido';
+    } else if (!namePattern.test(values.lastNames)) {
+        errors.lastNames = 'El apellido ingresado es inválido';
     }
 
-    if (values.documentType === '') {
-        errors.documentType = 'Selecciona el tipo de documento';
+    if (values.typeDocument) {
+        errors.typeDocument = 'Selecciona el tipo de documento';
     }
 
-    if (!values.documentNumber) {
-        errors.documentNumber = 'Ingresa el número de documento';
+    if (!values.numberDocument) {
+        errors.numberDocument = 'Ingresa el número de documento';
     }
 
     if (!values.department) {
@@ -36,8 +36,12 @@ const validate = (values) => {
         errors.city = 'Selecciona la ciudad';
     }
 
-    if (!values.telephoneNumber) {
-        errors.telephoneNumber = 'Ingresa el número de teléfono o celular';
+    if (!values.profession) {
+        errors.profession = 'Ingresa tu profesión';
+    }
+
+    if (!values.phone) {
+        errors.phone = 'Ingresa el número de teléfono o celular';
     }
 
     if (!values.email) {
