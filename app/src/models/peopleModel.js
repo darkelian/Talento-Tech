@@ -60,20 +60,21 @@ const People = sequelize.define('People', {
     },
     cityId: {
         type: DataTypes.INTEGER,
-        references: {
+        allowNull: false
+        /*references: {
             model: City,
             key: 'id'
-        }
+        }*/
     }
 }, {
     tableName: 'People'
 });
-
+/*
 City.hasMany(People, { as: 'city_people', foreignKey: 'cityId' });
 People.belongsTo(City, {
     foreignKey: "cityId",
 });
-
+*/
 User.hasMany(People, { as: 'user_people', foreignKey: 'userId' });
 People.belongsTo(User, {
     foreignKey: "userId",
