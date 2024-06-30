@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useSelector } from "react-redux";
 import { secondForm } from "../schemas/studentSecondForm";
 import { useNavigate } from "react-router-dom";
 
 const Registrations2 = () => {
+  const [formSended, setFormSended] = useState(false);
+
   const navigate = useNavigate();
 
   const { dataStudentForm2 } = useSelector((store) => store.infoStudentForm);
@@ -20,6 +22,7 @@ const Registrations2 = () => {
   } = useSelector((store) => store.infoStudentForm);
 
   const onSubmit = (values) => {
+    setFormSended(true);
     const {
       age,
       residenceDepartment,
@@ -43,57 +46,16 @@ const Registrations2 = () => {
       dataTreatment,
     };
     console.log(sendData);
-  };
 
-  const sendInfo = () => {
-    navigate("/");
+    setTimeout(()=>{
+      navigate("/");
+    },3000)
   };
 
 
   return (
     <>
-      {/* Modal starts*/}
-      <div className="modal-dialog modal-dialog-centered">
-        <div
-          className="modal fade"
-          id="exampleModalToggle"
-          aria-hidden="true"
-          aria-labelledby="exampleModalToggleLabel"
-          tabIndex="-1"
-        >
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h1 className="modal-title fs-5" id="exampleModalToggleLabel">
-                  ¡Registro exitoso!
-                </h1>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div className="modal-body">
-                La información ha sido enviada de manera exitosa.
-              </div>
-              <div className="modal-footer">
-                <button
-                  className="btn btn-primary"
-                  data-bs-target="#exampleModalToggle"
-                  data-bs-toggle="modal"
-                  onClick={() => sendInfo()}
-                >
-                  Continuar
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* Modal ends */}
-
-      <div className="container">
+      <div className="container height-container">
         <h1 className="text-center">
           <p>Continúa con el registro</p>
         </h1>
@@ -235,12 +197,15 @@ const Registrations2 = () => {
               <button
                 type="submit"
                 className="btn btn-primary"
-                /*                 data-bs-target="#exampleModalToggle"
-                data-bs-toggle="modal" */
                 disabled={isSubmitting}
               >
                 Siguiente
               </button>
+              {formSended && (
+                <div className="alert alert-success" role="alert">
+                  Información enviada satisfactoriamente
+                </div>
+              )}
             </Form>
           )}
         </Formik>

@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 const BookInfo = () => {
   return (
@@ -14,7 +13,12 @@ const BookInfo = () => {
             alcanzar tus metas académicas.
           </p>
           <div className="d-grid gap-2 d-md-block">
-            <button className="btn btn-dark" onClick={() => (window.location.href = "#bookReserve")}>Reservar tutoria</button>
+            <button
+              className="btn btn-dark"
+              onClick={() => (window.location.href = "#bookReserve")}
+            >
+              Reservar tutoria
+            </button>
           </div>
         </div>
         <figure className="col position-relative">
