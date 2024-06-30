@@ -17,7 +17,7 @@ const Registrations = () => {
 
   return (
     <>
-      <div className="container">
+      <div className="container height-container">
         <h1 className="text-center">
           <p>Regístrate como estudiante</p>
         </h1>

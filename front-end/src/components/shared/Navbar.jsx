@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export function Navbar() {
   return (
-    <div className="container-fluid">
+    <div className="container-fluid" style={{ padding: 0 }}>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
           <button
