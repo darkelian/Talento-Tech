@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import StatusEnum from "../models/status.model";
 import { fetchRequestsByTutorIdAndStatus, setRequestStatus } from "../services/api";
 
-export function Request() {
+export function Request({ onAcceptRequest }) {
     const user = useSelector((state) => state.user.user);
     const [requests, setRequests] = useState([]);
     const [selectedRequest, setSelectedRequest] = useState(null);
@@ -42,6 +42,7 @@ export function Request() {
 
         try {
             await setRequestStatus(selectedRequest, status);
+            onAcceptRequest();
         } catch (error) {
             console.error("Error updating request status:", error);
         }

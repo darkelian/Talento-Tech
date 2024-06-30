@@ -7,6 +7,11 @@ export function Dashboard() {
   const [updateScheduled, setUpdateScheduled] = useState(false);
 
 
+  const handleRequestAccepted = () => {
+    // Activar la actualización de Scheduled
+    setUpdateScheduled(true);
+  };
+
   return (
     <div className="container">
       <div className="row">
@@ -21,11 +26,11 @@ export function Dashboard() {
           <Profile />
         </div>
         <div className="col">
-          <Request />
+          <Request onAcceptRequest={handleRequestAccepted} />
         </div>
       </div>
       <div className="">
-        <Scheduled />
+        <Scheduled shouldUpdate={updateScheduled} />
       </div>
     </div>
   );

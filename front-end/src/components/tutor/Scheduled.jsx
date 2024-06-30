@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { fetchRequestsByTutorIdAndStatus, setRequestStatus } from "../services/api";
 import StatusEnum from "../models/status.model";
 
-export function Scheduled() {
+export function Scheduled({ shouldUpdate }) {
     const user = useSelector((state) => state.user.user);
     const [requests, setRequests] = useState([]);
     const [selectedRequest, setSelectedRequest] = useState(null);
@@ -19,7 +19,7 @@ export function Scheduled() {
 
     useEffect(() => {
         loadRequests();
-    }, [user.id]);
+    }, [user.id, shouldUpdate]);
 
     const handleActionClick = (request) => {
         setSelectedRequest(request);
