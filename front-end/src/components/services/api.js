@@ -18,16 +18,65 @@ export const fetchCities = async (department) => {
     return data.sort((a, b) => a.name.localeCompare(b.name));    //devuelve las ciudades ordenadas alfabéticamente
 };
 
+export const fetchGender = async () => {
+    const response = await fetch(`${urlAPI}generic/gender`);
+    if (!response.ok) {
+        throw new Error('Error fetching gender');
+    }
+    const data = await response.json();
+    const dataArray = Object.entries(data).map(([key, value]) => ({
+        id: key,
+        name: value
+    }));
+    return dataArray;   //devuelve los generos
+};
+
+export const fetchDocumentType = async () => {
+    const response = await fetch(`${urlAPI}generic/documentType`);
+    if (!response.ok) {
+        throw new Error('Error fetching document type');
+    }
+
+    const data = await response.json();
+    const dataArray = Object.entries(data).map(([key, value]) => ({
+        id: key,
+        name: value
+    }));
+    return dataArray;    //devuelve los tipos de documento
+};
+
+export const fetchTutorInfo = async (userId) => {
+    const response = await fetch(`${urlAPI}tutor/${userId}`);
+    if (!response.ok) {
+        throw new Error('Error fetching document type');
+    }
+
+    const data = await response.json();
+    return data.tutor;    //devuelve los datos del tutor
+};
+
+export const fetchRequestsByTutorId = async (tutorId) => {
+    const response = await fetch(`${urlAPI}reservations/tutor/${tutorId}`);
+    if (!response.ok) {
+        throw new Error('Error fetching document type');
+    }
+
+    const data = await response.json();
+    return data.reservations;    //devuelve los datos del tutor
+};
+
 export const setTutorInfo = async (values) => {
-    const response = await fetch(`${urlAPI}tutor`, {
+    const valuesToInsert = JSON.stringify(values);
+
+    const response = await fetch(`${urlAPI}tutor/new`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(values)
+        body: valuesToInsert
     });
     if (!response.ok) {
-        throw new Error('Error al enviar la información del tutor');
+        throw new Error(`Error al enviar la información del tutor`);
     }
     return response.json();
 };

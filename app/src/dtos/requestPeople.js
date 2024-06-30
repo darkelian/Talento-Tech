@@ -11,6 +11,7 @@ class RegisterPeopleDTO {
     birthdate;
     phone;
     password;
+    cityId;
 
     constructor(data){
         this.id = data.id;
@@ -23,6 +24,7 @@ class RegisterPeopleDTO {
         this.birthdate = data.birthdate;
         this.phone = data.phone;
         this.password = data.password;
+        this.cityId = data.cityId;
     }
 };
 

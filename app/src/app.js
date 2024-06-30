@@ -40,13 +40,19 @@ app.get('/auth/callback',
 const users = require('./routes/userRoutes');
 const students = require('./routes/studentRoutes');
 const tutors = require('./routes/tutorRoutes');
-const cities = require('./routes/cityRoutes'); // Asegúrate de que la ruta es correcta
+const tutorSubjects = require('./routes/tutorSubjectRoutes');
+const reservations = require('./routes/reservationRoutes');
+const cities = require('./routes/cityRoutes');
+const generic = require('./routes/genericRoutes');
 
 // Crear las rutas del navegador, las rutas del back inician con '/api'
 app.use('/api/user', users);
 app.use('/api', students);
 app.use('/api/', tutors);
+app.use('/api/', tutorSubjects);
+app.use('/api/', reservations);
 app.use('/api/cities', cities);
+app.use('/api/generic', generic);
 
 // Sincronizar la base de datos y luego iniciar el servidor
 sequelize.sync({ force: true }) // `force: true` recrea las tablas en cada reinicio (útil para desarrollo)

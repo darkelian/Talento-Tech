@@ -6,10 +6,10 @@ const ReservationType = require('./reservationTypeModel');
 
 const Reservation = sequelize.define('Reservation', {
     id: {
-        type: DataTypes.INTEGER, 
+        type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
-      },
+    },
     date: {
         type: DataTypes.DATEONLY,
         allowNull: false,
@@ -28,46 +28,48 @@ const Reservation = sequelize.define('Reservation', {
     cancelled: {
         type: DataTypes.TEXT('tiny'),
         allowNull: false,
-        unique: true
+        unique: false,
+        defaultValue: 'Active'
     },
-    studentId : {
+    studentId: {
         type: DataTypes.INTEGER,
         references: {
             model: Student,
             key: 'id'
         }
     },
-    tutorId : {
+    tutorId: {
         type: DataTypes.INTEGER,
         references: {
             model: Tutor,
             key: 'id'
         }
     },
-    reservationTypeId : {
+    reservationTypeId: {
         type: DataTypes.INTEGER,
         references: {
             model: ReservationType,
             key: 'id'
         }
-    }},
+    }
+},
     { tableName: 'Reservations' }
 );
 
 Student.hasMany(Reservation, { as: 'student_reservation', foreignKey: 'studentId' });
 Reservation.belongsTo(Student, {
-  foreignKey: "studentId",
+    foreignKey: "studentId",
 });
 
 
 Tutor.hasMany(Reservation, { as: 'tutor_reservation', foreignKey: 'tutorId' });
 Reservation.belongsTo(Tutor, {
-  foreignKey: "tutorId",
+    foreignKey: "tutorId",
 });
 
 ReservationType.hasMany(Reservation, { as: 'reservationType_reservation', foreignKey: 'reservationTypeId' });
 Reservation.belongsTo(ReservationType, {
-  foreignKey: "reservationTypeId",
+    foreignKey: "reservationTypeId",
 });
 
 module.exports = Reservation;
