@@ -3,10 +3,11 @@ const Tutor = require("../models/tutorModel");
 const Reservation = require("../models/reservationModel");
 const ReservationType = require("../models/reservationTypeModel");
 const RegisterReservationDTO = require("../dtos/requestReservation");
+const People = require("../models/peopleModel");
 
 //Create a Reservation
 exports.newReservation = async (req, res, next) => {
-    
+
     try {
         const reservationDTO = new RegisterReservationDTO(req.body);
 
@@ -29,7 +30,7 @@ exports.newReservation = async (req, res, next) => {
 exports.getAllReservations = async (req, res, next) => {
     try {
         const reservations = await Reservation.findAll()
- 
+
         if (!reservations || reservations.length === 0) {
             return res.status(404).json({
                 success: false,
@@ -81,8 +82,14 @@ exports.getReservationsByTutorId = async (req, res, next) => {
 
     try {
         const reservations = await Reservation.findAll({
-            where: {tutorId: tutorId},
-            include: [ ReservationType, Student ]
+            where: { tutorId: tutorId },
+            include: [
+                { model: ReservationType },
+                {
+                    model: Student,
+                    include: [{ model: People }] // Incluye la tabla People asociada al modelo Student
+                }
+            ]
         });
 
         if (!reservations) {
@@ -110,8 +117,8 @@ exports.getReservationsByStudentId = async (req, res, next) => {
 
     try {
         const reservations = await Reservation.findAll({
-            where: {studentId: studentId},
-            include: [ ReservationType, Tutor ]
+            where: { studentId: studentId },
+            include: [ReservationType, Tutor]
         });
 
         if (!reservations) {
@@ -143,9 +150,9 @@ exports.updateReservation = async (req, res, next) => {
     }
 
     try {
-        
+
         await reservation.update(req.body)
-        
+
         res.status(200).json({
             success: true,
             message: "Reservation update in DB.",
@@ -162,7 +169,7 @@ exports.updateReservation = async (req, res, next) => {
 //Delete a Reservation
 exports.deleteReservation = async (req, res, next) => {
     const id = req.params.id;
-    
+
     const reservation = await Reservation.findByPk(id)
 
     if (!reservation) {
