@@ -21,9 +21,6 @@ export function Dashboard() {
           <Request />
         </div>
       </div>
-      <div className="row">
-        <EditableCalendar />
-      </div>
       <div className="">
         <Scheduled />
       </div>

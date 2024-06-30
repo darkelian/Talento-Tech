@@ -45,6 +45,26 @@ export const fetchDocumentType = async () => {
     return dataArray;    //devuelve los tipos de documento
 };
 
+export const fetchTutorInfo = async (userId) => {
+    const response = await fetch(`${urlAPI}tutor/${userId}`);
+    if (!response.ok) {
+        throw new Error('Error fetching document type');
+    }
+
+    const data = await response.json();
+    return data.tutor;    //devuelve los datos del tutor
+};
+
+export const fetchRequestsByTutorId = async (tutorId) => {
+    const response = await fetch(`${urlAPI}reservations/tutor/${tutorId}`);
+    if (!response.ok) {
+        throw new Error('Error fetching document type');
+    }
+
+    const data = await response.json();
+    return data.reservations;    //devuelve los datos del tutor
+};
+
 export const setTutorInfo = async (values) => {
     const valuesToInsert = JSON.stringify(values);
 

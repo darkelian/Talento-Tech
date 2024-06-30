@@ -177,9 +177,10 @@ export function Registration() {
                             <ErrorMessage name="email" component={() => (<div className='invalid-feedback'>{errors.email}</div>)} />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="profession" className="form-label">Profesión</label>
+                            <label htmlFor="profession" className="form-label">Cuéntanos sobre ti</label>
                             <Field
-                                type="text"
+                                as="textarea"  // Usa 'as="textarea"' en lugar de 'type="text"'
+                                rows={5}       // Define el número de filas para hacer el textarea más grande
                                 className={`form-control ${touched.profession && errors.profession ? 'is-invalid' : ''}`}
                                 id="profession"
                                 name="profession"
