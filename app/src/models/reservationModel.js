@@ -4,6 +4,7 @@ const Student = require('./studentModel');
 const Tutor = require('./tutorModel');
 const ReservationType = require('./reservationTypeModel');
 const StatusEnum = require('./statusEnum');
+const StatusEnum = require('./statusEnum');
 
 const Reservation = sequelize.define('Reservation', {
     id: {
@@ -27,7 +28,7 @@ const Reservation = sequelize.define('Reservation', {
         unique: false
     },
     status: {
-        type: DataTypes.TEXT('tiny'),
+        type: DataTypes.STRING,
         values: Object.keys(StatusEnum),
         allowNull: false,
         unique: false,
