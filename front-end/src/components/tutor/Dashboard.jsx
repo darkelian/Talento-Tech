@@ -1,9 +1,12 @@
-import { EditableCalendar } from "./Calendar";
 import { Profile } from "./Profile";
 import { Scheduled } from "./Scheduled";
 import { Request } from "./Request";
+import { useState } from "react";
 
 export function Dashboard() {
+  const [updateScheduled, setUpdateScheduled] = useState(false);
+
+
   return (
     <div className="container">
       <div className="row">

@@ -1,5 +1,12 @@
-
-ALTER TABLE public."Reservations" DROP CONSTRAINT "Reservations_cancelled_key";
+INSERT INTO public."ReservationTypes"
+(id, description)
+VALUES(nextval('"ReservationTypes_id_seq"'::regclass), 'Presencial');
+INSERT INTO public."ReservationTypes"
+(id, description)
+VALUES(nextval('"ReservationTypes_id_seq"'::regclass), 'Virtual');
+INSERT INTO public."ReservationTypes"
+(id, description)
+VALUES(nextval('"ReservationTypes_id_seq"'::regclass), 'Mixta');
 
 INSERT INTO public."People"
 (id, names, "lastNames", "typeDocument", "numberDocument", email, gender, birthdate, phone, "password", "userId", "cityId")
@@ -25,23 +32,13 @@ INSERT INTO public."Students"
 (id, "personId")
 VALUES(nextval('"Students_id_seq"'::regclass), 3);
 
-INSERT INTO public."ReservationTypes"
-(id, description)
-VALUES(nextval('"ReservationTypes_id_seq"'::regclass), 'Presencial');
-INSERT INTO public."ReservationTypes"
-(id, description)
-VALUES(nextval('"ReservationTypes_id_seq"'::regclass), 'Virtual');
-INSERT INTO public."ReservationTypes"
-(id, description)
-VALUES(nextval('"ReservationTypes_id_seq"'::regclass), 'Mixta');
-
 INSERT INTO public."Reservations"
-(id, "date", date_start, date_end, cancelled, "studentId", "tutorId", "reservationTypeId")
-VALUES(nextval('"Reservations_id_seq"'::regclass), '2024-07-07', '2024-07-10', '2024-07-15', 'Active'::text, 1, 1, 2);
+(id, "date", date_start, date_end, status, "studentId", "tutorId", "reservationTypeId")
+VALUES(nextval('"Reservations_id_seq"'::regclass), '2024-07-07', '2024-07-10', '2024-07-15', 'C'::text, 1, 1, 2);
 
 
 INSERT INTO public."Reservations"
-(id, "date", date_start, date_end, cancelled, "studentId", "tutorId", "reservationTypeId")
-VALUES(nextval('"Reservations_id_seq"'::regclass), '2024-07-07', '2024-08-10', '2024-08-15', 'Active'::text, 2, 1, 1);
+(id, "date", date_start, date_end, status, "studentId", "tutorId", "reservationTypeId")
+VALUES(nextval('"Reservations_id_seq"'::regclass), '2024-07-07', '2024-08-10', '2024-08-15', 'C'::text, 2, 1, 1);
 
 

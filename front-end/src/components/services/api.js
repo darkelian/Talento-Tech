@@ -55,14 +55,32 @@ export const fetchTutorInfo = async (userId) => {
     return data.tutor;    //devuelve los datos del tutor
 };
 
-export const fetchRequestsByTutorId = async (tutorId) => {
-    const response = await fetch(`${urlAPI}reservations/tutor/${tutorId}`);
+export const fetchRequestsByTutorIdAndStatus = async (tutorId, status) => {
+    const response = await fetch(`${urlAPI}reservations/tutor/${tutorId}/${status}`);
     if (!response.ok) {
-        throw new Error('Error fetching document type');
+        throw new Error('Error fetching reservations by tutor and status');
     }
 
     const data = await response.json();
     return data.reservations;    //devuelve los datos del tutor
+};
+
+export const setRequestStatus = async (request, status) => {
+    debugger
+    request.status = status
+    const valuesToInsert = JSON.stringify(request);
+
+    const response = await fetch(`${urlAPI}reservation/${request.id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: valuesToInsert
+    });
+    if (!response.ok) {
+        throw new Error(`Error al enviar la información del tutor`);
+    }
+    return response.json();
 };
 
 export const setTutorInfo = async (values) => {
