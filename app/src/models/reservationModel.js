@@ -3,6 +3,7 @@ const sequelize = require('../config/database');
 const Student = require('./studentModel');
 const Tutor = require('./tutorModel');
 const ReservationType = require('./reservationTypeModel');
+const StatusEnum = require('./statusEnum');
 
 const Reservation = sequelize.define('Reservation', {
     id: {
@@ -25,11 +26,12 @@ const Reservation = sequelize.define('Reservation', {
         allowNull: false,
         unique: false
     },
-    cancelled: {
+    status: {
         type: DataTypes.TEXT('tiny'),
+        values: Object.keys(StatusEnum),
         allowNull: false,
         unique: false,
-        defaultValue: 'Active'
+        defaultValue: StatusEnum.C
     },
     studentId: {
         type: DataTypes.INTEGER,

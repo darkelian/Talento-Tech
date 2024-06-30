@@ -77,12 +77,16 @@ exports.getReservationById = async (req, res, next) => {
 };
 
 //Query a reservations by tutorId
-exports.getReservationsByTutorId = async (req, res, next) => {
+exports.getReservationsByTutorIdAndStatus = async (req, res, next) => {
     const tutorId = req.params.id;  //id viene en la ruta o el navegador con params
+    const status = req.params.status;  //id viene en la ruta o el navegador con params
 
     try {
         const reservations = await Reservation.findAll({
-            where: { tutorId: tutorId },
+            where: {
+                tutorId: tutorId,
+                status: status  // Añadimos el status a la cláusula where
+            },
             include: [
                 { model: ReservationType },
                 {
