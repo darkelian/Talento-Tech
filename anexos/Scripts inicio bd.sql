@@ -42,3 +42,35 @@ INSERT INTO public."Reservations"
 VALUES(nextval('"Reservations_id_seq"'::regclass), '2024-07-07', '2024-08-10', '2024-08-15', 'C'::text, 2, 1, 1);
 
 
+INSERT INTO public."Subjects"
+(id, "name", description, grade)
+VALUES(nextval('"Subjects_id_seq"'::regclass), 'Matemáticas', 'Curso de matemáticas básicas', 'Básico');
+
+INSERT INTO public."Subjects"
+(id, "name", description, grade)
+VALUES(nextval('"Subjects_id_seq"'::regclass), 'Lenguaje', 'Curso de lenguaje básico', 'Básico');
+
+INSERT INTO public."Subjects"
+(id, "name", description, grade)
+VALUES(nextval('"Subjects_id_seq"'::regclass), 'Geografía', 'Curso de geografía básica', 'Básico');
+
+INSERT INTO public."Subjects"
+(id, "name", description, grade)
+VALUES(nextval('"Subjects_id_seq"'::regclass), 'Historia', 'Curso de historia básica', 'Básico');
+
+INSERT INTO public."Subjects"
+(id, "name", description, grade)
+VALUES(nextval('"Subjects_id_seq"'::regclass), 'Álgebra', 'Curso de álgebra básica', 'Básico');
+
+INSERT INTO public."Subjects"
+(id, "name", description, grade)
+VALUES(nextval('"Subjects_id_seq"'::regclass), 'Cálculo', 'Curso de cálculo básico', 'Básico');
+
+INSERT INTO public."Subjects"
+(id, "name", description, grade)
+VALUES(nextval('"Subjects_id_seq"'::regclass), 'Cálculo diferencial', 'Curso de cálculo intermedio', 'Intermedio');
+
+INSERT INTO public."Subjects"
+(id, "name", description, grade)
+VALUES(nextval('"Subjects_id_seq"'::regclass), 'Cálculo integral', 'Curso de cálculo avanzado', 'Avanzado');
+

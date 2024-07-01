@@ -66,7 +66,7 @@ export const fetchRequestsByTutorIdAndStatus = async (tutorId, status) => {
 };
 
 export const setRequestStatus = async (request, status) => {
-    debugger
+
     request.status = status
     const valuesToInsert = JSON.stringify(request);
 
@@ -98,4 +98,53 @@ export const setTutorInfo = async (values) => {
     }
     return response.json();
 };
+
+export const fetchSubjectsByTutorID = async (tutorId) => {
+    const response = await fetch(`${urlAPI}tutorSubject/${tutorId}`);
+    if (!response.ok) {
+        throw new Error('Error fetching subjects by tutor');
+    }
+
+    const data = await response.json();
+    return data.tutorSubject;    //devuelve los datos del tutor
+};
+
+export const fetchSubjectsUnselectedByTutorID = async (tutorId) => {
+    const response = await fetch(`${urlAPI}tutorUnslectedSubject/${tutorId}`);
+
+    if (!response.ok) {
+        throw new Error('Error obteniendo las materias del tutor');
+    }
+
+    const data = await response.json();
+    return data.unselectedSubjects;    //devuelve los datos del tutor
+};
+
+export const setTutorSubject = async (tutorId, subjectId) => {
+    const valuesToInsert = JSON.stringify({ tutorId, subjectId });
+
+    const response = await fetch(`${urlAPI}tutorSubject/new`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: valuesToInsert
+    });
+    if (!response.ok) {
+        throw new Error(`Error al enviar la información del tutor materia`);
+    }
+    return response.json();
+};
+
+export const deleteTutorSubject = async (id) => {
+
+    const response = await fetch(`${urlAPI}tutorSubject/${id}`, { method: 'DELETE' });
+
+    if (!response.ok) {
+        throw new Error(`Error al eliminar la información del tutor materia`);
+    }
+
+    return response.json();
+};
+
 

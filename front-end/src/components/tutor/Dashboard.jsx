@@ -2,6 +2,7 @@ import { Profile } from "./Profile";
 import { Scheduled } from "./Scheduled";
 import { Request } from "./Request";
 import { useState } from "react";
+import { Subjects } from "./Subjects";
 
 export function Dashboard() {
   const [updateScheduled, setUpdateScheduled] = useState(false);
@@ -29,8 +30,13 @@ export function Dashboard() {
           <Request onAcceptRequest={handleRequestAccepted} />
         </div>
       </div>
-      <div className="">
-        <Scheduled shouldUpdate={updateScheduled} />
+      <div className="row">
+        <div className="col">
+          <Scheduled shouldUpdate={updateScheduled} />
+        </div>
+        <div className="col">
+          <Subjects />
+        </div>
       </div>
     </div>
   );
