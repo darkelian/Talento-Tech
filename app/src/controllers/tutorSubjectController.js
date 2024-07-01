@@ -2,6 +2,7 @@ const Tutor = require("../models/tutorModel");
 const Subject = require("../models/subjectModel");
 const TutorSubject = require("../models/tutorSubjectModel");
 const RegisterTutorSubjectDTO = require("../dtos/requestTutorSubject");
+const { Op } = require("sequelize");
 
 //Create a TutorSubject
 exports.newTutorSubject = async (req, res, next) => {
@@ -43,6 +44,38 @@ exports.newTutorSubject = async (req, res, next) => {
     }
 };
 
+//query the unselected subject by tutor id
+exports.getTutorUnselectedSubjectByTutorId = async (req, res, next) => {
+    try {
+        const tutorId = req.params.id;
+
+        // Realiza la subconsulta para obtener los IDs de las materias seleccionadas por el tutor
+        const selectedSubjectIdsSubQuery = await TutorSubject.findAll({
+            where: { tutorId },
+            attributes: ['subjectId'],
+            raw: true
+        });
+        const selectedSubjectIds = selectedSubjectIdsSubQuery.map(subject => subject.subjectId);
+
+        // Obtén las materias que no están en la lista de seleccionadas
+        const unselectedSubjects = await Subject.findAll({
+            where: {
+                id: {
+                    [Op.notIn]: selectedSubjectIds
+                }
+            },
+            order: [['name', 'ASC']]
+        });
+
+        res.status(201).json({
+            success: true,
+            unselectedSubjects
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 //Query the tutor's subject by tutor's id
 exports.getTutorSubjectByTutorId = async (req, res, next) => {
     const id = req.params.id;  //id viene en la ruta o el navegador con params
@@ -58,8 +91,8 @@ exports.getTutorSubjectByTutorId = async (req, res, next) => {
         }
 
         const tutorSubject = await TutorSubject.findAll({
-            where: { tutorId: id }, 
-            include: [ Subject ]
+            where: { tutorId: id },
+            include: [Subject]
         });
 
         if (!tutorSubject) {
@@ -84,8 +117,8 @@ exports.getTutorSubjectByTutorId = async (req, res, next) => {
 //Delete a tutorSubject by id
 exports.deleteTutorSubject = async (req, res, next) => {
     const tutorSubjectId = req.params.id;
-    
-    const tutorSubject = await Tutor.findByPk(tutorSubjectId)
+
+    const tutorSubject = await TutorSubject.findByPk(tutorSubjectId)
 
     if (!tutorSubject) {
         return next(`TutorSubject not found in DB with Id: ${tutorSubjectId}`, 404);
