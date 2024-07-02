@@ -1,38 +1,31 @@
-// src/config/passport.js
 const passport = require('passport');
 const OAuth2Strategy = require('passport-oauth2').Strategy;
-const User = require('../models/userModel');
 
+// Configuración de la estrategia OAuth2
 passport.use(new OAuth2Strategy({
-  authorizationURL: 'https://example.com/auth',
-  tokenURL: 'https://example.com/token',
-  clientID: 'your-client-id',
-  clientSecret: 'your-client-secret',
-  callbackURL: 'http://localhost:3000/auth/callback'
-},
-async (accessToken, refreshToken, profile, done) => {
-  try {
-    let user = await User.findOne({ where: { username: profile.username } });
-    if (!user) {
-      user = await User.create({ username: profile.username });
-    }
-    return done(null, user);
-  } catch (error) {
-    return done(error);
+    authorizationURL: 'https://authorization-server.com/auth',
+    tokenURL: 'https://authorization-server.com/token',
+    clientID: 'YOUR_CLIENT_ID',
+    clientSecret: 'YOUR_CLIENT_SECRET',
+    callbackURL: 'http://localhost:4000/auth/callback'
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    // Aquí puedes buscar o crear el usuario en tu base de datos
+    User.findOrCreate({ oauthId: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
   }
-}));
+));
 
-passport.serializeUser((user, done) => {
+// Serializar y deserializar usuario para la sesión
+passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
 
-passport.deserializeUser(async (id, done) => {
-  try {
-    const user = await User.findByPk(id);
-    done(null, user);
-  } catch (error) {
-    done(error);
-  }
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
 });
 
 module.exports = passport;

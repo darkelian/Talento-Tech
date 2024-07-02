@@ -1,9 +1,9 @@
+// src/models/reservationModel.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 const Student = require('./studentModel');
 const Tutor = require('./tutorModel');
 const ReservationType = require('./reservationTypeModel');
-const StatusEnum = require('./statusEnum');
 
 const Reservation = sequelize.define('Reservation', {
     id: {
@@ -13,25 +13,20 @@ const Reservation = sequelize.define('Reservation', {
     },
     date: {
         type: DataTypes.DATEONLY,
-        allowNull: false,
-        unique: false
+        allowNull: false
     },
     date_start: {
         type: DataTypes.DATEONLY,
-        allowNull: false,
-        unique: false
+        allowNull: false
     },
     date_end: {
         type: DataTypes.DATEONLY,
-        allowNull: false,
-        unique: false
+        allowNull: false
     },
-    status: {
-        type: DataTypes.TEXT('tiny'),
-        values: Object.keys(StatusEnum),
+    cancelled: {
+        type: DataTypes.STRING,  // Cambiar a STRING para evitar problemas con TEXT
         allowNull: false,
-        unique: false,
-        defaultValue: StatusEnum.C
+        defaultValue: 'Active'
     },
     studentId: {
         type: DataTypes.INTEGER,
@@ -54,24 +49,23 @@ const Reservation = sequelize.define('Reservation', {
             key: 'id'
         }
     }
-},
-    { tableName: 'Reservations' }
-);
+}, {
+    tableName: 'Reservations'
+});
 
 Student.hasMany(Reservation, { as: 'student_reservation', foreignKey: 'studentId' });
 Reservation.belongsTo(Student, {
-    foreignKey: "studentId",
+    foreignKey: "studentId"
 });
-
 
 Tutor.hasMany(Reservation, { as: 'tutor_reservation', foreignKey: 'tutorId' });
 Reservation.belongsTo(Tutor, {
-    foreignKey: "tutorId",
+    foreignKey: "tutorId"
 });
 
 ReservationType.hasMany(Reservation, { as: 'reservationType_reservation', foreignKey: 'reservationTypeId' });
 Reservation.belongsTo(ReservationType, {
-    foreignKey: "reservationTypeId",
+    foreignKey: "reservationTypeId"
 });
 
 module.exports = Reservation;
