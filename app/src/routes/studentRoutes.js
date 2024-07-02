@@ -9,7 +9,7 @@ const router = express.Router();
 const { newStudent, getStudentById, getAllStudents, updateStudent, deleteStudent } = require("../controllers/studentController")
 
 //Ruta para crear un nuevo student (CREATE)
-router.route('/student/new').post(newStudent);
+router.route('/register').post(newStudent);
 
 //Ruta consulta student x id (FIND) (get)
 router.route('/student/:id').get(getStudentById);  //Con los : toma el id de la ruta
