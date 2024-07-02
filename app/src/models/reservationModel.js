@@ -4,7 +4,6 @@ const Student = require('./studentModel');
 const Tutor = require('./tutorModel');
 const ReservationType = require('./reservationTypeModel');
 const StatusEnum = require('./statusEnum');
-const StatusEnum = require('./statusEnum');
 
 const Reservation = sequelize.define('Reservation', {
     id: {
