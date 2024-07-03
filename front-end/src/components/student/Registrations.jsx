@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { firstForm } from "../schemas/studentFirstForm";
 import { useNavigate } from "react-router-dom";
 import { addInfo } from "../features/studentFormSlice";
+import StudentContext from "./StudentRegistrationProvider";
 
 const Registrations = () => {
+  const props = useContext(StudentContext);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { dataStudentForm1 } = useSelector((store) => store.infoStudentForm);
@@ -38,87 +41,82 @@ const Registrations = () => {
           {({ errors, touched, isSubmitting }) => (
             <Form className=" needs-validation" noValidate>
               <div className="mb-3">
-                <label htmlFor="studentName" className="form-label">
+                <label htmlFor="names" className="form-label">
                   Nombres
                 </label>
                 <Field
-                  name="studentName"
-                  id="studentName"
+                  name="names"
+                  id="names"
                   type="text"
                   className={`form-control ${
-                    touched.studentName && errors.studentName
-                      ? "is-invalid"
-                      : ""
+                    touched.names && errors.names ? "is-invalid" : ""
                   }`}
                   autoFocus
                 />
-                <ErrorMessage name="studentName" component="p" />
+                <ErrorMessage name="names" component="p" />
               </div>
               <div className="mb-3">
-                <label htmlFor="surnameStudent" className="form-label">
+                <label htmlFor="lastNames" className="form-label">
                   Apellidos
                 </label>
                 <Field
-                  name="surnameStudent"
-                  id="surnameStudent"
+                  name="lastNames"
+                  id="lastNames"
                   type="text"
                   className={`form-control ${
-                    touched.surnameStudent && errors.surnameStudent
-                      ? "is-invalid"
-                      : ""
+                    touched.lastNames && errors.lastNames ? "is-invalid" : ""
                   }`}
                 />
-                <ErrorMessage name="surnameStudent" component="p" />
+                <ErrorMessage name="lastNames" component="p" />
               </div>
               <div className="mb-3">
-                <label htmlFor="documentType">Tipo de documento</label>
+                <label htmlFor="typeDocument">Tipo de documento</label>
                 <Field
-                  name="documentType"
-                  id="documentType"
+                  name="typeDocument"
+                  id="typeDocument"
                   as="select"
                   className={`form-control ${
-                    touched.documentType && errors.documentType
+                    touched.typeDocument && errors.typeDocument
                       ? "is-invalid"
                       : ""
                   }`}
                 >
-                  <option> Selecciona una opción</option>
-                  <option> Cédula de ciudadanía</option>
-                  <option> Tarjeta de identidad</option>
-                  <option> Número de pasaporte</option>
-                  <option> Cédula de extranjería</option>
+                  <option value="">Selecciona un tipo de documento</option>
+                  {props.typeDocuments.map((docType) => (
+                    <option key={docType.id} value={docType.id}>
+                      {docType.name}
+                    </option>
+                  ))}
                 </Field>
-                <ErrorMessage name="documentType" component="p" />
+                <ErrorMessage name="typeDocument" component="p" />
               </div>
               <div className="mb-3">
-                <label htmlFor="documentNumber"> Número de documento</label>
+                <label htmlFor="numberDocument"> Número de documento</label>
                 <Field
-                  name="documentNumber"
-                  id="documentNumber"
+                  name="numberDocument"
+                  id="numberDocument"
                   type="text"
                   className={`form-control ${
-                    touched.documentNumber && errors.documentNumber
+                    touched.numberDocument && errors.numberDocument
                       ? "is-invalid"
                       : ""
                   }`}
                 />
-                <ErrorMessage name="documentNumber" component="p" />
+                <ErrorMessage name="numberDocument" component="p" />
               </div>
               <div className="mb-3">
-                <label htmlFor="emailStudent" className="form-label">
+                <label htmlFor="email" className="form-label">
                   Correo electrónico
                 </label>
                 <Field
-                  name="emailStudent"
-                  id="emailStudent"
+                  name="email"
+                  id="email"
                   type="email"
                   className={`form-control ${
-                    touched.emailStudent && errors.emailStudent
-                      ? "is-invalid"
-                      : ""
+                    touched.email && errors.email ? "is-invalid" : ""
                   }`}
                 />
-                <ErrorMessage name="emailStudent" component="p" />
+                <ErrorMessage name="email" component="p" />
               </div>
               <div className="mb-3">
                 <label htmlFor="gender" className="form-label">
@@ -132,11 +130,12 @@ const Registrations = () => {
                     touched.gender && errors.gender ? "is-invalid" : ""
                   }`}
                 >
-                  <option> Select an option</option>
-                  <option> Masculino</option>
-                  <option> Femenino</option>
-                  <option> Otro</option>
-                  <option> Prefiero no responder</option>
+                  <option value="">Selecciona un género</option>
+                  {props.genders.map((gen) => (
+                    <option key={gen.id} value={gen.id}>
+                      {gen.name}
+                    </option>
+                  ))}
                 </Field>
                 <ErrorMessage
                   name="gender"

@@ -36,7 +36,7 @@ const BookReserve = () => {
           >
             <div className="mb-3">
               <label htmlFor="reserveName" className="form-label">
-                Nombre
+                Materia
               </label>
               <Field
                 name="reserveName"

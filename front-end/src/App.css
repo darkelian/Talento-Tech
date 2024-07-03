@@ -25,8 +25,17 @@
   height: calc(100vh - 104px);
 }
 
-.displayNone{
+.displayNone {
   display: none;
+}
+
+.alertSize {
+  width: 696px;
+  margin: auto;
+}
+
+#root {
+  min-width: 35rem;
 }
 
 @media (max-width: 768px) {
@@ -44,6 +53,10 @@
   .font-p1-testimony {
     font-size: 1.125rem;
     font-weight: 500;
+  }
+
+  .alertSize {
+    width: 516px;
   }
 }
 

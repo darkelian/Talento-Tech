@@ -29,7 +29,7 @@ const dataTestimony = [
 
 export const HomeTestimony = () => {
   return (
-    <div className="container text-center">
+    <div className="container text-center" id="testimony">
       <div className="mt-5">
         <p className="back-color mb-5 p-testimony">Testimonios</p>
         <h2 className="mb-5 font-h2-testimony">
