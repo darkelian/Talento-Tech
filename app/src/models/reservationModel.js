@@ -27,7 +27,7 @@ const Reservation = sequelize.define('Reservation', {
         unique: false
     },
     status: {
-        type: DataTypes.TEXT('tiny'),
+        type: DataTypes.STRING,
         values: Object.keys(StatusEnum),
         allowNull: false,
         unique: false,

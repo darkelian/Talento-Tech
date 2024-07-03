@@ -2,10 +2,16 @@ import { Profile } from "./Profile";
 import { Scheduled } from "./Scheduled";
 import { Request } from "./Request";
 import { useState } from "react";
+import { Subjects } from "./Subjects";
 
 export function Dashboard() {
   const [updateScheduled, setUpdateScheduled] = useState(false);
 
+
+  const handleRequestAccepted = () => {
+    // Activar la actualización de Scheduled
+    setUpdateScheduled(true);
+  };
 
   return (
     <div className="container height-container">
@@ -21,11 +27,16 @@ export function Dashboard() {
           <Profile />
         </div>
         <div className="col">
-          <Request />
+          <Request onAcceptRequest={handleRequestAccepted} />
         </div>
       </div>
-      <div className="">
-        <Scheduled />
+      <div className="row">
+        <div className="col">
+          <Scheduled shouldUpdate={updateScheduled} />
+        </div>
+        <div className="col">
+          <Subjects />
+        </div>
       </div>
     </div>
   );
