@@ -19,7 +19,7 @@ export function Dashboard() {
   };
 
   return (
-    <div className="container">
+    <div className="container height-container">
       <div className="row">
         <div>
           <h1>

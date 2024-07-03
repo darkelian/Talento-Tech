@@ -1,57 +1,45 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useSelector } from "react-redux";
 import { secondForm } from "../schemas/studentSecondForm";
-import { useNavigate } from "react-router-dom";
+import StudentContext from "./StudentRegistrationProvider";
 
 const Registrations2 = () => {
-  const [formSended, setFormSended] = useState(false);
-
-  const navigate = useNavigate();
+  const props = useContext(StudentContext);
 
   const { dataStudentForm2 } = useSelector((store) => store.infoStudentForm);
   const {
-    dataForm: {
-      studentName,
-      surnameStudent,
-      documentType,
-      emailStudent,
-      documentNumber,
-      gender,
-    },
+    dataForm: { names, lastNames, typeDocument, email, numberDocument, gender },
   } = useSelector((store) => store.infoStudentForm);
 
   const onSubmit = (values) => {
-    setFormSended(true);
     const {
-      age,
-      residenceDepartment,
-      phoneNumber,
+      birthdate,
+      department,
+      cityId,
+      phone,
       password,
-      passwordConfirmation,
-      dataTreatment,
+      passwordConfirm,
+      // dataTreatment,
     } = values;
     const sendData = {
-      studentName,
-      surnameStudent,
-      documentType,
-      emailStudent,
-      documentNumber,
+      names,
+      lastNames,
+      typeDocument,
+      birthdate,
       gender,
-      age,
-      residenceDepartment,
-      phoneNumber,
+      numberDocument,
+      phone,
+      department,
+      cityId,
+      email,
       password,
-      passwordConfirmation,
-      dataTreatment,
+      passwordConfirm,
+      // dataTreatment,
     };
     console.log(sendData);
-
-    setTimeout(()=>{
-      navigate("/");
-    },3000)
+    props.handleSubmit(sendData);
   };
-
 
   return (
     <>
@@ -73,67 +61,94 @@ const Registrations2 = () => {
           }}
           validationSchema={secondForm}
         >
-          {({ errors, touched, isSubmitting }) => (
+          {({ errors, touched, isSubmitting, setFieldValue }) => (
             <Form className=" needs-validation" noValidate>
               <div className="mb-3">
-                <label htmlFor="age" className="form-label">
-                  Edad
+                <label htmlFor="birthdate" className="form-label">
+                  Fecha de nacimiento
                 </label>
                 <Field
-                  name="age"
-                  id="age"
-                  type="text"
+                  name="birthdate"
+                  id="birthdate"
+                  type="date"
                   className={`form-control ${
-                    touched.age && errors.age ? "is-invalid" : ""
+                    touched.birthdate && errors.birthdate ? "is-invalid" : ""
                   }`}
                   autoFocus
                 />
                 <ErrorMessage
-                  name="age"
+                  name="birthdate"
                   component="p"
                   className="invalid-feedback"
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="residenceDepartment" className="form-label">
+                <label htmlFor="department" className="form-label">
                   Departamento de residencia
                 </label>
                 <Field
-                  name="residenceDepartment"
-                  id="residenceDepartment"
+                  name="department"
+                  id="department"
                   as="select"
                   className={`form-control ${
-                    touched.residenceDepartment && errors.residenceDepartment
-                      ? "is-invalid"
-                      : ""
+                    touched.department && errors.department ? "is-invalid" : ""
                   }`}
+                  onChange={(e) => {
+                    props.handleDepartmentChange(e);
+                    // Actualizar el valor del campo 'department' en Formik
+                    setFieldValue("department", e.target.value);
+                  }}
                 >
-                  <option> Selecciona una opción</option>
-                  <option> Bogotá D.C</option>
-                  <option> Cundinamarca</option>
-                  <option> Medellin</option>
-                  <option> Cali</option>
+                  <option value=""> Selecciona una departamento</option>
+                  {props.departments.map((dept) => (
+                    <option key={dept.id} value={dept.id}>
+                      {dept.name}
+                    </option>
+                  ))}
                 </Field>
                 <ErrorMessage
-                  name="residenceDepartment"
+                  name="department"
                   component="p"
                   className="invalid-feedback"
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="phoneNumber">Número de celular</label>
+                <label htmlFor="cityId" className="form-label">
+                  Ciudad
+                </label>
                 <Field
-                  name="phoneNumber"
-                  id="phoneNumber"
+                  name="cityId"
+                  id="cityId"
+                  as="select"
+                  className={`form-control ${
+                    touched.cityId && errors.cityId ? "is-invalid" : ""
+                  }`}
+                >
+                  <option value=""> Selecciona una ciudad</option>
+                  {props.cities.map((city) => (
+                    <option key={city.id} value={city.id}>
+                      {city.name}
+                    </option>
+                  ))}
+                </Field>
+                <ErrorMessage
+                  name="cityId"
+                  component="p"
+                  className="invalid-feedback"
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="phone">Número de celular</label>
+                <Field
+                  name="phone"
+                  id="phone"
                   type="text"
                   className={`form-control ${
-                    touched.phoneNumber && errors.phoneNumber
-                      ? "is-invalid"
-                      : ""
+                    touched.phone && errors.phone ? "is-invalid" : ""
                   }`}
                 />
                 <ErrorMessage
-                  name="phoneNumber"
+                  name="phone"
                   component="p"
                   className="invalid-feedback"
                 />
@@ -155,21 +170,21 @@ const Registrations2 = () => {
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="passwordConfirmation" className="form-label">
+                <label htmlFor="passwordConfirm" className="form-label">
                   Confirme la contraseña
                 </label>
                 <Field
-                  name="passwordConfirmation"
-                  id="passwordConfirmation"
+                  name="passwordConfirm"
+                  id="passwordConfirm"
                   type="password"
                   className={`form-control ${
-                    touched.passwordConfirmation && errors.passwordConfirmation
+                    touched.passwordConfirm && errors.passwordConfirm
                       ? "is-invalid"
                       : ""
                   }`}
                 />
                 <ErrorMessage
-                  name="passwordConfirmation"
+                  name="passwordConfirm"
                   component="p"
                   className="invalid-feedback"
                 />
@@ -201,9 +216,14 @@ const Registrations2 = () => {
               >
                 Siguiente
               </button>
-              {formSended && (
+              {props.formSended && (
                 <div className="alert alert-success" role="alert">
                   Información enviada satisfactoriamente
+                </div>
+              )}
+              {props.formSendedError && (
+                <div className="alert alert-danger" role="alert">
+                  Hubo errores al enviar la información del estudiante
                 </div>
               )}
             </Form>

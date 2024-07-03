@@ -15,9 +15,9 @@ const HomeInfo = () => {
           <div className="d-grid gap-2 d-md-block">
             <button
               className="btn btn-dark"
-              onClick={() => (window.location.href = "#bookReserve")}
+              onClick={() => (window.location.href = "#testimony")}
             >
-              Reservar tutoria
+              Testimonios
             </button>
           </div>
         </div>

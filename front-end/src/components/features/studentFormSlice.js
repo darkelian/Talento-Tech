@@ -2,20 +2,20 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   dataStudentForm1: {
-    studentName: "",
-    surnameStudent: "",
-    documentType: "",
-    emailStudent: "",
-    documentNumber: "",
+    names: "",
+    lastNames: "",
+    typeDocument: "",
+    email: "",
+    numberDocument: "",
     gender: "",
   },
   dataStudentForm2: {
-    age: "",
-    residenceDepartment: "",
-
-    phoneNumber: "",
+    birthdate: "",
+    department: "",
+    cityId: "",
+    phone: "",
     password: "",
-    passwordConfirmation: "",
+    passwordConfirm: "",
     dataTreatment: false,
   },
   contactForm: {
