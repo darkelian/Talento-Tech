@@ -2,7 +2,7 @@ const Tutor = require("../models/tutorModel");
 const Subject = require("../models/subjectModel");
 const TutorSubject = require("../models/tutorSubjectModel");
 const RegisterTutorSubjectDTO = require("../dtos/requestTutorSubject");
-const { Op, Sequelize } = require("sequelize");
+const { Op } = require("sequelize");
 
 //Create a TutorSubject
 exports.newTutorSubject = async (req, res, next) => {
@@ -95,7 +95,7 @@ exports.getTutorSubjectByTutorId = async (req, res, next) => {
             include: [Subject]
         });
 
-        if (!tutorSubject) {
+        if (!tutorSubject.length === 0) {
             return next(res.status(404).json({
                 success: false,
                 message: `tutorSubject not found in DB with id: ${id}`

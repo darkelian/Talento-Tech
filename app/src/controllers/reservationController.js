@@ -31,7 +31,7 @@ exports.getAllReservations = async (req, res, next) => {
     try {
         const reservations = await Reservation.findAll()
 
-        if (!reservations || reservations.length === 0) {
+        if (!reservations.length === 0) {
             return res.status(404).json({
                 success: false,
                 message: "Reservations not found in BD."
@@ -79,7 +79,7 @@ exports.getReservationById = async (req, res, next) => {
 //Query a reservations by tutorId
 exports.getReservationsByTutorIdAndStatus = async (req, res, next) => {
     const tutorId = req.params.id;  //id viene en la ruta o el navegador con params
-    const status = req.params.status;  //id viene en la ruta o el navegador con params
+    const status = req.params.status;  //status viene en la ruta o el navegador con params
 
     try {
         const reservations = await Reservation.findAll({
@@ -96,10 +96,10 @@ exports.getReservationsByTutorIdAndStatus = async (req, res, next) => {
             ]
         });
 
-        if (!reservations) {
+        if (!reservations.length === 0) {  //Esto pq findAll devuelve una lista vacía si no hay reservations
             return next(res.status(404).json({
                 success: false,
-                message: `Reservations not found in DB with Id: ${tutorId}`
+                message: `Reservations not found in DB with tutor Id: ${tutorId}`
             }));
         } else {
             return res.status(200).json({
@@ -125,10 +125,10 @@ exports.getReservationsByStudentId = async (req, res, next) => {
             include: [ReservationType, Tutor]
         });
 
-        if (!reservations) {
+        if (!reservations.length === 0) {
             return next(res.status(404).json({
                 success: false,
-                message: `Reservations not found in DB with Id: ${studentId}`
+                message: `Reservations not found in DB with student Id: ${studentId}`
             }));
         } else {
             return res.status(200).json({

@@ -1,21 +1,10 @@
 const express = require('express');
 const session = require('express-session');
-const cors = require('cors');
 const passport = require('./config/passport');
-const sequelize = require('./config/database');
+const Database = require('./config/databaseInit');
+const jwt = require('jsonwebtoken');
 const app = express();
 const port = 4000;
-
-// Importar modelos
-const City = require('./models/cityModel');
-const Person = require('./models/peopleModel');
-const Reservation = require('./models/reservationModel');
-const ReservationType = require('./models/reservationTypeModel');
-const Student = require('./models/studentModel');
-const Subject = require('./models/subjectModel');
-const Tutor = require('./models/tutorModel');
-const TutorSubject = require('./models/tutorSubjectModel');
-const User = require('./models/userModel');
 
 // Middleware
 app.use(express.json());
@@ -25,39 +14,50 @@ app.use(express.static('public'));
 app.use(session({ secret: 'your-secret-key', resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors());
+
+// Secret key for JWT
+const secretKey = 'talento-tech';
+
+// Middleware to authenticate token
+function authenticateToken(req, res, next) {
+  const token = req.header('Authorization') && req.header('Authorization').split(' ')[1];
+  if (!token) return res.status(401).json({ success: false, message: 'Access Denied' });
+  try {
+    const verified = jwt.verify(token, secretKey);
+    req.user = verified;
+    next();
+  } catch (err) {
+    res.status(400).json({ success: false, message: 'Invalid Token' });
+  }
+}
 
 // Rutas de autenticación
-app.get('/auth', passport.authenticate('oauth2'));
-
-app.get('/auth/callback',
-  passport.authenticate('oauth2', { failureRedirect: '/' }),
-  (req, res) => {
-    res.redirect('/');
-  });
+const authRoutes = require('./routes/authRoutes');
+app.use('/api/auth', authRoutes);
 
 // Importar las rutas
 const users = require('./routes/userRoutes');
 const students = require('./routes/studentRoutes');
 const tutors = require('./routes/tutorRoutes');
-const tutorSubjects = require('./routes/tutorSubjectRoutes');
-const reservations = require('./routes/reservationRoutes');
 const cities = require('./routes/cityRoutes');
-const generic = require('./routes/genericRoutes');
+const generics = require('./routes/genericRoutes');
+const reservations = require('./routes/reservationRoutes');
+const subjects = require('./routes/subjectRoutes');
+const tutorSubjects = require('./routes/tutorSubjectRoutes');
 
 // Crear las rutas del navegador, las rutas del back inician con '/api'
 app.use('/api/user', users);
-app.use('/api', students);
-app.use('/api/', tutors);
-app.use('/api/', tutorSubjects);
-app.use('/api/', reservations);
-app.use('/api/cities', cities);
-app.use('/api/generic', generic);
+app.use('/api/student', students);
+app.use('/api/tutor', tutors);
+app.use('/api/city', cities);
+app.use('/api/generic', generics);
+app.use('/api/reservation', reservations);
+app.use('/api/subject', subjects);
+app.use('/api/tutorSubject', tutorSubjects);
 
-// Sincronizar la base de datos y luego iniciar el servidor
-sequelize.sync({ force: true }) // `force: true` recrea las tablas en cada reinicio (útil para desarrollo)
+// Inicializar la base de datos y luego iniciar el servidor
+Database.init()
   .then(() => {
-    console.log('Database & tables created!');
     app.listen(port, () => {
       console.log(`Server running at http://localhost:${port}`);
     });

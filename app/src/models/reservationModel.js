@@ -1,3 +1,4 @@
+// src/models/reservationModel.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 const Student = require('./studentModel');
@@ -13,18 +14,15 @@ const Reservation = sequelize.define('Reservation', {
     },
     date: {
         type: DataTypes.DATEONLY,
-        allowNull: false,
-        unique: false
+        allowNull: false
     },
     date_start: {
         type: DataTypes.DATEONLY,
-        allowNull: false,
-        unique: false
+        allowNull: false
     },
     date_end: {
         type: DataTypes.DATEONLY,
-        allowNull: false,
-        unique: false
+        allowNull: false
     },
     status: {
         type: DataTypes.STRING,
@@ -54,24 +52,23 @@ const Reservation = sequelize.define('Reservation', {
             key: 'id'
         }
     }
-},
-    { tableName: 'Reservations' }
-);
+}, {
+    tableName: 'Reservations'
+});
 
 Student.hasMany(Reservation, { as: 'student_reservation', foreignKey: 'studentId' });
 Reservation.belongsTo(Student, {
-    foreignKey: "studentId",
+    foreignKey: "studentId"
 });
-
 
 Tutor.hasMany(Reservation, { as: 'tutor_reservation', foreignKey: 'tutorId' });
 Reservation.belongsTo(Tutor, {
-    foreignKey: "tutorId",
+    foreignKey: "tutorId"
 });
 
 ReservationType.hasMany(Reservation, { as: 'reservationType_reservation', foreignKey: 'reservationTypeId' });
 Reservation.belongsTo(ReservationType, {
-    foreignKey: "reservationTypeId",
+    foreignKey: "reservationTypeId"
 });
 
 module.exports = Reservation;

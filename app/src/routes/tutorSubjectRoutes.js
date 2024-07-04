@@ -16,7 +16,7 @@ router.route('/tutorSubject/new').post(newTutorSubject);
 router.route('/tutorSubject/:id').get(getTutorSubjectByTutorId);
 
 //(FIND) Ruta consulta tutorSubject x tutorId 
-router.route('/tutorUnslectedSubject/:id').get(getTutorUnselectedSubjectByTutorId);
+router.route('/tutorUnselectedSubject/:id').get(getTutorUnselectedSubjectByTutorId);
 
 //(DELETE) Ruta eliminar tutorSubject x id 
 router.route('/tutorSubject/:id').delete(deleteTutorSubject);
