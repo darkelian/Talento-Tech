@@ -95,7 +95,7 @@ exports.getTutorSubjectByTutorId = async (req, res, next) => {
             include: [Subject]
         });
 
-        if (!tutorSubject) {
+        if (!tutorSubject.length === 0) {
             return next(res.status(404).json({
                 success: false,
                 message: `tutorSubject not found in DB with id: ${id}`

@@ -3,6 +3,8 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 const User = require('./userModel');
 const City = require('./cityModel');
+const DocumentTypeEnum = require('./documentTypeEnum');
+const GenderEnum = require('./genderEnum');
 
 const People = sequelize.define('People', {
     id: {
@@ -19,7 +21,8 @@ const People = sequelize.define('People', {
         allowNull: false
     },
     typeDocument: {
-        type: DataTypes.ENUM('CC', 'CE', 'TI', 'OT'),
+        type:DataTypes.ENUM,
+        values: Object.keys(DocumentTypeEnum),
         allowNull: false
     },
     numberDocument: {
@@ -33,7 +36,8 @@ const People = sequelize.define('People', {
         unique: true
     },
     gender: {
-        type: DataTypes.ENUM('M', 'F', 'O', 'U'),
+        type:DataTypes.ENUM,
+        values: Object.keys(GenderEnum),
         allowNull: false
     },
     birthdate: {
@@ -44,10 +48,6 @@ const People = sequelize.define('People', {
         type: DataTypes.STRING,
         allowNull: true
     },
-    password: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
     userId: {
         type: DataTypes.INTEGER,
         references: {
@@ -57,21 +57,21 @@ const People = sequelize.define('People', {
     },
     cityId: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
+        allowNull: false
+/*        references: {
             model: City,
             key: 'id'
-        }
+        }*/
     }
 }, {
     tableName: 'People'
 });
-
+/*
 City.hasMany(People, { as: 'city_people', foreignKey: 'cityId' });
 People.belongsTo(City, {
     foreignKey: "cityId"
 });
-
+*/
 User.hasMany(People, { as: 'user_people', foreignKey: 'userId' });
 People.belongsTo(User, {
     foreignKey: "userId"

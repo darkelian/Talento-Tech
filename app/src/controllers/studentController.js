@@ -47,7 +47,7 @@ exports.getAllStudents = async (req, res, next) => {
     try {
         const students = await Student.findAll({ include: [Person] });
 
-        if (!students || students.length === 0) {
+        if (!students.length === 0) {
             return res.status(404).json({
                 success: false,
                 message: "Information not found at BD."

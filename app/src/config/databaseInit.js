@@ -17,12 +17,13 @@ class Database {
       console.log('Connection has been established successfully.');
 
       // Definir relaciones si es necesario
-      Person.hasOne(User, { foreignKey: 'personId' });
-      User.belongsTo(Person, { foreignKey: 'personId' });
+      //Person.hasOne(User, { foreignKey: 'personId' });
+      //User.belongsTo(Person, { foreignKey: 'personId' });
 
       // Agrega aquí las relaciones entre los demás modelos
 
       await sequelize.sync({ alter: true }); // `alter: true` evita borrar los datos existentes
+      //await sequelize.sync({ force: true });
       console.log('Database synchronized.');
     } catch (error) {
       console.error('Unable to connect to the database:', error);

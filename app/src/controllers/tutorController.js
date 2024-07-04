@@ -47,7 +47,7 @@ exports.getAllTutors = async (req, res, next) => {
     try {
         const tutors = await Tutor.findAll({ include: [Person] });
 
-        if (!tutors || tutors.length === 0) {
+        if (!tutors.length === 0) {
             return res.status(404).json({
                 success: false,
                 message: "Information not found at BD."
@@ -76,7 +76,7 @@ exports.getTutorById = async (req, res, next) => {
         if (!tutor) {
             return res.status(404).json({
                 success: false,
-                message: `Tutor not found in BD: ${id}`
+                message: `Tutor not found in BD with id: ${id}`
             });
         } else {
             return res.status(200).json({

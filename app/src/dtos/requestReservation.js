@@ -4,7 +4,7 @@ class RegisterReservationDTO {
     date;
     date_start;
     date_end;
-    cancelled;
+    status;
     studentId;
     tutorId;
     reservationTypeId;
@@ -14,7 +14,7 @@ class RegisterReservationDTO {
         this.date = data.date;
         this.date_start = data.date_start;
         this.date_end = data.date_end;
-        this.cancelled = data.cancelled;
+        this.status = data.status;
         this.studentId = data.studentId;
         this.tutorId = data.tutorId;
         this.reservationTypeId = data.reservationTypeId;
