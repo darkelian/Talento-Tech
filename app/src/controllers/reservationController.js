@@ -31,7 +31,7 @@ exports.getAllReservations = async (req, res, next) => {
     try {
         const reservations = await Reservation.findAll()
 
-        if (!reservations.length === 0) {
+        if (reservations.length === 0) {
             return res.status(404).json({
                 success: false,
                 message: "Reservations not found in BD."
@@ -95,18 +95,20 @@ exports.getReservationsByTutorIdAndStatus = async (req, res, next) => {
             ]
         });
 
-        if (!reservations.length) {  // Corrección de la condición
-            return next(res.status(204).json({
+        if (reservations.length === 0) {  // Corrección de la condición
+            return res.status(200).json({
                 success: false,
-                message: `Reservations not found in DB with tutor Id: ${tutorId}`,
-                reservations: []
-            }));
+                message: `Reservations not found in DB with tutor Id: ${tutorId} and status: ${status} `,
+                reservations: reservations
+            });
         }
 
         // Reemplazar el reservationType con el valor correspondiente del enum
         const reservationsWithType = reservations.map(reservation => {
-            reservation.reservationType = ReservationTypeEnum[reservation.reservationType];
-            return reservation;
+            return {
+                ...reservation.get({ plain: true }),  // Usar plain para obtener el objeto simple
+                reservationType: ReservationTypeEnum[reservation.reservationTypeId]
+            };
         });
 
         return res.status(200).json({
@@ -131,7 +133,7 @@ exports.getReservationsByStudentId = async (req, res, next) => {
             include: [ReservationType, Tutor]
         });
 
-        if (!reservations.length === 0) {
+        if (reservations.length === 0) {
             return next(res.status(404).json({
                 success: false,
                 message: `Reservations not found in DB with student Id: ${studentId}`
