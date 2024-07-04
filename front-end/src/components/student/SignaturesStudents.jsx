@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const SignaturesStudents = () => {
   const data = [
@@ -50,9 +51,12 @@ const SignaturesStudents = () => {
                   {info.signature}
                 </h6>
                 <p className="card-text">{info.description}</p>
-                <a href="#" className="card-link text-decoration-none">
+                <Link
+                  to="/student/booktutoring"
+                  className="card-link text-decoration-none"
+                >
                   Más información
-                </a>
+                </Link>
               </div>
             </div>
           ))}

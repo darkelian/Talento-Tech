@@ -4,7 +4,7 @@ const BookInfo = () => {
   return (
     <div className="container my-5 py-5 text-center heightReserveinfo">
       <div className="row row-cols-1 row-cols-md-2 align-items-center gy-5">
-        <div className="col text-start">
+        <div className="col text-start" >
           <h2 className="font-size-sm font-size-md-up">
             Mejora tu rendimiento académico con nuestras tutorías
           </h2>

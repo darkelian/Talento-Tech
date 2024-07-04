@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ServicesStudent = () => {
   return (
@@ -21,9 +22,12 @@ const ServicesStudent = () => {
                 Recibe atención personalizada de nuestros expertos profesores
                 para mejorar tu rendimiento académico.
               </p>
-              <a href="#" className="card-link text-decoration-none">
+              <Link
+                to="/student/booktutoring"
+                className="card-link text-decoration-none"
+              >
                 Más información
-              </a>
+              </Link>
             </div>
           </div>
           <div
@@ -39,9 +43,12 @@ const ServicesStudent = () => {
                 Trabaja en equipo con tus compañeros y recibe apoyo de nuestros
                 profesores expertos.
               </p>
-              <a href="#" className="card-link text-decoration-none">
+              <Link
+                to="/student/booktutoring"
+                className="card-link text-decoration-none"
+              >
                 Más información
-              </a>
+              </Link>
             </div>
           </div>
         </div>

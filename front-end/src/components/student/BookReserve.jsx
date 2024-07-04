@@ -4,6 +4,10 @@ import { useSelector } from "react-redux";
 import { bookTutoriiing } from "../schemas/bookTutoriiing";
 
 const BookReserve = () => {
+
+ //const user = useSelector((state) => state.user.user);
+
+
   const { bookTutoring } = useSelector((store) => store.infoStudentForm);
 
   const onSubmit = (values) => {
@@ -35,6 +39,7 @@ const BookReserve = () => {
             style={{ maxWidth: "696px" }}
           >
             <div className="mb-3">
+              {/* da igual el nombre */}
               <label htmlFor="reserveName" className="form-label">
                 Materia
               </label>
@@ -53,64 +58,8 @@ const BookReserve = () => {
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="reserveEmail" className="form-label">
-                Correo electrónico
-              </label>
-              <Field
-                name="reserveEmail"
-                id="reserveEmail"
-                type="email"
-                className={`form-control ${
-                  touched.reserveEmail && errors.reserveEmail
-                    ? "is-invalid"
-                    : ""
-                }`}
-              />
-              <ErrorMessage
-                name="reserveEmail"
-                component="p"
-                className="invalid-feedback"
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="reserveDate" className="form-label">
-                Fecha
-              </label>
-              <Field
-                name="reserveDate"
-                id="reserveDate"
-                type="date"
-                className={`form-control ${
-                  touched.reserveDate && errors.reserveDate ? "is-invalid" : ""
-                }`}
-              />
-              <ErrorMessage
-                name="reserveDate"
-                component="p"
-                className="invalid-feedback"
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="reserveHour" className="form-label">
-                Hora
-              </label>
-              <Field
-                name="reserveHour"
-                id="reserveHour"
-                type="time"
-                className={`form-control ${
-                  touched.reserveHour && errors.reserveHour ? "is-invalid" : ""
-                }`}
-              />
-              <ErrorMessage
-                name="reserveHour"
-                component="p"
-                className="invalid-feedback"
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="reserveSubject" className="form-label">
-                Asignatura de la tutoría
+              <label htmlFor="tutorId" className="form-label">
+                Profesores de la materia
               </label>
               <Field
                 name="reserveSubject"
@@ -136,6 +85,63 @@ const BookReserve = () => {
                 className="invalid-feedback"
               />
             </div>
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label">
+                Correo electrónico
+              </label>
+              <Field
+                name="reserveEmail"
+                id="reserveEmail"
+                type="email"
+                className={`form-control ${
+                  touched.reserveEmail && errors.reserveEmail
+                    ? "is-invalid"
+                    : ""
+                }`}
+              />
+              <ErrorMessage
+                name="reserveEmail"
+                component="p"
+                className="invalid-feedback"
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="date_start" className="form-label">
+                Fecha de inicio
+              </label>
+              <Field
+                name="reserveDate"
+                id="reserveDate"
+                type="date"
+                className={`form-control ${
+                  touched.reserveDate && errors.reserveDate ? "is-invalid" : ""
+                }`}
+              />
+              <ErrorMessage
+                name="reserveDate"
+                component="p"
+                className="invalid-feedback"
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="date_end" className="form-label">
+                Fecha de finalización
+              </label>
+              <Field
+                name="reserveHour"
+                id="reserveHour"
+                type="date"
+                className={`form-control ${
+                  touched.reserveHour && errors.reserveHour ? "is-invalid" : ""
+                }`}
+              />
+              <ErrorMessage
+                name="reserveHour"
+                component="p"
+                className="invalid-feedback"
+              />
+            </div>
+
             <button
               type="submit"
               className="btn btn-dark"
