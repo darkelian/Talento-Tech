@@ -13,6 +13,11 @@ export function Dashboard() {
     setUpdateScheduled(true);
   };
 
+  const handleScheduledUpdate = () => {
+    // Desactivar la actualización después de que Scheduled se haya actualizado
+    setUpdateScheduled(false);
+  };
+
   return (
     <div className="container height-container">
       <div className="row">
@@ -32,7 +37,7 @@ export function Dashboard() {
       </div>
       <div className="row">
         <div className="col">
-          <Scheduled shouldUpdate={updateScheduled} />
+          <Scheduled shouldUpdate={updateScheduled} onUpdate={handleScheduledUpdate} />
         </div>
         <div className="col">
           <Subjects />

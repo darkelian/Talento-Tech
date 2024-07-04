@@ -43,10 +43,10 @@ export function Request({ onAcceptRequest }) {
         try {
             await setRequestStatus(selectedRequest, status);
             onAcceptRequest();
+            loadRequests();
         } catch (error) {
             console.error("Error updating request status:", error);
         }
-        loadRequests();
         handleClose();
     };
 
