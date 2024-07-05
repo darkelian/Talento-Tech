@@ -2,16 +2,31 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
 import { useSelector } from "react-redux";
 import { bookTutoriiing } from "../schemas/bookTutoriiing";
+import StatusEnum from "../models/status.model";
 
 const BookReserve = () => {
-
- //const user = useSelector((state) => state.user.user);
-
+  const user = useSelector((state) => state.user.user),
+    id = user.id,
+    status = StatusEnum.Accepted, //si se selecciona "Accepted"?
+    date = new Date();
+    //studentId?
+    //reservationTypeId?
 
   const { bookTutoring } = useSelector((store) => store.infoStudentForm);
 
   const onSubmit = (values) => {
-    console.log(values);
+    const { reserveName, tutorId, email, date_start, date_end } = values;
+    const data = {
+      id,
+      date,
+      date_start,
+      date_end,
+      status,
+      tutorId,
+      reserveName,
+      email,
+    };
+    console.log(data);
   };
 
   return (
@@ -62,13 +77,11 @@ const BookReserve = () => {
                 Profesores de la materia
               </label>
               <Field
-                name="reserveSubject"
-                id="reserveSubject"
+                name="tutorId"
+                id="tutorId"
                 as="select"
                 className={`form-control ${
-                  touched.reserveSubject && errors.reserveSubject
-                    ? "is-invalid"
-                    : ""
+                  touched.tutorId && errors.tutorId ? "is-invalid" : ""
                 }`}
               >
                 <option>Selecciona un tema</option>
@@ -80,7 +93,7 @@ const BookReserve = () => {
                 <option>Historia</option>
               </Field>
               <ErrorMessage
-                name="reserveSubject"
+                name="tutorId"
                 component="p"
                 className="invalid-feedback"
               />
@@ -90,17 +103,15 @@ const BookReserve = () => {
                 Correo electrónico
               </label>
               <Field
-                name="reserveEmail"
-                id="reserveEmail"
+                name="email"
+                id="email"
                 type="email"
                 className={`form-control ${
-                  touched.reserveEmail && errors.reserveEmail
-                    ? "is-invalid"
-                    : ""
+                  touched.email && errors.email ? "is-invalid" : ""
                 }`}
               />
               <ErrorMessage
-                name="reserveEmail"
+                name="email"
                 component="p"
                 className="invalid-feedback"
               />
@@ -110,15 +121,15 @@ const BookReserve = () => {
                 Fecha de inicio
               </label>
               <Field
-                name="reserveDate"
-                id="reserveDate"
+                name="date_start"
+                id="date_start"
                 type="date"
                 className={`form-control ${
-                  touched.reserveDate && errors.reserveDate ? "is-invalid" : ""
+                  touched.date_start && errors.date_start ? "is-invalid" : ""
                 }`}
               />
               <ErrorMessage
-                name="reserveDate"
+                name="date_start"
                 component="p"
                 className="invalid-feedback"
               />
@@ -128,15 +139,15 @@ const BookReserve = () => {
                 Fecha de finalización
               </label>
               <Field
-                name="reserveHour"
-                id="reserveHour"
+                name="date_end"
+                id="date_end"
                 type="date"
                 className={`form-control ${
-                  touched.reserveHour && errors.reserveHour ? "is-invalid" : ""
+                  touched.date_end && errors.date_end ? "is-invalid" : ""
                 }`}
               />
               <ErrorMessage
-                name="reserveHour"
+                name="date_end"
                 component="p"
                 className="invalid-feedback"
               />

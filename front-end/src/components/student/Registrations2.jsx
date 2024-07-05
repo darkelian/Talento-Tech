@@ -6,6 +6,7 @@ import StudentContext from "./StudentRegistrationProvider";
 
 const Registrations2 = () => {
   const props = useContext(StudentContext);
+  //StatusEnum
 
   const { dataStudentForm2 } = useSelector((store) => store.infoStudentForm);
   const {

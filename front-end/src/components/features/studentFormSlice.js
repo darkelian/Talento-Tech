@@ -26,10 +26,10 @@ const initialState = {
 
   bookTutoring: {
     reserveName: "",
-    reserveEmail: "",
-    reserveDate: "",
-    reserveHour: "",
-    reserveSubject: "",
+    tutorId: "",
+    email: "",
+    date_start: "",
+    date_end: "",
   },
   dataForm: {},
 };
