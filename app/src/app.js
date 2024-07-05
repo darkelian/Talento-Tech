@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const cors = require('cors');
 const passport = require('./config/passport');
 const Database = require('./config/databaseInit');
 const jwt = require('jsonwebtoken');
@@ -14,6 +15,7 @@ app.use(express.static('public'));
 app.use(session({ secret: 'your-secret-key', resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cors());
 
 // Secret key for JWT
 const secretKey = 'talento-tech';
