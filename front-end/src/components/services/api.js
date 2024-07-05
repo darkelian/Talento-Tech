@@ -1,7 +1,7 @@
 const urlAPI = "http://localhost:4000/api/";
 
 export const fetchDepartments = async () => {
-  const response = await fetch(`${urlAPI}cities/departments`);
+  const response = await fetch(`${urlAPI}city/departments`);
   if (!response.ok) {
     throw new Error("Error fetching departments");
   }
@@ -11,7 +11,7 @@ export const fetchDepartments = async () => {
 
 export const fetchCities = async (department) => {
   const response = await fetch(
-    `${urlAPI}cities/departments/cities?name=${department}`
+    `${urlAPI}city/departments/cities?name=${department}`
   );
   if (!response.ok) {
     throw new Error("Error fetching cities");
@@ -48,7 +48,7 @@ export const fetchDocumentType = async () => {
 };
 
 export const fetchTutorInfo = async (userId) => {
-  const response = await fetch(`${urlAPI}tutor/${userId}`);
+  const response = await fetch(`${urlAPI}tutor/tutor/${userId}`);
   if (!response.ok) {
     throw new Error("Error fetching document type");
   }
@@ -59,7 +59,7 @@ export const fetchTutorInfo = async (userId) => {
 
 export const fetchRequestsByTutorIdAndStatus = async (tutorId, status) => {
   const response = await fetch(
-    `${urlAPI}reservations/tutor/${tutorId}/${status}`
+    `${urlAPI}reservation/reservations/tutor/${tutorId}/${status}`
   );
   if (!response.ok) {
     throw new Error("Error fetching reservations by tutor and status");
@@ -73,7 +73,7 @@ export const setRequestStatus = async (request, status) => {
   request.status = status;
   const valuesToInsert = JSON.stringify(request);
 
-  const response = await fetch(`${urlAPI}reservation/${request.id}`, {
+  const response = await fetch(`${urlAPI}reservation/reservation/${request.id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -89,7 +89,7 @@ export const setRequestStatus = async (request, status) => {
 export const setTutorInfo = async (values) => {
   const valuesToInsert = JSON.stringify(values);
 
-  const response = await fetch(`${urlAPI}tutor/new`, {
+  const response = await fetch(`${urlAPI}tutor/tutor/new`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -103,7 +103,7 @@ export const setTutorInfo = async (values) => {
 };
 
 export const fetchSubjectsByTutorID = async (tutorId) => {
-  const response = await fetch(`${urlAPI}tutorSubject/${tutorId}`);
+  const response = await fetch(`${urlAPI}tutorSubject/tutorSubject/${tutorId}`);
   if (!response.ok) {
     throw new Error("Error fetching subjects by tutor");
   }
@@ -113,7 +113,7 @@ export const fetchSubjectsByTutorID = async (tutorId) => {
 };
 
 export const fetchSubjectsUnselectedByTutorID = async (tutorId) => {
-  const response = await fetch(`${urlAPI}tutorUnslectedSubject/${tutorId}`);
+  const response = await fetch(`${urlAPI}tutorSubject/tutorUnselectedSubject/${tutorId}`);
 
   if (!response.ok) {
     throw new Error("Error obteniendo las materias del tutor");
@@ -126,7 +126,7 @@ export const fetchSubjectsUnselectedByTutorID = async (tutorId) => {
 export const setTutorSubject = async (tutorId, subjectId) => {
   const valuesToInsert = JSON.stringify({ tutorId, subjectId });
 
-  const response = await fetch(`${urlAPI}tutorSubject/new`, {
+  const response = await fetch(`${urlAPI}tutorSubject/tutorSubject/new`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -140,7 +140,7 @@ export const setTutorSubject = async (tutorId, subjectId) => {
 };
 
 export const deleteTutorSubject = async (id) => {
-  const response = await fetch(`${urlAPI}tutorSubject/${id}`, {
+  const response = await fetch(`${urlAPI}tutorSubject/tutorSubject/${id}`, {
     method: "DELETE",
   });
 
@@ -155,7 +155,7 @@ export const deleteTutorSubject = async (id) => {
 export const setStudentInfo = async (values) => {
   const valuesStudent = JSON.stringify(values);
 
-  const response = await fetch(`${urlAPI}student/new`, {
+  const response = await fetch(`${urlAPI}student/student/new`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
