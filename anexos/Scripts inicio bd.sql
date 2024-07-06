@@ -1,13 +1,3 @@
-INSERT INTO public."ReservationTypes"
-(id, description)
-VALUES(nextval('"ReservationTypes_id_seq"'::regclass), 'Presencial');
-INSERT INTO public."ReservationTypes"
-(id, description)
-VALUES(nextval('"ReservationTypes_id_seq"'::regclass), 'Virtual');
-INSERT INTO public."ReservationTypes"
-(id, description)
-VALUES(nextval('"ReservationTypes_id_seq"'::regclass), 'Mixta');
-
 INSERT INTO public."People"
 (id, names, "lastNames", "typeDocument", "numberDocument", email, gender, birthdate, phone, "userId", "cityId")
 VALUES(nextval('"People_id_seq"'::regclass), 'Edgar Alexander', 'Díaz Murillo', 'CC', '80016199', 'eadiazm@gmail.com', 'M', '1977-07-30', '3134258856', null, 74539);
@@ -34,12 +24,12 @@ VALUES(nextval('"Students_id_seq"'::regclass), 3);
 
 INSERT INTO public."Reservations"
 (id, "date", date_start, date_end, status, "studentId", "tutorId", "reservationTypeId")
-VALUES(nextval('"Reservations_id_seq"'::regclass), '2024-07-07', '2024-07-10', '2024-07-15', 'C'::text, 1, 1, 2);
+VALUES(nextval('"Reservations_id_seq"'::regclass), '2024-07-07', '2024-07-10', '2024-07-15', 'C'::text, 1, 1, 'PI');
 
 
 INSERT INTO public."Reservations"
 (id, "date", date_start, date_end, status, "studentId", "tutorId", "reservationTypeId")
-VALUES(nextval('"Reservations_id_seq"'::regclass), '2024-07-07', '2024-08-10', '2024-08-15', 'C'::text, 2, 1, 1);
+VALUES(nextval('"Reservations_id_seq"'::regclass), '2024-07-07', '2024-08-10', '2024-08-15', 'C'::text, 2, 1, 'PG');
 
 
 INSERT INTO public."Subjects"

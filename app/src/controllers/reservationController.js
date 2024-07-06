@@ -3,6 +3,7 @@ const Tutor = require("../models/tutorModel");
 const Reservation = require("../models/reservationModel");
 const RegisterReservationDTO = require("../dtos/requestReservation");
 const People = require("../models/peopleModel");
+const ReservationTypeEnum = require("../models/reservationTypeEnum");
 
 //Create a Reservation
 exports.newReservation = async (req, res, next) => {
@@ -30,7 +31,7 @@ exports.getAllReservations = async (req, res, next) => {
     try {
         const reservations = await Reservation.findAll()
 
-        if (!reservations.length === 0) {
+        if (reservations.length === 0) {
             return res.status(404).json({
                 success: false,
                 message: "Reservations not found in BD."
@@ -87,7 +88,6 @@ exports.getReservationsByTutorIdAndStatus = async (req, res, next) => {
                 status: status  // Añadimos el status a la cláusula where
             },
             include: [
-                { model: ReservationType },
                 {
                     model: Student,
                     include: [{ model: People }] // Incluye la tabla People asociada al modelo Student
@@ -95,23 +95,32 @@ exports.getReservationsByTutorIdAndStatus = async (req, res, next) => {
             ]
         });
 
-        if (!reservations.length === 0) {  //Esto pq findAll devuelve una lista vacía si no hay reservations
-            return next(res.status(404).json({
-                success: false,
-                message: `Reservations not found in DB with tutor Id: ${tutorId}`
-            }));
-        } else {
+        if (reservations.length === 0) {  // Corrección de la condición
             return res.status(200).json({
-                success: true,
-                reservations
-            })
+                success: false,
+                message: `Reservations not found in DB with tutor Id: ${tutorId} and status: ${status} `,
+                reservations: reservations
+            });
         }
+
+        // Reemplazar el reservationType con el valor correspondiente del enum
+        const reservationsWithType = reservations.map(reservation => {
+            return {
+                ...reservation.get({ plain: true }),  // Usar plain para obtener el objeto simple
+                reservationType: ReservationTypeEnum[reservation.reservationTypeId]
+            };
+        });
+
+        return res.status(200).json({
+            success: true,
+            reservations: reservationsWithType
+        });
     } catch (error) {
         return res.status(500).json({
             success: false,
             message: error.message
         });
-    };
+    }
 };
 
 //Query reservations by studentId
@@ -124,7 +133,7 @@ exports.getReservationsByStudentId = async (req, res, next) => {
             include: [ReservationType, Tutor]
         });
 
-        if (!reservations.length === 0) {
+        if (reservations.length === 0) {
             return next(res.status(404).json({
                 success: false,
                 message: `Reservations not found in DB with student Id: ${studentId}`
