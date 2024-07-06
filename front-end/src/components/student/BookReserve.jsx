@@ -1,33 +1,118 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { bookTutoriiing } from "../schemas/bookTutoriiing";
 import StatusEnum from "../models/status.model";
+import {
+  fetchSubjects,
+  fetchTutorials,
+  fetchTutorsBySubject,
+  setReserveTutorial,
+} from "../services/api";
 
 const BookReserve = () => {
+  const [subjects, setSubjects] = useState([]);
+  const [tutorials, setTutorials] = useState([]);
+  const [tutorNames, setTutorNames] = useState([]);
+  const [date, setCurrentDate] = useState("");
+  const [formSended, setformSended] = useState(false);
+  const [formSendedError, setformSendedError] = useState(false);
+
   const user = useSelector((state) => state.user.user),
-    id = user.id,
-    status = StatusEnum.Accepted, //si se selecciona "Accepted"?
-    date = new Date();
-    //studentId?
-    //reservationTypeId?
+    studentId = user.id,
+    status = StatusEnum.Created;
 
   const { bookTutoring } = useSelector((store) => store.infoStudentForm);
 
+  const handleTutorChange = async (e) => {
+    const subjectsId = e.target.value;
+    try {
+      const tutorsBySubject = await fetchTutorsBySubject(subjectsId);
+      setTutorNames(tutorsBySubject);
+    } catch (error) {
+      console.error(error);
+      setTutorNames([]); // Manejo de error: establecer tutorNames como un array vacío
+    }
+  };
+
+  function obtenerFechaEnFormato() {
+    let fecha = new Date(); // Obtener la fecha actual
+    let year = fecha.getFullYear(); // Obtener el año (YYYY)
+    let month = ("0" + (fecha.getMonth() + 1)).slice(-2); // Obtener el mes (MM)
+    let day = ("0" + fecha.getDate()).slice(-2); // Obtener el día (DD)
+
+    const newDate = `${year}-${month}-${day}`;
+    setCurrentDate(newDate);
+  }
+
+  const handleSubmit = async (values) => {
+    try {
+      const response = await setReserveTutorial(values);
+
+      if (!response.success) {
+        const errorData = await response.json();
+        throw new Error(
+          errorData.message || "Error al enviar los datos de la tutoría"
+        );
+      }
+
+      setformSended(true);
+      setTimeout(() => {
+        setformSended(false);
+      }, 3000);
+    } catch (error) {
+      setformSendedError(true);
+      setTimeout(() => {
+        setformSendedError(false);
+      }, 3000);
+    }
+  };
+
   const onSubmit = (values) => {
-    const { reserveName, tutorId, email, date_start, date_end } = values;
+    const {
+      reserveName,
+      tutorId,
+      email,
+      date_start,
+      date_end,
+      reservationTypeId,
+    } = values;
     const data = {
-      id,
       date,
       date_start,
       date_end,
       status,
+      studentId,
       tutorId,
+      reservationTypeId,
       reserveName,
       email,
     };
-    console.log(data);
+    handleSubmit(data);
   };
+
+  useEffect(() => {
+    const loadSubjects = async () => {
+      try {
+        const data = await fetchSubjects();
+        setSubjects(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    loadSubjects();
+
+    const loadTutorials = async () => {
+      try {
+        const data = await fetchTutorials();
+        setTutorials(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    loadTutorials();
+    obtenerFechaEnFormato();
+  }, []);
 
   return (
     <div className="p-5 mt-5">
@@ -47,25 +132,35 @@ const BookReserve = () => {
         }}
         validationSchema={bookTutoriiing}
       >
-        {({ errors, touched, isSubmitting }) => (
+        {({ errors, touched, isSubmitting, setFieldValue }) => (
           <Form
             className="card shadow my-5 needs-validation  container text-start py-4 px-md-5"
             noValidate
             style={{ maxWidth: "696px" }}
           >
             <div className="mb-3">
-              {/* da igual el nombre */}
               <label htmlFor="reserveName" className="form-label">
                 Materia
               </label>
               <Field
                 name="reserveName"
                 id="reserveName"
-                type="text"
+                as="select"
                 className={`form-control ${
                   touched.reserveName && errors.reserveName ? "is-invalid" : ""
                 }`}
-              />
+                onChange={(e) => {
+                  handleTutorChange(e);
+                  setFieldValue("reserveName", e.target.value);
+                }}
+              >
+                <option value="">Selecciona una materia</option>
+                {subjects.map((subject) => (
+                  <option key={subject.id} value={subject.id}>
+                    {subject.name}
+                  </option>
+                ))}
+              </Field>
               <ErrorMessage
                 name="reserveName"
                 component="p"
@@ -83,17 +178,47 @@ const BookReserve = () => {
                 className={`form-control ${
                   touched.tutorId && errors.tutorId ? "is-invalid" : ""
                 }`}
+                disabled={!touched.reserveName || errors.reserveName}
               >
-                <option>Selecciona un tema</option>
-                <option>Matemáticas</option>
-                <option>Física</option>
-                <option>Química</option>
-                <option>Biología</option>
-                <option>Inglés</option>
-                <option>Historia</option>
+                <option value="">Selecciona una profesor</option>
+                {tutorNames.map((subject) => (
+                  <option
+                    key={subject.Tutor.Person.id}
+                    value={subject.Tutor.Person.id}
+                  >
+                    {subject.Tutor.Person.names}
+                  </option>
+                ))}
               </Field>
               <ErrorMessage
                 name="tutorId"
+                component="p"
+                className="invalid-feedback"
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="reservationTypeId" className="form-label">
+                Tipo de tutoría
+              </label>
+              <Field
+                name="reservationTypeId"
+                id="reservationTypeId"
+                as="select"
+                className={`form-control ${
+                  touched.reservationTypeId && errors.reservationTypeId
+                    ? "is-invalid"
+                    : ""
+                }`}
+              >
+                <option value="">Selecciona un tipo de tutoría</option>
+                {tutorials.map((tutorial) => (
+                  <option key={tutorial.id} value={tutorial.id}>
+                    {tutorial.name}
+                  </option>
+                ))}
+              </Field>
+              <ErrorMessage
+                name="reservationTypeId"
                 component="p"
                 className="invalid-feedback"
               />
@@ -160,6 +285,16 @@ const BookReserve = () => {
             >
               Reservar tutoría
             </button>
+            {formSended && (
+              <div className="alert alert-success" role="alert">
+                Solicitud de tutoría enviada satisfactoriamente
+              </div>
+            )}
+            {formSendedError && (
+              <div className="alert alert-danger" role="alert">
+                Hubo errores al enviar la información de la tutoría
+              </div>
+            )}
           </Form>
         )}
       </Formik>
