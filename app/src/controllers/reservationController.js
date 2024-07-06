@@ -1,7 +1,6 @@
 const Student = require("../models/studentModel");
 const Tutor = require("../models/tutorModel");
 const Reservation = require("../models/reservationModel");
-const ReservationType = require("../models/reservationTypeModel");
 const RegisterReservationDTO = require("../dtos/requestReservation");
 const People = require("../models/peopleModel");
 

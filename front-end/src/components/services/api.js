@@ -74,13 +74,16 @@ export const setRequestStatus = async (request, status) => {
   request.status = status;
   const valuesToInsert = JSON.stringify(request);
 
-  const response = await fetch(`${urlAPI}reservation/reservation/${request.id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: valuesToInsert,
-  });
+  const response = await fetch(
+    `${urlAPI}reservation/reservation/${request.id}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: valuesToInsert,
+    }
+  );
   if (!response.ok) {
     throw new Error(`Error al enviar la información del tutor`);
   }
@@ -114,7 +117,9 @@ export const fetchSubjectsByTutorID = async (tutorId) => {
 };
 
 export const fetchSubjectsUnselectedByTutorID = async (tutorId) => {
-  const response = await fetch(`${urlAPI}tutorSubject/tutorUnselectedSubject/${tutorId}`);
+  const response = await fetch(
+    `${urlAPI}tutorSubject/tutorUnselectedSubject/${tutorId}`
+  );
 
   if (!response.ok) {
     throw new Error("Error obteniendo las materias del tutor");
@@ -165,6 +170,56 @@ export const setStudentInfo = async (values) => {
   });
   if (!response.ok) {
     throw new Error(`Error al enviar la información del estudiante`);
+  }
+  return response.json();
+};
+
+export const fetchSubjects = async () => {
+  const response = await fetch(`${urlAPI}subject/subjects`);
+  if (!response.ok) {
+    throw new Error("Error fetching subjects");
+  }
+  const data = await response.json();
+  return data.subjects.sort((a, b) => a.name.localeCompare(b.name)); //devuelve las materias ordenadas alfabéticamente
+};
+
+export const fetchTutorials = async () => {
+  const response = await fetch(`${urlAPI}generic/reservationType`);
+  if (!response.ok) {
+    throw new Error("Error fetching reservationType");
+  }
+  const data = await response.json();
+  const dataArray = Object.entries(data).map(([key, value]) => ({
+    id: key,
+    name: value,
+  }));
+  return dataArray.sort((a, b) => a.name.localeCompare(b.name)); //devuelve las tutorias ordenadas alfabéticamente
+};
+
+export const fetchTutorsBySubject = async (id) => {
+  const response = await fetch(`${urlAPI}subject/tutorsSubject/${id}`);
+  if (!response.ok) {
+    throw new Error("Error fetching tutors");
+  }
+  const data = await response.json();
+
+  return data.tutorSubjects;
+};
+
+export const setReserveTutorial = async (values) => {
+  const valuesToInsert = JSON.stringify(values);
+  console.log(valuesToInsert);
+
+  const response = await fetch(`${urlAPI}reservation/reservation/new`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: valuesToInsert,
+  });
+  debugger;
+  if (!response.ok) {
+    throw new Error(`Error al enviar la solicitud de la tutoría`);
   }
   return response.json();
 };
