@@ -167,7 +167,7 @@ export const deleteTutorSubject = async (id) => {
 export const setStudentInfo = async (values) => {
   const valuesStudent = JSON.stringify(values);
 
-  const response = await fetch(`${urlAPI}student/student/new`, {
+  const response = await fetch(`${urlAPI}student/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
