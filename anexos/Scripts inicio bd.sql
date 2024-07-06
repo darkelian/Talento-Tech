@@ -9,24 +9,24 @@ INSERT INTO public."ReservationTypes"
 VALUES(nextval('"ReservationTypes_id_seq"'::regclass), 'Mixta');
 
 INSERT INTO public."People"
-(id, names, "lastNames", "typeDocument", "numberDocument", email, gender, birthdate, phone, "password", "userId", "cityId")
-VALUES(nextval('"People_id_seq"'::regclass), 'Edgar Alexander', 'Díaz Murillo', 'CC', '80016199', 'eadiazm@gmail.com', 'M', '1977-07-30', '3134258856', '123', null, 74539);
+(id, names, "lastNames", "typeDocument", "numberDocument", email, gender, birthdate, phone, "userId", "cityId")
+VALUES(nextval('"People_id_seq"'::regclass), 'Edgar Alexander', 'Díaz Murillo', 'CC', '80016199', 'eadiazm@gmail.com', 'M', '1977-07-30', '3134258856', null, 74539);
 
 INSERT INTO public."Tutors"
 (id, profession, "personId")
 VALUES(nextval('"Tutors_id_seq"'::regclass), 'Ingeniero de sistemas especializado en PHP', 1);
 
 INSERT INTO public."People"
-(id, names, "lastNames", "typeDocument", "numberDocument", email, gender, birthdate, phone, "password", "userId", "cityId")
-VALUES(nextval('"People_id_seq"'::regclass), 'Sandra Paola', 'Olarte Casallas', 'CC', '50645897', 'solarte@gmail.com', 'F', '1978-05-06', '3002583691', '123', null, 74589);
+(id, names, "lastNames", "typeDocument", "numberDocument", email, gender, birthdate, phone, "userId", "cityId")
+VALUES(nextval('"People_id_seq"'::regclass), 'Sandra Paola', 'Olarte Casallas', 'CC', '50645897', 'solarte@gmail.com', 'F', '1978-05-06', '3002583691', null, 74589);
 
 INSERT INTO public."Students"
 (id, "personId")
 VALUES(nextval('"Students_id_seq"'::regclass), 2);
 
 INSERT INTO public."People"
-(id, names, "lastNames", "typeDocument", "numberDocument", email, gender, birthdate, phone, "password", "userId", "cityId")
-VALUES(nextval('"People_id_seq"'::regclass), 'Mario', 'Moreno', 'CC', '78525252', 'mmoreno@gmail.com', 'M', '1985-06-01', '3004444691', '123', null, 75000);
+(id, names, "lastNames", "typeDocument", "numberDocument", email, gender, birthdate, phone, "userId", "cityId")
+VALUES(nextval('"People_id_seq"'::regclass), 'Mario', 'Moreno', 'CC', '78525252', 'mmoreno@gmail.com', 'M', '1985-06-01', '3004444691', null, 75000);
 
 INSERT INTO public."Students"
 (id, "personId")
