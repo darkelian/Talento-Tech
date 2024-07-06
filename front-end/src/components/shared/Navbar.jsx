@@ -46,11 +46,6 @@ export function Navbar() {
                       aria-labelledby="navbarDropdownTutor"
                     >
                       <li>
-                        <Link className="dropdown-item" to="/tutor/registration">
-                          Registro
-                        </Link>
-                      </li>
-                      <li>
                         <Link className="dropdown-item" to="/tutor/dashboard">
                           Dashboard
                         </Link>
@@ -74,11 +69,6 @@ export function Navbar() {
                       aria-labelledby="navbarDropdownStudent"
                     >
                       <li>
-                        <Link className="dropdown-item" to="/student/registration1">
-                          Registro
-                        </Link>
-                      </li>
-                      <li>
                         <Link className="dropdown-item" to="/student/dashboardstudent">
                           Dashboard
                         </Link>
@@ -94,11 +84,23 @@ export function Navbar() {
                 </>
               )}
               {!user && (
-                <li className="nav-item">
-                  <Link className="nav-link" to="/login">
-                    Login
-                  </Link>
-                </li>
+                <>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/tutor/registration">
+                      Quiero ser tutor
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/student/registration1">
+                      Quiero ser estudiante
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/login">
+                      Login
+                    </Link>
+                  </li>
+                </>
               )}
             </ul>
           </div>

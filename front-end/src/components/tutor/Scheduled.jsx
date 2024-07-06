@@ -11,6 +11,7 @@ export function Scheduled({ shouldUpdate, onUpdate }) {
     const loadRequests = async () => {
         try {
             const data = await fetchRequestsByTutorIdAndStatus(user.id, StatusEnum.Accepted);
+
             setRequests(data);
             if (onUpdate) {
                 onUpdate();

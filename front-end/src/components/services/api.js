@@ -59,15 +59,21 @@ export const fetchTutorInfo = async (userId) => {
 };
 
 export const fetchRequestsByTutorIdAndStatus = async (tutorId, status) => {
-  const response = await fetch(
-    `${urlAPI}reservation/reservations/tutor/${tutorId}/${status}`
-  );
-  if (!response.ok) {
-    throw new Error("Error fetching reservations by tutor and status");
-  }
+  try {
+    const response = await fetch(
+      `${urlAPI}reservation/reservations/tutor/${tutorId}/${status}`
+    );
 
-  const data = await response.json();
-  return data.reservations; //devuelve los datos del tutor
+    if (!response.ok) {
+      throw new Error("Error fetching reservations by tutor and status");
+    }
+
+    const data = await response.json();
+    return data.reservations; //devuelve los datos del tutor
+
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 export const setRequestStatus = async (request, status) => {
