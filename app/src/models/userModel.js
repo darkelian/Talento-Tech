@@ -1,3 +1,4 @@
+// src/models/userModel.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
@@ -19,8 +20,9 @@ const User = sequelize.define('User', {
     rolName: {
         type: DataTypes.STRING,
         allowNull: false
-    }},
-    { tableName: 'Users' }
-);
+    }
+}, {
+    tableName: 'Users'
+});
 
 module.exports = User;

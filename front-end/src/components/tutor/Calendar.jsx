@@ -30,7 +30,7 @@ const customStaticRanges = createStaticRanges([
     // Agrega más rangos personalizados según sea necesario
 ]);
 
-export function CalendarioEditable() {
+export function EditableCalendar() {
     const [selectionRanges, setSelectionRanges] = useState({
         selection1: {
             startDate: new Date(),

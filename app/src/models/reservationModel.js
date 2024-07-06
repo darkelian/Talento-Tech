@@ -1,57 +1,74 @@
+// src/models/reservationModel.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 const Student = require('./studentModel');
 const Tutor = require('./tutorModel');
 const ReservationType = require('./reservationTypeModel');
+const StatusEnum = require('./statusEnum');
 
 const Reservation = sequelize.define('Reservation', {
     id: {
-        type: DataTypes.INTEGER, 
+        type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
-      },
+    },
     date: {
         type: DataTypes.DATEONLY,
-        allowNull: false,
-        unique: false
+        allowNull: false
     },
     date_start: {
         type: DataTypes.DATEONLY,
-        allowNull: false,
-        unique: false
+        allowNull: false
     },
     date_end: {
         type: DataTypes.DATEONLY,
-        allowNull: false,
-        unique: false
+        allowNull: false
     },
-    cancelled: {
-        type: DataTypes.TEXT('tiny'),
+    status: {
+        type: DataTypes.STRING,
+        values: Object.keys(StatusEnum),
         allowNull: false,
-        unique: true
+        unique: false,
+        defaultValue: StatusEnum.C
     },
-    studentId : {
+    studentId: {
         type: DataTypes.INTEGER,
         references: {
             model: Student,
             key: 'id'
         }
     },
-    tutorId : {
+    tutorId: {
         type: DataTypes.INTEGER,
         references: {
             model: Tutor,
             key: 'id'
         }
     },
-    reservationTypeId : {
+    reservationTypeId: {
         type: DataTypes.INTEGER,
         references: {
             model: ReservationType,
             key: 'id'
         }
-    }},
-    { tableName: 'Reservations' }
-);
+    }
+}, {
+    tableName: 'Reservations'
+});
+
+Student.hasMany(Reservation, { as: 'student_reservation', foreignKey: 'studentId' });
+Reservation.belongsTo(Student, {
+    foreignKey: "studentId"
+});
+
+Tutor.hasMany(Reservation, { as: 'tutor_reservation', foreignKey: 'tutorId' });
+Reservation.belongsTo(Tutor, {
+    foreignKey: "tutorId"
+});
+
+ReservationType.hasMany(Reservation, { as: 'reservationType_reservation', foreignKey: 'reservationTypeId' });
+Reservation.belongsTo(ReservationType, {
+    foreignKey: "reservationTypeId"
+});
 
 module.exports = Reservation;

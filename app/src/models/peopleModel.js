@@ -1,13 +1,14 @@
+// src/models/peopleModel.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 const User = require('./userModel');
 const City = require('./cityModel');
+const DocumentTypeEnum = require('./documentTypeEnum');
 const GenderEnum = require('./genderEnum');
-const documentTypeEnum = require('./documentTypeEnum');
 
-const Person = sequelize.define('Person', {
+const People = sequelize.define('People', {
     id: {
-        type: DataTypes.INTEGER, 
+        type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
@@ -20,8 +21,8 @@ const Person = sequelize.define('Person', {
         allowNull: false
     },
     typeDocument: {
-        type: DataTypes.ENUM,
-        values: Object.values(documentTypeEnum),
+        type:DataTypes.ENUM,
+        values: Object.keys(DocumentTypeEnum),
         allowNull: false
     },
     numberDocument: {
@@ -35,8 +36,8 @@ const Person = sequelize.define('Person', {
         unique: true
     },
     gender: {
-        type: DataTypes.ENUM,
-        values: Object.values(GenderEnum),
+        type:DataTypes.ENUM,
+        values: Object.keys(GenderEnum),
         allowNull: false
     },
     birthdate: {
@@ -47,10 +48,6 @@ const Person = sequelize.define('Person', {
         type: DataTypes.STRING,
         allowNull: true
     },
-    password: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
     userId: {
         type: DataTypes.INTEGER,
         references: {
@@ -60,13 +57,24 @@ const Person = sequelize.define('Person', {
     },
     cityId: {
         type: DataTypes.INTEGER,
-        references: {
+        allowNull: false
+/*        references: {
             model: City,
             key: 'id'
-        }
+        }*/
     }
 }, {
-    tableName: 'persons'
+    tableName: 'People'
+});
+/*
+City.hasMany(People, { as: 'city_people', foreignKey: 'cityId' });
+People.belongsTo(City, {
+    foreignKey: "cityId"
+});
+*/
+User.hasMany(People, { as: 'user_people', foreignKey: 'userId' });
+People.belongsTo(User, {
+    foreignKey: "userId"
 });
 
-module.exports = Person;
+module.exports = People;
