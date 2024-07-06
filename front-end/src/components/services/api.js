@@ -1,6 +1,7 @@
-const urlAPI = "http://localhost:4000/api/";
+const urlAPI = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000/api/";
 
 export const fetchDepartments = async () => {
+  console.log(urlAPI)
   const response = await fetch(`${urlAPI}city/departments`);
   if (!response.ok) {
     throw new Error("Error fetching departments");
