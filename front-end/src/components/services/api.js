@@ -1,7 +1,8 @@
-const urlAPI = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000/api/";
+const urlAPI =
+  process.env.REACT_APP_BACKEND_URL || "http://localhost:4000/api/";
 
 export const fetchDepartments = async () => {
-  console.log(urlAPI)
+  console.log(urlAPI);
   const response = await fetch(`${urlAPI}city/departments`);
   if (!response.ok) {
     throw new Error("Error fetching departments");
@@ -214,7 +215,6 @@ export const fetchTutorsBySubject = async (id) => {
 
 export const setReserveTutorial = async (values) => {
   const valuesToInsert = JSON.stringify(values);
-  console.log(valuesToInsert);
 
   const response = await fetch(`${urlAPI}reservation/reservation/new`, {
     method: "POST",
@@ -223,9 +223,22 @@ export const setReserveTutorial = async (values) => {
     },
     body: valuesToInsert,
   });
-  debugger;
   if (!response.ok) {
     throw new Error(`Error al enviar la solicitud de la tutoría`);
   }
   return response.json();
+};
+
+export const fetchRequestTutorialsByStudentId = async (studentId) => {
+  const response = await fetch(
+    `${urlAPI}reservation/reservations/student/${studentId}`
+  );
+  debugger
+  if (!response.ok) {
+    throw new Error("Error fetching reservation tutorials by student Id");
+  }
+
+  const data = await response.json();
+  debugger
+  return data
 };
