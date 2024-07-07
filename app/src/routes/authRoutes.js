@@ -108,7 +108,11 @@ router.post('/login',
             };
 
             const token = jwt.sign(tokenPayload, secretKey, { expiresIn: '1h' });
-            res.status(200).json({ token: token, message: 'Login successful' });
+            res.status(200).json({
+                success: true,
+                token: token,
+                message: 'Login successful'
+            });
         } catch (err) {
             next(err);
         }
