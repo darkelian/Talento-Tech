@@ -2,7 +2,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 const User = require('./userModel');
-const City = require('./cityModel');
 const DocumentTypeEnum = require('./documentTypeEnum');
 const GenderEnum = require('./genderEnum');
 
@@ -21,7 +20,7 @@ const People = sequelize.define('People', {
         allowNull: false
     },
     typeDocument: {
-        type:DataTypes.ENUM,
+        type: DataTypes.ENUM,
         values: Object.keys(DocumentTypeEnum),
         allowNull: false
     },
@@ -36,7 +35,7 @@ const People = sequelize.define('People', {
         unique: true
     },
     gender: {
-        type:DataTypes.ENUM,
+        type: DataTypes.ENUM,
         values: Object.keys(GenderEnum),
         allowNull: false
     },
@@ -58,10 +57,10 @@ const People = sequelize.define('People', {
     cityId: {
         type: DataTypes.INTEGER,
         allowNull: false
-/*        references: {
-            model: City,
-            key: 'id'
-        }*/
+        /*        references: {
+                    model: City,
+                    key: 'id'
+                }*/
     }
 }, {
     tableName: 'People'

@@ -4,6 +4,11 @@ const { body, validationResult } = require('express-validator');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const User = require('../models/userModel');
+const People = require('../models/peopleModel');
+const { use } = require('passport');
+const Tutor = require('../models/tutorModel');
+const Student = require('../models/studentModel');
 const secretKey = 'talento-tech';
 
 const users = []; // En un entorno real, deberías usar una base de datos
@@ -39,22 +44,71 @@ router.post('/login',
     ],
     async (req, res, next) => {
         const errors = validationResult(req);
+
         if (!errors.isEmpty()) {
             return res.status(400).error(errors.array().map(err => err.msg).join(', '));
         }
 
         try {
             const { username, password } = req.body;
-            const user = users.find(u => u.username === username);
+            const user = await User.findOne({
+                where: { username },
+                include: [
+                    {
+                        model: People,
+                        as: 'user_people',
+                        include: [
+                            {
+                                model: Tutor,
+                                as: 'person_tutor'
+                            },
+                            {
+                                model: Student,
+                                as: 'person_student'
+                            }
+                        ]
+                    }
+                ]
+            });
+
             if (!user) {
                 return res.status(400).error('User not found');
             }
+
+            const person = user.user_people[0];
+
+            // Verificar si es tutor y/o estudiante y obtener los IDs si existen
+            let tutorId = null;
+            let studentId = null;
+
+            if (person.person_tutor.length > 0) {
+                tutorId = person.person_tutor[0].id;
+            }
+
+            if (person.person_student.length > 0) {
+                studentId = person.person_student[0].id;
+            }
+
             const validPassword = await bcrypt.compare(password, user.password);
             if (!validPassword) {
-                return res.status(400).error('Invalid password');
+                return res.status(400).json({ error: 'Invalid password' });
             }
-            const token = jwt.sign({ username: user.username }, secretKey, { expiresIn: '1h' });
-            res.success({ token }, 'Login successful');
+
+            const tokenPayload = {
+                user: {
+                    id: user.id,
+                    username: user.username,
+                },
+                roles: {
+                    isTutor: tutorId !== null,
+                    isStudent: studentId !== null
+                },
+                tutorId,
+                studentId
+            };
+
+            const token = jwt.sign(tokenPayload, secretKey, { expiresIn: '1h' });
+            res.status(200).json({ token: token, message: 'Login successful' });
         } catch (err) {
             next(err);
         }
