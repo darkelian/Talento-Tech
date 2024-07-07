@@ -3,14 +3,14 @@ import { useSelector } from "react-redux";
 import { deleteTutorSubject, fetchSubjectsByTutorID, fetchSubjectsUnselectedByTutorID, setTutorSubject } from "../services/api";
 
 export function Subjects({ shouldUpdate }) {
-    const user = useSelector((state) => state.user.user);
+    const user = useSelector((state) => state.user);
     const [selectedSubjects, setSelectedSubjects] = useState([]);
     const [show, setShow] = useState(false);
     const [subjectsUnselected, setUnselectedSubjects] = useState([]);
 
     const loadSelectedSubjects = async () => {
         try {
-            const data = await fetchSubjectsByTutorID(user.id);
+            const data = await fetchSubjectsByTutorID(user.tutorId);
             setSelectedSubjects(data);
         } catch (error) {
             console.error(error);
@@ -19,7 +19,7 @@ export function Subjects({ shouldUpdate }) {
 
     const loadUnselectedSubjects = async () => {
         try {
-            const data = await fetchSubjectsUnselectedByTutorID(user.id);
+            const data = await fetchSubjectsUnselectedByTutorID(user.tutorId);
             setUnselectedSubjects(data);
         } catch (error) {
             console.error(error);
@@ -28,16 +28,16 @@ export function Subjects({ shouldUpdate }) {
 
     useEffect(() => {
         loadUnselectedSubjects();
-    }, [user.id]);
+    }, [user.tutorId]);
 
     useEffect(() => {
         loadSelectedSubjects();
-    }, [user.id, shouldUpdate]);
+    }, [user.tutorId, shouldUpdate]);
 
     const handleClickAdd = async (subject) => {
 
         try {
-            const resp = await setTutorSubject(user.id, subject.id)
+            const resp = await setTutorSubject(user.tutorId, subject.id)
             loadSelectedSubjects();
             loadUnselectedSubjects();
         } catch (error) {

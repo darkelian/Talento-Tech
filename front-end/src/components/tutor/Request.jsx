@@ -4,7 +4,7 @@ import StatusEnum from "../models/status.model";
 import { fetchRequestsByTutorIdAndStatus, setRequestStatus } from "../services/api";
 
 export function Request({ onAcceptRequest }) {
-    const user = useSelector((state) => state.user.user);
+    const user = useSelector((state) => state.user);
     const [requests, setRequests] = useState([]);
     const [selectedRequest, setSelectedRequest] = useState(null);
     const [show, setShow] = useState(false);
@@ -12,7 +12,7 @@ export function Request({ onAcceptRequest }) {
 
     const loadRequests = async () => {
         try {
-            const data = await fetchRequestsByTutorIdAndStatus(user.id, StatusEnum.Created);
+            const data = await fetchRequestsByTutorIdAndStatus(user.tutorId, StatusEnum.Created);
             setRequests(data);
         } catch (error) {
             console.error(error);
@@ -21,7 +21,7 @@ export function Request({ onAcceptRequest }) {
 
     useEffect(() => {
         loadRequests();
-    }, [user.id]);
+    }, [user.tutorId]);
 
     const handleActionClick = (request, actionType) => {
         setSelectedRequest(request);

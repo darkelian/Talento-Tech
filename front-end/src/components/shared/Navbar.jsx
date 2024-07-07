@@ -1,8 +1,10 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export function Navbar() {
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state.user);
+
   return (
     <div className="container-fluid" style={{ padding: 0 }}>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -28,7 +30,7 @@ export function Navbar() {
                   Home
                 </Link>
               </li>
-              {user && (
+              {user.userId && user.isTutor && (
                 <>
                   <li className="nav-item dropdown">
                     <a
@@ -52,7 +54,10 @@ export function Navbar() {
                       </li>
                     </ul>
                   </li>
-
+                </>
+              )}
+              {user.userId && user.isStudent && (
+                <>
                   <li className="nav-item dropdown">
                     <a
                       className="nav-link dropdown-toggle"
@@ -75,7 +80,10 @@ export function Navbar() {
                       </li>
                     </ul>
                   </li>
-
+                </>
+              )}
+              {user.userId && (
+                <>
                   <li className="nav-item">
                     <Link className="nav-link" to="/logout">
                       Logout
@@ -83,7 +91,7 @@ export function Navbar() {
                   </li>
                 </>
               )}
-              {!user && (
+              {!user.userId && (
                 <>
                   <li className="nav-item">
                     <Link className="nav-link" to="/tutor/registration">
@@ -105,7 +113,7 @@ export function Navbar() {
             </ul>
           </div>
         </div>
-      </nav>
-    </div>
+      </nav >
+    </div >
   );
 }
