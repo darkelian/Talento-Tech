@@ -18,8 +18,8 @@ const BookReserve = () => {
   const [formSended, setformSended] = useState(false);
   const [formSendedError, setformSendedError] = useState(false);
 
-  const user = useSelector((state) => state.user.user),
-    studentId = user.id,
+  const user = useSelector((state) => state.user),
+    studentId = user.studentId,
     status = StatusEnum.Created;
 
   const { bookTutoring } = useSelector((store) => store.infoStudentForm);
@@ -146,9 +146,8 @@ const BookReserve = () => {
                 name="reserveName"
                 id="reserveName"
                 as="select"
-                className={`form-control ${
-                  touched.reserveName && errors.reserveName ? "is-invalid" : ""
-                }`}
+                className={`form-control ${touched.reserveName && errors.reserveName ? "is-invalid" : ""
+                  }`}
                 onChange={(e) => {
                   handleTutorChange(e);
                   setFieldValue("reserveName", e.target.value);
@@ -175,9 +174,8 @@ const BookReserve = () => {
                 name="tutorId"
                 id="tutorId"
                 as="select"
-                className={`form-control ${
-                  touched.tutorId && errors.tutorId ? "is-invalid" : ""
-                }`}
+                className={`form-control ${touched.tutorId && errors.tutorId ? "is-invalid" : ""
+                  }`}
                 disabled={!touched.reserveName || errors.reserveName}
               >
                 <option value="">Selecciona una profesor</option>
@@ -204,11 +202,10 @@ const BookReserve = () => {
                 name="reservationTypeId"
                 id="reservationTypeId"
                 as="select"
-                className={`form-control ${
-                  touched.reservationTypeId && errors.reservationTypeId
-                    ? "is-invalid"
-                    : ""
-                }`}
+                className={`form-control ${touched.reservationTypeId && errors.reservationTypeId
+                  ? "is-invalid"
+                  : ""
+                  }`}
               >
                 <option value="">Selecciona un tipo de tutoría</option>
                 {tutorials.map((tutorial) => (
@@ -231,9 +228,8 @@ const BookReserve = () => {
                 name="email"
                 id="email"
                 type="email"
-                className={`form-control ${
-                  touched.email && errors.email ? "is-invalid" : ""
-                }`}
+                className={`form-control ${touched.email && errors.email ? "is-invalid" : ""
+                  }`}
               />
               <ErrorMessage
                 name="email"
@@ -249,9 +245,8 @@ const BookReserve = () => {
                 name="date_start"
                 id="date_start"
                 type="date"
-                className={`form-control ${
-                  touched.date_start && errors.date_start ? "is-invalid" : ""
-                }`}
+                className={`form-control ${touched.date_start && errors.date_start ? "is-invalid" : ""
+                  }`}
               />
               <ErrorMessage
                 name="date_start"
@@ -267,9 +262,8 @@ const BookReserve = () => {
                 name="date_end"
                 id="date_end"
                 type="date"
-                className={`form-control ${
-                  touched.date_end && errors.date_end ? "is-invalid" : ""
-                }`}
+                className={`form-control ${touched.date_end && errors.date_end ? "is-invalid" : ""
+                  }`}
               />
               <ErrorMessage
                 name="date_end"

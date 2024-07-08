@@ -1,7 +1,28 @@
-const urlAPI = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000/api/";
+const urlAPI =
+  process.env.REACT_APP_BACKEND_URL || "http://localhost:4000/api/";
+
+export const fetchLogin = async (values) => {
+
+  const response = await fetch(`${urlAPI}auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: values.email,
+      password: values.password,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Error ingresando al sistema");
+  }
+
+  const data = await response.json();
+  return data;
+}
 
 export const fetchDepartments = async () => {
-  console.log(urlAPI)
   const response = await fetch(`${urlAPI}city/departments`);
   if (!response.ok) {
     throw new Error("Error fetching departments");
@@ -59,15 +80,21 @@ export const fetchTutorInfo = async (userId) => {
 };
 
 export const fetchRequestsByTutorIdAndStatus = async (tutorId, status) => {
-  const response = await fetch(
-    `${urlAPI}reservation/reservations/tutor/${tutorId}/${status}`
-  );
-  if (!response.ok) {
-    throw new Error("Error fetching reservations by tutor and status");
-  }
+  try {
+    const response = await fetch(
+      `${urlAPI}reservation/reservations/tutor/${tutorId}/${status}`
+    );
 
-  const data = await response.json();
-  return data.reservations; //devuelve los datos del tutor
+    if (!response.ok) {
+      throw new Error("Error fetching reservations by tutor and status");
+    }
+
+    const data = await response.json();
+    return data.reservations; //devuelve los datos del tutor
+
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 export const setRequestStatus = async (request, status) => {
@@ -161,7 +188,7 @@ export const deleteTutorSubject = async (id) => {
 export const setStudentInfo = async (values) => {
   const valuesStudent = JSON.stringify(values);
 
-  const response = await fetch(`${urlAPI}student/student/new`, {
+  const response = await fetch(`${urlAPI}student/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -208,7 +235,6 @@ export const fetchTutorsBySubject = async (id) => {
 
 export const setReserveTutorial = async (values) => {
   const valuesToInsert = JSON.stringify(values);
-  console.log(valuesToInsert);
 
   const response = await fetch(`${urlAPI}reservation/reservation/new`, {
     method: "POST",
@@ -217,9 +243,21 @@ export const setReserveTutorial = async (values) => {
     },
     body: valuesToInsert,
   });
-  debugger;
   if (!response.ok) {
     throw new Error(`Error al enviar la solicitud de la tutoría`);
   }
   return response.json();
+};
+
+export const fetchRequestTutorialsByStudentId = async (studentId) => {
+  const response = await fetch(
+    `${urlAPI}reservation/reservations/student/${studentId}`
+  );
+
+  if (!response.ok) {
+    throw new Error("Error fetching reservation tutorials by student Id");
+  }
+
+  const data = await response.json();
+  return data
 };
