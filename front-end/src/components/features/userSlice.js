@@ -25,7 +25,7 @@ const userSlice = createSlice({
             state.userId = decodedToken.user.id;
             state.userName = decodedToken.user.username;
 
-            localStorage.setItem('user', state);  // Guardar el usario directamente
+            localStorage.setItem('user', JSON.stringify(state));  // Guardar el usario directamente
         },
         logout: (state) => {
             state.isTutor = false;
