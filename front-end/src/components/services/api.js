@@ -1,8 +1,27 @@
 const urlAPI =
   process.env.REACT_APP_BACKEND_URL || "http://localhost:4000/api/";
 
+export const fetchLogin = async (values) => {
+  const response = await fetch(`${urlAPI}auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: values.email,
+      password: values.password,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Error ingresando al sistema");
+  }
+
+  const data = await response.json();
+  return data;
+};
+
 export const fetchDepartments = async () => {
-  console.log(urlAPI);
   const response = await fetch(`${urlAPI}city/departments`);
   if (!response.ok) {
     throw new Error("Error fetching departments");
@@ -232,6 +251,7 @@ export const fetchRequestTutorialsByStudentId = async (studentId) => {
   const response = await fetch(
     `${urlAPI}reservation/reservations/student/${studentId}`
   );
+
   if (!response.ok) {
     throw new Error("Error fetching reservation tutorials by student Id");
   }

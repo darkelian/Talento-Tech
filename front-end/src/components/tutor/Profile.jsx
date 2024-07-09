@@ -3,13 +3,13 @@ import { useSelector } from 'react-redux';
 import { fetchTutorInfo } from "../services/api";
 
 export function Profile() {
-    const user = useSelector((state) => state.user.user);
+    const user = useSelector((state) => state.user);
     const [tutor, setTutor] = useState(null);
 
     useEffect(() => {
         const loadProfile = async () => {
             try {
-                const data = await fetchTutorInfo(user.id);
+                const data = await fetchTutorInfo(user.tutorId);
 
                 setTutor(data);
             } catch (error) {

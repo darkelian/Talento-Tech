@@ -4,13 +4,13 @@ import { fetchRequestsByTutorIdAndStatus, setRequestStatus } from "../services/a
 import StatusEnum from "../models/status.model";
 
 export function Scheduled({ shouldUpdate, onUpdate }) {
-    const user = useSelector((state) => state.user.user);
+    const user = useSelector((state) => state.user);
     const [requests, setRequests] = useState([]);
     const [selectedRequest, setSelectedRequest] = useState(null);
     const [show, setShow] = useState(false);
     const loadRequests = async () => {
         try {
-            const data = await fetchRequestsByTutorIdAndStatus(user.id, StatusEnum.Accepted);
+            const data = await fetchRequestsByTutorIdAndStatus(user.tutorId, StatusEnum.Accepted);
 
             setRequests(data);
             if (onUpdate) {
@@ -24,7 +24,7 @@ export function Scheduled({ shouldUpdate, onUpdate }) {
 
     useEffect(() => {
         loadRequests();
-    }, [user.id, shouldUpdate]);
+    }, [user.tutorId, shouldUpdate]);
 
     const handleActionClick = (request) => {
         setSelectedRequest(request);

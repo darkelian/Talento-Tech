@@ -1,15 +1,30 @@
 import { Form, Formik, Field, ErrorMessage } from "formik";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../features/userSlice";
+import { fetchLogin } from "../services/api";
 
 export function Login() {
   const dispatch = useDispatch();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [formSended, setFormSended] = useState(false);
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (formSended) {
+      setTimeout(() => {
+        setFormSended(false);
+
+        if (user.isTutor) {
+          navigate("../tutor/Dashboard");
+        }
+        if (user.isStudent) {
+          navigate("../student/Dashboard");
+        }
+      }, 2000);
+    }
+  }, [formSended, user, navigate]);
 
   const validate = (values) => {
     const errors = {};
@@ -28,25 +43,19 @@ export function Login() {
     return errors;
   };
 
-  const handleSubmit = (event) => {
-    // Aquí deberías enviar las credenciales al backend y obtener los datos del usuario
-    const userData = {
-      id: "1",
-      email: event.email,
-      password: event.password,
-      rol: "tutor",
-    };
-    dispatch(login(userData));
-    setFormSended(true);
-    setTimeout(() => {
-      setFormSended(false);
-      if (userData.rol == "tutor") {
-        navigate("../tutor/Dashboard");
-      }
-      if (userData.rol == "student") {
-        navigate("../student/Dashboard");
-      }
-    }, 2000);
+  const handleSubmit = async (values, { setSubmitting }) => {
+    try {
+      const response = await fetchLogin(values);
+
+      dispatch(login(response));
+      setFormSended(true);
+
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error en la autenticación");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -70,9 +79,8 @@ export function Login() {
               </label>
               <Field
                 type="email"
-                className={`form-control ${
-                  touched.email && errors.email ? "is-invalid" : ""
-                }`}
+                className={`form-control ${touched.email && errors.email ? "is-invalid" : ""
+                  }`}
                 id="email"
                 name="email"
                 aria-describedby="emailHelp"
@@ -91,9 +99,8 @@ export function Login() {
               </label>
               <Field
                 type="password"
-                className={`form-control ${
-                  touched.password && errors.password ? "is-invalid" : ""
-                }`}
+                className={`form-control ${touched.password && errors.password ? "is-invalid" : ""
+                  }`}
                 id="password"
                 name="password"
                 autoComplete="current-password"
