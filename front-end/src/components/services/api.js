@@ -259,3 +259,16 @@ export const fetchRequestTutorialsByStudentId = async (studentId) => {
   const data = await response.json();
   return data.reservations;
 };
+
+
+export const deleteTutorialReserve = async (id) => {
+  const response = await fetch(`${urlAPI}reservation/reservation/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error al eliminar la información del tutor materia`);
+  }
+
+  return response.json();
+};

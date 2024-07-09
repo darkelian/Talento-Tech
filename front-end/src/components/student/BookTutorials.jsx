@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { fetchRequestTutorialsByStudentId } from "../services/api";
+import {
+  deleteTutorialReserve,
+  fetchRequestTutorialsByStudentId,
+} from "../services/api";
 
 const BookTutorials = () => {
   const user = useSelector((state) => state.user);
@@ -10,7 +13,15 @@ const BookTutorials = () => {
     try {
       const data = await fetchRequestTutorialsByStudentId(user.studentId);
       setRequests(data);
-      console.log(requests);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleClickCancel = async (request) => {
+    try {
+      await deleteTutorialReserve(request.id);
+      loadRequests();
     } catch (error) {
       console.log(error);
     }
@@ -21,19 +32,43 @@ const BookTutorials = () => {
   }, [user.studentId]);
 
   return (
-    <div className="grid back-color py-5 align-item-center">
+    <div className="grid back-color p-5 align-item-center">
+      {console.log(requests)}
       <div className="">
         <h2 className="text-center">Tus tutorias</h2>
         <div
-          className="container card shadow py-2"
+          className="container card shadow d-flex justify-content-center align-items-center px-md-5"
           style={{ maxWidth: "696px" }}
         >
-          {requests.map((request, index)=>{
-            
-          })}
-          {console.log(requests)}
-
-          <p>En este momento no tienes ninguna tutoria pendiente</p>
+          {requests.length !== 0 ? (
+            requests.map((request, index) => (
+              <div
+                key={index}
+                className="card shadow container row row-cols-1 back-color p-1 mx-0 my-2"
+              >
+                <div className="row row-cols-2">
+                  <div className="text-center">
+                    <p className="mb-0 fw-bolder">
+                      {`${request.Tutor.Person.names} ${request.Tutor.Person.lastNames} (${request.Subject.name}) `}
+                    </p>
+                    <p className="mb-0">
+                      {`${request.date_start} - ${request.date_end}`}{" "}
+                    </p>
+                  </div>
+                  <div className="d-flex justify-content-center align-items-center">
+                    <button
+                      className="btn btn-dark"
+                      onClick={() => handleClickCancel(request)}
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p className="fw-bolder">En este momento no tienes ninguna tutoria pendiente</p>
+          )}
         </div>
       </div>
     </div>
