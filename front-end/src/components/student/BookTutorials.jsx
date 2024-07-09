@@ -8,7 +8,9 @@ const BookTutorials = () => {
 
   const loadRequests = async () => {
     try {
-      const data = await fetchRequestTutorialsByStudentId(user.studentId);
+      const data = await fetchRequestTutorialsByStudentId(
+        user.studentId
+      );
       setRequests(data);
       console.log(requests);
     } catch (error) {
