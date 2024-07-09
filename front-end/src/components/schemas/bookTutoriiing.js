@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 
 export const bookTutoriiing = Yup.object().shape({
-  reserveName: Yup.string().required("Los nombres son requeridos"),
+  subjectId: Yup.string().required("Los nombres son requeridos"),
   tutorId: Yup.string().required("Debe seleccionar al profesor de la tutoría"),
   reservationTypeId: Yup.string().required(
     "Debe seleccionar el tipo de tutoría"

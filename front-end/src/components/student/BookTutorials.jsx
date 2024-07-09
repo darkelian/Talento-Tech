@@ -8,9 +8,7 @@ const BookTutorials = () => {
 
   const loadRequests = async () => {
     try {
-      const data = await fetchRequestTutorialsByStudentId(
-        user.studentId
-      );
+      const data = await fetchRequestTutorialsByStudentId(user.studentId);
       setRequests(data);
       console.log(requests);
     } catch (error) {
@@ -30,6 +28,11 @@ const BookTutorials = () => {
           className="container card shadow py-2"
           style={{ maxWidth: "696px" }}
         >
+          {requests.map((request, index)=>{
+            
+          })}
+          {console.log(requests)}
+
           <p>En este momento no tienes ninguna tutoria pendiente</p>
         </div>
       </div>

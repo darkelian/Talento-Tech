@@ -70,7 +70,7 @@ const BookReserve = () => {
 
   const onSubmit = (values) => {
     const {
-      reserveName,
+      subjectId,
       tutorId,
       email,
       date_start,
@@ -85,7 +85,7 @@ const BookReserve = () => {
       studentId,
       tutorId,
       reservationTypeId,
-      reserveName,
+      subjectId,
       email,
     };
     handleSubmit(data);
@@ -139,18 +139,19 @@ const BookReserve = () => {
             style={{ maxWidth: "696px" }}
           >
             <div className="mb-3">
-              <label htmlFor="reserveName" className="form-label">
+              <label htmlFor="subjectId" className="form-label">
                 Materia
               </label>
               <Field
-                name="reserveName"
-                id="reserveName"
+                name="subjectId"
+                id="subjectId"
                 as="select"
-                className={`form-control ${touched.reserveName && errors.reserveName ? "is-invalid" : ""
-                  }`}
+                className={`form-control ${
+                  touched.subjectId && errors.subjectId ? "is-invalid" : ""
+                }`}
                 onChange={(e) => {
                   handleTutorChange(e);
-                  setFieldValue("reserveName", e.target.value);
+                  setFieldValue("subjectId", e.target.value);
                 }}
               >
                 <option value="">Selecciona una materia</option>
@@ -161,7 +162,7 @@ const BookReserve = () => {
                 ))}
               </Field>
               <ErrorMessage
-                name="reserveName"
+                name="subjectId"
                 component="p"
                 className="invalid-feedback"
               />
@@ -174,9 +175,10 @@ const BookReserve = () => {
                 name="tutorId"
                 id="tutorId"
                 as="select"
-                className={`form-control ${touched.tutorId && errors.tutorId ? "is-invalid" : ""
-                  }`}
-                disabled={!touched.reserveName || errors.reserveName}
+                className={`form-control ${
+                  touched.tutorId && errors.tutorId ? "is-invalid" : ""
+                }`}
+                disabled={!touched.subjectId || errors.subjectId}
               >
                 <option value="">Selecciona una profesor</option>
                 {tutorNames.map((subject) => (
@@ -202,10 +204,11 @@ const BookReserve = () => {
                 name="reservationTypeId"
                 id="reservationTypeId"
                 as="select"
-                className={`form-control ${touched.reservationTypeId && errors.reservationTypeId
-                  ? "is-invalid"
-                  : ""
-                  }`}
+                className={`form-control ${
+                  touched.reservationTypeId && errors.reservationTypeId
+                    ? "is-invalid"
+                    : ""
+                }`}
               >
                 <option value="">Selecciona un tipo de tutoría</option>
                 {tutorials.map((tutorial) => (
@@ -228,8 +231,9 @@ const BookReserve = () => {
                 name="email"
                 id="email"
                 type="email"
-                className={`form-control ${touched.email && errors.email ? "is-invalid" : ""
-                  }`}
+                className={`form-control ${
+                  touched.email && errors.email ? "is-invalid" : ""
+                }`}
               />
               <ErrorMessage
                 name="email"
@@ -245,8 +249,9 @@ const BookReserve = () => {
                 name="date_start"
                 id="date_start"
                 type="date"
-                className={`form-control ${touched.date_start && errors.date_start ? "is-invalid" : ""
-                  }`}
+                className={`form-control ${
+                  touched.date_start && errors.date_start ? "is-invalid" : ""
+                }`}
               />
               <ErrorMessage
                 name="date_start"
@@ -262,8 +267,9 @@ const BookReserve = () => {
                 name="date_end"
                 id="date_end"
                 type="date"
-                className={`form-control ${touched.date_end && errors.date_end ? "is-invalid" : ""
-                  }`}
+                className={`form-control ${
+                  touched.date_end && errors.date_end ? "is-invalid" : ""
+                }`}
               />
               <ErrorMessage
                 name="date_end"
