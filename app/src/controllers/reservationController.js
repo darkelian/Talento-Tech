@@ -4,6 +4,7 @@ const Reservation = require("../models/reservationModel");
 const RegisterReservationDTO = require("../dtos/requestReservation");
 const People = require("../models/peopleModel");
 const ReservationTypeEnum = require("../models/reservationTypeEnum");
+const Subject = require("../models/subjectModel");
 
 //Create a Reservation
 exports.newReservation = async (req, res, next) => {
@@ -138,6 +139,9 @@ exports.getReservationsByStudentId = async (req, res, next) => {
         {
           model: Tutor,
           include: [{ model: People }], // Incluye la tabla People asociada al modelo Student
+        },
+        {
+          model: Subject,
         },
       ],
     });

@@ -5,6 +5,7 @@ const Student = require("./studentModel");
 const Tutor = require("./tutorModel");
 const StatusEnum = require("./statusEnum");
 const ReservationTypeEnum = require("./reservationTypeEnum");
+const Subject = require("./subjectModel");
 
 const Reservation = sequelize.define(
   "Reservation",
@@ -53,6 +54,13 @@ const Reservation = sequelize.define(
       allowNull: false,
       unique: false,
     },
+    subjectId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: Subject,
+        key: "id",
+      },
+    },
   },
   {
     tableName: "Reservations",
@@ -70,6 +78,14 @@ Reservation.belongsTo(Student, {
 Tutor.hasMany(Reservation, { as: "tutor_reservation", foreignKey: "tutorId" });
 Reservation.belongsTo(Tutor, {
   foreignKey: "tutorId",
+});
+
+Subject.hasMany(Reservation, {
+  as: "subject_reservation",
+  foreignKey: "subjectId",
+});
+Reservation.belongsTo(Subject, {
+  foreignKey: "subjectId",
 });
 
 module.exports = Reservation;
