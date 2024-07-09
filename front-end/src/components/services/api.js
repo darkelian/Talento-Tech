@@ -71,9 +71,8 @@ export const fetchRequestsByTutorIdAndStatus = async (tutorId, status) => {
 
     const data = await response.json();
     return data.reservations; //devuelve los datos del tutor
-
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
 
@@ -233,12 +232,10 @@ export const fetchRequestTutorialsByStudentId = async (studentId) => {
   const response = await fetch(
     `${urlAPI}reservation/reservations/student/${studentId}`
   );
-  debugger
   if (!response.ok) {
     throw new Error("Error fetching reservation tutorials by student Id");
   }
 
   const data = await response.json();
-  debugger
-  return data
+  return data.reservations;
 };
