@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/darkelian/Talento-Tech.git/static/css/main.b913c890.css",
+    "main.js": "/darkelian/Talento-Tech.git/static/js/main.89aa27fa.js",
+    "static/js/453.f7be5b23.chunk.js": "/darkelian/Talento-Tech.git/static/js/453.f7be5b23.chunk.js",
+    "index.html": "/darkelian/Talento-Tech.git/index.html",
+    "main.b913c890.css.map": "/darkelian/Talento-Tech.git/static/css/main.b913c890.css.map",
+    "main.89aa27fa.js.map": "/darkelian/Talento-Tech.git/static/js/main.89aa27fa.js.map",
+    "453.f7be5b23.chunk.js.map": "/darkelian/Talento-Tech.git/static/js/453.f7be5b23.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b913c890.css",
+    "static/js/main.89aa27fa.js"
+  ]
+}
