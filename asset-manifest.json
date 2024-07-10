@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Talento-Tech/static/css/main.b913c890.css",
-    "main.js": "/Talento-Tech/static/js/main.06f7c249.js",
+    "main.js": "/Talento-Tech/static/js/main.3b1aa56f.js",
     "static/js/453.f7be5b23.chunk.js": "/Talento-Tech/static/js/453.f7be5b23.chunk.js",
     "index.html": "/Talento-Tech/index.html",
     "main.b913c890.css.map": "/Talento-Tech/static/css/main.b913c890.css.map",
-    "main.06f7c249.js.map": "/Talento-Tech/static/js/main.06f7c249.js.map",
+    "main.3b1aa56f.js.map": "/Talento-Tech/static/js/main.3b1aa56f.js.map",
     "453.f7be5b23.chunk.js.map": "/Talento-Tech/static/js/453.f7be5b23.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b913c890.css",
-    "static/js/main.06f7c249.js"
+    "static/js/main.3b1aa56f.js"
   ]
 }
