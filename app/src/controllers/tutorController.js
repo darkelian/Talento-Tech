@@ -1,5 +1,6 @@
 const Person = require("../models/peopleModel");
 const Tutor = require("../models/tutorModel");
+const Student = require("../models/studentModel");
 const User = require("../models/userModel");
 const bcrypt = require('bcryptjs');
 const RegisterTutorDTO = require("../dtos/requestTutor");
@@ -36,6 +37,52 @@ exports.newTutor = async (req, res, next) => {
         });
     } catch (error) {
         res.status(400).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
+// Create a tutor as Student
+exports.createTutorAsStudentByTutorId = async (req, res, next) => {
+    const tutorId = req.params.id;
+
+    try {
+        const tutor = await Tutor.findOne({
+            where: { id: tutorId },
+            include: [{ model: Person }]
+        });
+
+        if (!tutor) {
+            return res.status(404).json({
+                success: false,
+                message: `Tutor not found in BD with id: ${tutorId}`
+            });
+        }
+
+        const student = await Student.findOne({
+            where: { personId: tutor.Person.id },
+            include: [{ model: Person }]
+        });
+
+        if (student) {
+            return res.status(200).json({
+                success: true,
+                message: `Tutor already exists as a student: ${tutor.Person.id}`,
+                student: student
+            });
+        }
+
+        const newStudent = await Student.create({ personId: tutor.Person.id });
+
+        res.status(201).json({
+            success: true,
+            message: "Tutor created as Student in BD.",
+            student: newStudent
+        });
+
+    } catch (error) {
+        return res.status(500).json({
             success: false,
             message: error.message
         });
