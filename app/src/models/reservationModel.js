@@ -6,7 +6,6 @@ const Tutor = require("./tutorModel");
 const StatusEnum = require("./statusEnum");
 const ReservationTypeEnum = require("./reservationTypeEnum");
 const Subject = require("./subjectModel");
-const ReservationType = require("./reservationTypeModel");
 
 const Reservation = sequelize.define(
   "Reservation",
