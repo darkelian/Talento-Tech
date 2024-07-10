@@ -147,12 +147,11 @@ exports.getReservationsByStudentId = async (req, res, next) => {
     });
 
     if (reservations.length === 0) {
-      return next(
-        res.status(200).json({
-          success: false,
-          message: `Reservations not found in DB with student Id: ${studentId}`,
-        })
-      );
+      return res.status(200).json({
+        success: false,
+        message: `Reservations not found in DB with student Id: ${studentId}`,
+        reservations: [],
+      });
     }
 
     const reservationsWithType = reservations.map((reservation) => {

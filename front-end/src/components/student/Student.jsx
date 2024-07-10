@@ -9,22 +9,6 @@ export function Student() {
   return (
     <>
       <Routes>
-        <Route
-          path={`registration1`}
-          element={
-            <StudentRegistrationProvider>
-              <Registrations />
-            </StudentRegistrationProvider>
-          }
-        />
-        <Route
-          path={`registration2`}
-          element={
-            <StudentRegistrationProvider>
-              <Registrations2 />
-            </StudentRegistrationProvider>
-          }
-        />
         <Route path={`dashboardstudent`} element={<HomeStudent />} />
         <Route path={`booktutoring`} element={<BookTutoring />} />
       </Routes>

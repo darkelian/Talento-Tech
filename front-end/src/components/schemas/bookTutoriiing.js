@@ -1,10 +1,11 @@
 import * as Yup from "yup";
 
 export const bookTutoriiing = Yup.object().shape({
-  reserveName: Yup.string()
-    .matches(/^([ a-zA-ZñÑáéíóúÁÉÍÓÚ]).{2,254}/, "Solo se permiten letras")
-    .required("Los nombres son requeridos"),
-  tutorId: Yup.string().required("Debe seleccionar la matería de la tutoría"),
+  subjectId: Yup.string().required("Los nombres son requeridos"),
+  tutorId: Yup.string().required("Debe seleccionar al profesor de la tutoría"),
+  reservationTypeId: Yup.string().required(
+    "Debe seleccionar el tipo de tutoría"
+  ),
   email: Yup.string()
     .matches(
       /[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,5}/,

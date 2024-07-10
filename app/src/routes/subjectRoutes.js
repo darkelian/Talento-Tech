@@ -17,7 +17,7 @@ router.route('/subject/new').post(newSubject);
 //(FIND) Ruta consulta all Subjects 
 router.route('/subjects').get(getAllSubjects);
 
-//(FIND) Ruta consulta Subject x tutorId 
+//(FIND) Ruta consulta Subject x subjectId
 router.route('/subject/:id').get(getSubjectById);
 
 //(FIND) Ruta consulta Subject' tutors x subjectId 

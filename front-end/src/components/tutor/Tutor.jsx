@@ -7,10 +7,6 @@ export function Tutor() {
     return (
         <>
             <Routes>
-                <Route path={`registration`} element={
-                    <TutorRegistrationProvider>
-                        <Registration />
-                    </TutorRegistrationProvider>} />
                 <Route path={`dashboard`} element={<Dashboard />} />
             </Routes>
         </>

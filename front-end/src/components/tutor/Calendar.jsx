@@ -52,7 +52,6 @@ export function EditableCalendar() {
         for (let key in ranges) {
             newRanges[key] = ranges[key];
         }
-        debugger
         setSelectionRanges(newRanges);
     };
 
