@@ -10,7 +10,7 @@ import {
   setReserveTutorial,
 } from "../services/api";
 
-const BookReserve = () => {
+const BookReserve = ({sendingReload}) => {
   const [subjects, setSubjects] = useState([]);
   const [tutorials, setTutorials] = useState([]);
   const [tutorNames, setTutorNames] = useState([]);
@@ -60,6 +60,7 @@ const BookReserve = () => {
       setTimeout(() => {
         setformSended(false);
       }, 3000);
+      sendingReload()
     } catch (error) {
       setformSendedError(true);
       setTimeout(() => {

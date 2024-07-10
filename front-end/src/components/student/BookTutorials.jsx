@@ -5,7 +5,7 @@ import {
   fetchRequestTutorialsByStudentId,
 } from "../services/api";
 
-const BookTutorials = () => {
+const BookTutorials = ({ sendingReload, updateReload }) => {
   const user = useSelector((state) => state.user);
   const [requests, setRequests] = useState([]);
 
@@ -13,6 +13,7 @@ const BookTutorials = () => {
     try {
       const data = await fetchRequestTutorialsByStudentId(user.studentId);
       setRequests(data);
+      updateReload(false);
     } catch (error) {
       console.log(error);
     }
@@ -21,15 +22,16 @@ const BookTutorials = () => {
   const handleClickCancel = async (request) => {
     try {
       await deleteTutorialReserve(request.id);
-      loadRequests();
     } catch (error) {
       console.log(error);
+    } finally {
+      loadRequests();
     }
   };
 
   useEffect(() => {
     loadRequests();
-  }, [user.studentId]);
+  }, [user.studentId, sendingReload]);
 
   return (
     <div className="grid back-color p-5 align-item-center">
@@ -67,7 +69,9 @@ const BookTutorials = () => {
               </div>
             ))
           ) : (
-            <p className="fw-bolder">En este momento no tienes ninguna tutoria pendiente</p>
+            <p className="fw-bolder">
+              En este momento no tienes ninguna tutoria pendiente
+            </p>
           )}
         </div>
       </div>
