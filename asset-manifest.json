@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.b913c890.css",
-    "main.js": "/static/js/main.5bf29b71.js",
-    "static/js/453.f7be5b23.chunk.js": "/static/js/453.f7be5b23.chunk.js",
-    "index.html": "/index.html",
-    "main.b913c890.css.map": "/static/css/main.b913c890.css.map",
-    "main.5bf29b71.js.map": "/static/js/main.5bf29b71.js.map",
-    "453.f7be5b23.chunk.js.map": "/static/js/453.f7be5b23.chunk.js.map"
+    "main.css": "/darkelian/Talento-Tech/static/css/main.b913c890.css",
+    "main.js": "/darkelian/Talento-Tech/static/js/main.eda0ea18.js",
+    "static/js/453.f7be5b23.chunk.js": "/darkelian/Talento-Tech/static/js/453.f7be5b23.chunk.js",
+    "index.html": "/darkelian/Talento-Tech/index.html",
+    "main.b913c890.css.map": "/darkelian/Talento-Tech/static/css/main.b913c890.css.map",
+    "main.eda0ea18.js.map": "/darkelian/Talento-Tech/static/js/main.eda0ea18.js.map",
+    "453.f7be5b23.chunk.js.map": "/darkelian/Talento-Tech/static/js/453.f7be5b23.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b913c890.css",
-    "static/js/main.5bf29b71.js"
+    "static/js/main.eda0ea18.js"
   ]
 }
