@@ -9,6 +9,7 @@ export function Subjects({ shouldUpdate }) {
     const [subjectsUnselected, setUnselectedSubjects] = useState([]);
 
     const loadSelectedSubjects = async () => {
+        if (!user || !user.tutorId) return; // Verificar si user y tutorId están definidos
         try {
             const data = await fetchSubjectsByTutorID(user.tutorId);
             setSelectedSubjects(data);
@@ -18,6 +19,7 @@ export function Subjects({ shouldUpdate }) {
     };
 
     const loadUnselectedSubjects = async () => {
+        if (!user || !user.tutorId) return; // Verificar si user y tutorId están definidos
         try {
             const data = await fetchSubjectsUnselectedByTutorID(user.tutorId);
             setUnselectedSubjects(data);
@@ -28,11 +30,11 @@ export function Subjects({ shouldUpdate }) {
 
     useEffect(() => {
         loadUnselectedSubjects();
-    }, [user.tutorId]);
+    }, [user]);
 
     useEffect(() => {
         loadSelectedSubjects();
-    }, [user.tutorId, shouldUpdate]);
+    }, [user, shouldUpdate]);
 
     const handleClickAdd = async (subject) => {
 

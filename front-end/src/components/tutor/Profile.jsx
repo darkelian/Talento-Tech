@@ -7,6 +7,8 @@ export function Profile() {
     const [tutor, setTutor] = useState(null);
 
     useEffect(() => {
+        if (!user || !user.tutorId) return; // Verificar si user y tutorId están definidos
+
         const loadProfile = async () => {
             try {
                 const data = await fetchTutorInfo(user.tutorId);
@@ -17,7 +19,7 @@ export function Profile() {
             }
         };
         loadProfile();
-    }, []);
+    }, [user]);
 
     if (!tutor) {
         return <div>Cargando perfil del tutor...</div>;

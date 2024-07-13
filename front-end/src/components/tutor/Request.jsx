@@ -20,8 +20,11 @@ export function Request({ onAcceptRequest }) {
     };
 
     useEffect(() => {
-        loadRequests();
-    }, [user.tutorId]);
+        if (user && user.tutorId) {
+            loadRequests();
+        }
+    }, [user]);
+
 
     const handleActionClick = (request, actionType) => {
         setSelectedRequest(request);
@@ -53,25 +56,28 @@ export function Request({ onAcceptRequest }) {
     return (
         <div className="card mb-3" style={{ minWidth: '400px' }} >
             <h5 className="card-header">Solicitudes de tutorias</h5>
-            {requests.map((request, index) => (
-                <div key={index} className="row g-0">
-                    <div className="d-flex text-center align-items-center justify-content-center w-100">
-                        <div className="col-3">
-                            <img src={`https://ui-avatars.com/api/?name=${request.Student.Person.names}+${request.Student.Person.lastNames}&background=random`} className="img-fluid rounded-circle" alt={`${request.Student.Person.names} ${request.Student.Person.lastNames}`} style={{ width: '30px', height: '30px', objectFit: 'cover' }} />
-                        </div>
-                        <div className="col-3">
-                            <div className="card-title my-1"><nobr>{request.Student.Person.names} {request.Student.Person.lastNames}</nobr></div>
-                            <div className="card-text" style={{ marginTop: '-5px' }}><small className="text-muted">{request.subjects}</small></div>
-                        </div>
-                        <div className="col-3">
-                            <button type="button" className="btn btn-dark" onClick={() => handleActionClick(request, 'accept')} >Aceptar</button>
-                        </div>
-                        <div className="col-3">
-                            <button type="button" className="btn btn-warning" onClick={() => handleActionClick(request, 'reject')}>Rechazar</button>
+            {requests && requests.length > 0 ? (
+                requests.map((request, index) => (
+                    <div key={index} className="row g-0">
+                        <div className="d-flex text-center align-items-center justify-content-center w-100">
+                            <div className="col-3">
+                                <img src={`https://ui-avatars.com/api/?name=${request.Student.Person.names}+${request.Student.Person.lastNames}&background=random`} className="img-fluid rounded-circle" alt={`${request.Student.Person.names} ${request.Student.Person.lastNames}`} style={{ width: '30px', height: '30px', objectFit: 'cover' }} />
+                            </div>
+                            <div className="col-3">
+                                <div className="card-title my-1"><nobr>{request.Student.Person.names} {request.Student.Person.lastNames}</nobr></div>
+                                <div className="card-text" style={{ marginTop: '-5px' }}><small className="text-muted">{request.subjects}</small></div>
+                            </div>
+                            <div className="col-3">
+                                <button type="button" className="btn btn-dark" onClick={() => handleActionClick(request, 'accept')} >Aceptar</button>
+                            </div>
+                            <div className="col-3">
+                                <button type="button" className="btn btn-warning" onClick={() => handleActionClick(request, 'reject')}>Rechazar</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            ))}
+                ))) : (
+                <p>No hay solicitudes disponibles.</p>
+            )}
 
             <div className={`modal fade ${show ? 'show d-block' : ''}`} tabIndex="-1" style={{ display: show ? 'block' : 'none' }}>
                 <div className="modal-dialog">
