@@ -67,7 +67,7 @@ export function Subjects({ shouldUpdate }) {
   };
 
   return (
-    <div className="card mb-3" style={{ maxWidth: "450px" }}>
+    <div className="card mb-3 tutorContainers">
       <div className="card-header d-flex justify-content-between align-items-center">
         <h5 className="m-0">Materias dictadas</h5>
         <button className="btn btn-success" onClick={() => handleAddSubject()}>

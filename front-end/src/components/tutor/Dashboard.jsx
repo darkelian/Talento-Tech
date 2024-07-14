@@ -18,7 +18,7 @@ export function Dashboard() {
   };
 
   return (
-    <div className="container height-container">
+    <div className="container height-container p-3">
       <div className="row">
         <div>
           <h1>
@@ -34,7 +34,7 @@ export function Dashboard() {
           <Request onAcceptRequest={handleRequestAccepted} />
         </div>
       </div>
-      <div className="row">
+      <div class="row row-cols-1 row-cols-lg-2">
         <div className="col">
           <Scheduled
             shouldUpdate={updateScheduled}
