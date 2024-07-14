@@ -9,6 +9,8 @@ export function Scheduled({ shouldUpdate, onUpdate }) {
     const [selectedRequest, setSelectedRequest] = useState(null);
     const [show, setShow] = useState(false);
     const loadRequests = async () => {
+        if (!user || !user.tutorId) return; // Verificar si user y tutorId están definidos
+
         try {
             const data = await fetchRequestsByTutorIdAndStatus(user.tutorId, StatusEnum.Accepted);
 
@@ -24,7 +26,7 @@ export function Scheduled({ shouldUpdate, onUpdate }) {
 
     useEffect(() => {
         loadRequests();
-    }, [user.tutorId, shouldUpdate]);
+    }, [user, shouldUpdate]);
 
     const handleActionClick = (request) => {
         setSelectedRequest(request);
@@ -50,21 +52,24 @@ export function Scheduled({ shouldUpdate, onUpdate }) {
             <div className="card-header">
                 <h5 className="m-0">Tutorias aceptadas</h5>
             </div>
-            {requests.map((request, index) => (
-                <div key={index} className="row g-0">
-                    <div className="d-flex text-center align-items-center justify-content-center w-100">
-                        <div className="col-2">
-                            <img src={`https://ui-avatars.com/api/?name=${request.Student.Person.names}+${request.Student.Person.lastNames}&background=random`} className="img-fluid rounded-circle" alt={`${request.Student.Person.names} ${request.Student.Person.lastNames}`} style={{ width: '30px', height: '30px', objectFit: 'cover' }} />
-                        </div>
-                        <div className="col-6">
-                            <div className="card-title my-1"><nobr>{request.Student.Person.names} {request.Student.Person.lastNames}</nobr></div>
-                        </div>
-                        <div className="col-4">
-                            <button type="button" className="btn btn-light" onClick={() => handleActionClick(request)}>Cancelar</button>
+            {requests.length > 0 ? (
+                requests.map((request, index) => (
+                    <div key={index} className="row g-0">
+                        <div className="d-flex text-center align-items-center justify-content-center w-100">
+                            <div className="col-2">
+                                <img src={`https://ui-avatars.com/api/?name=${request.Student.Person.names}+${request.Student.Person.lastNames}&background=random`} className="img-fluid rounded-circle" alt={`${request.Student.Person.names} ${request.Student.Person.lastNames}`} style={{ width: '30px', height: '30px', objectFit: 'cover' }} />
+                            </div>
+                            <div className="col-6">
+                                <div className="card-title my-1"><nobr>{request.Student.Person.names} {request.Student.Person.lastNames}</nobr></div>
+                            </div>
+                            <div className="col-4">
+                                <button type="button" className="btn btn-light" onClick={() => handleActionClick(request)}>Cancelar</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            ))}
+                ))) : (
+                <p>No hay tutorías aceptadas.</p>
+            )}
 
             <div className={`modal fade ${show ? 'show d-block' : ''}`} tabIndex="-1" style={{ display: show ? 'block' : 'none' }}>
                 <div className="modal-dialog">
