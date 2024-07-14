@@ -20,7 +20,7 @@ export function Login() {
           navigate("../tutor/Dashboard");
         }
         if (user.isStudent) {
-          navigate("../student/Dashboard");
+          navigate("../student/HomeStudent");
         }
       }, 2000);
     }

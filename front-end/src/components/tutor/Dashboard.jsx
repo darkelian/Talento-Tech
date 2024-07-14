@@ -7,7 +7,6 @@ import { Subjects } from "./Subjects";
 export function Dashboard() {
   const [updateScheduled, setUpdateScheduled] = useState(false);
 
-
   const handleRequestAccepted = () => {
     // Activar la actualización de Scheduled
     setUpdateScheduled(true);
@@ -27,7 +26,7 @@ export function Dashboard() {
           </h1>
         </div>
       </div>
-      <div className="row">
+      <div className="row row-cols-1 row-cols-lg-2">
         <div className="col">
           <Profile />
         </div>
@@ -37,7 +36,10 @@ export function Dashboard() {
       </div>
       <div className="row">
         <div className="col">
-          <Scheduled shouldUpdate={updateScheduled} onUpdate={handleScheduledUpdate} />
+          <Scheduled
+            shouldUpdate={updateScheduled}
+            onUpdate={handleScheduledUpdate}
+          />
         </div>
         <div className="col">
           <Subjects />
