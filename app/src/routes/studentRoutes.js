@@ -6,10 +6,18 @@ const router = express.Router();
 
 //Crear constante de tipo array/json, para la lista de students
 //Traemos la respuesta json desde el controlador
-const { newStudent, getStudentById, getAllStudents, updateStudent, deleteStudent } = require("../controllers/studentController")
+const { newStudent, 
+    getStudentById, 
+    getAllStudents, 
+    updateStudent, 
+    deleteStudent, 
+    createStudentAsTutorByStudentId } = require("../controllers/studentController")
 
 //Ruta para crear un nuevo student (CREATE)
 router.route('/register').post(newStudent);
+
+//Ruta crear un student as tutor
+router.route('/studentTutor/:id').post(createStudentAsTutorByStudentId);
 
 //Ruta consulta student x id (FIND) (get)
 router.route('/student/:id').get(getStudentById);  //Con los : toma el id de la ruta

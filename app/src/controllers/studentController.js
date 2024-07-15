@@ -1,5 +1,6 @@
 const Person = require("../models/peopleModel");
 const Student = require("../models/studentModel");
+const Tutor = require("../models/tutorModel");
 const User = require("../models/userModel");
 const bcrypt = require('bcryptjs');
 const RegisterPeopleDTO = require("../dtos/requestPeople");
@@ -42,6 +43,52 @@ exports.newStudent = async (req, res, next) => {
     }
 };
 
+// Create a student as Tutor
+exports.createStudentAsTutorByStudentId = async (req, res, next) => {
+    const studentid = req.params.id;
+
+    try {
+        const student = await Student.findOne({
+            where: { id: studentid },
+            include: [{ model: Person }]
+        });
+
+        if (!student) {
+            return res.status(404).json({
+                success: false,
+                message: `Student not found in DB with id: ${studentid}`
+            });
+        }
+
+        const tutor = await Tutor.findOne({
+            where: { personId: student.Person.id },
+            include: [{ model: Person }]
+        });
+
+        if (tutor) {
+            return res.status(200).json({
+                success: true,
+                message: `Student already exists as a tutor: ${student.Person.id}`,
+                tutor: tutor
+            });
+        }
+
+        const newTutor = await Tutor.create({ personId: student.Person.id, ...req.body });
+
+        res.status(201).json({
+            success: true,
+            message: "Student created as Tutor in DB.",
+            tutor: newTutor
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
 // Query all students
 exports.getAllStudents = async (req, res, next) => {
     try {
@@ -76,7 +123,7 @@ exports.getStudentById = async (req, res, next) => {
         if (!student) {
             return res.status(404).json({
                 success: false,
-                message: `Student not found in BD: ${id}`
+                message: `Student not found in DB: ${id}`
             });
         } else {
             return res.status(200).json({
@@ -100,7 +147,7 @@ exports.updateStudent = async (req, res, next) => {
     if (!student) {
         return res.status(404).json({
             success: false,
-            message: `Student not found at BD with Id: ${id}`
+            message: `Student not found at DB with Id: ${id}`
         });
     }
 
@@ -109,7 +156,7 @@ exports.updateStudent = async (req, res, next) => {
     if (!person) {
         return res.status(404).json({
             success: false,
-            message: `Student data not found at BD with Id: ${student.personId}`
+            message: `Student data not found at DB with Id: ${student.personId}`
         });
     }
 
@@ -117,7 +164,7 @@ exports.updateStudent = async (req, res, next) => {
         await person.update(req.body);
         res.status(200).json({
             success: true,
-            message: "Student updated at BD.",
+            message: "Student updated at DB.",
             person,
             student
         });
@@ -138,7 +185,7 @@ exports.deleteStudent = async (req, res, next) => {
     if (!student) {
         return res.status(404).json({
             success: false,
-            message: `Student data not found at BD with Id: ${studentId}`
+            message: `Student data not found at DB with Id: ${studentId}`
         });
     }
 
@@ -151,7 +198,7 @@ exports.deleteStudent = async (req, res, next) => {
 
         res.status(200).json({
             success: true,
-            message: "Student and associated person erased from BD."
+            message: "Student and associated person erased from DB."
         });
     } catch (error) {
         res.status(400).json({
