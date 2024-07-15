@@ -70,14 +70,8 @@ const BookReserve = ({ sendingReload }) => {
   };
 
   const onSubmit = (values) => {
-    const {
-      subjectId,
-      tutorId,
-      email,
-      date_start,
-      date_end,
-      reservationTypeId,
-    } = values;
+    const { subjectId, tutorId, date_start, date_end, reservationTypeId } =
+      values;
     const data = {
       date,
       date_start,
@@ -87,9 +81,9 @@ const BookReserve = ({ sendingReload }) => {
       tutorId,
       reservationTypeId,
       subjectId,
-      email,
     };
     handleSubmit(data);
+    console.log(data);
   };
 
   useEffect(() => {
@@ -185,9 +179,11 @@ const BookReserve = ({ sendingReload }) => {
                 {tutorNames.map((subject) => (
                   <option
                     key={subject.Tutor.Person.id}
-                    value={subject.Tutor.Person.id}
+                    value={subject.Tutor.id}
                   >
-                    {subject.Tutor.Person.names}
+                    {subject.Tutor.Person.names +
+                      " " +
+                      subject.Tutor.Person.lastNames}
                   </option>
                 ))}
               </Field>
